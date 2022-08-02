@@ -16,7 +16,7 @@ create_pseudo_SNP <- function(db40, vcf) {
     rownames_to_column() %>%
     filter(rowname %in% db40_c1$POS) %>%
     column_to_rownames()
-
+  tidyr::pivot_longer()
   i_modes_1 <- apply(c1_vcf %>% sapply(as.double), 2, crosshap::mode) %>%
     as_tibble() %>% pull(value)
 
