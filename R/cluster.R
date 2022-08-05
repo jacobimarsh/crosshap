@@ -73,12 +73,6 @@ hap_run_cluster <- function(vcf, LD, elon =  c(0.5, 1, 1.5, 2)) {
 
     ####NEED TO MAKE IT MUTATE ALL >BUT> ID
 
-    #hapCounts <- pseudoSNP %>%
-    # count(MG1, MG2, MG3, MG4, MG5, MG6, MG7) %>%
-    #  count() %>%
-    #  as_tibble() %>%
-    #  arrange(by_group = -n)
-
     cnames <- colnames(select(pseudoSNP,-ID))
 
     het_hapCounts <- het_pseudoSNP %>%
