@@ -1,7 +1,7 @@
-#' Create pseudoSNPs!
+#' Call allelic states for each SNP marker group across individuals
 #'
-#' @param db40
-#' @param vcf
+#' @param db40_clust SNP marker groups clustered using DBscan.
+#' @param vcf Input VCF for region of interest.
 #'
 #' @return
 #' @export
@@ -13,7 +13,7 @@ create_pseudoSNP <- function(db40_clust, vcf) {
     dplyr::filter(cluster == 1) %>% tibble::as_tibble()
 
   c1_vcf <- vcf %>%
-    rownames_to_column() %>% filter(rowname %in% db40_c1$POS) %>% column_to_rownames()
+    rownames_to_column() %>% dplyr::filter(rowname %in% db40_c1$POS) %>% column_to_rownames()
 
   i_modes_1 <- apply(c1_vcf %>% sapply(as.double), 2, crosshap::mode) %>% as_tibble() %>%
     pull(value)
@@ -23,10 +23,10 @@ create_pseudoSNP <- function(db40_clust, vcf) {
 for (vel in c(2:max(db40$cluster))) {
 
     db40_cvel <- db40_clust %>%
-      filter(cluster == vel) %>% as_tibble()
+      dplyr::filter(cluster == vel) %>% as_tibble()
 
     cvel_vcf <- vcf %>%
-      rownames_to_column() %>% filter(rowname %in% db40_cvel$POS) %>% column_to_rownames()
+      rownames_to_column() %>% dplyr::filter(rowname %in% db40_cvel$POS) %>% column_to_rownames()
 
     i_modes_vel <-
       apply(cvel_vcf %>% sapply(as.double), 2, mode) %>% as_tibble()

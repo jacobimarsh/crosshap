@@ -1,8 +1,7 @@
-#' Run Clustering on Data
+#' Run clustering on data
 #'
 #' @param elon Epsilon values to search.
-#' @param vcf Input vcf of region.
-#' @param LD Pairwise R squared correlation matrix.
+#' @param pheno Input numeric phenotype data for colouring clustree.
 #'
 #' @return
 #' @export
@@ -10,11 +9,10 @@
 #' @examples
 #'
 run_clustree <- function(elon, pheno) {
-  pre_clustree <- get(paste("Haplotype_assignments_MP","_E",elon[1],sep=""))
+pre_clustree <- get(paste("Haplotype_assignments_MP","_E",elon[1],sep=""))
 
 for (drez in elon[2:length(elon)]){
-  pre_clustree <- pre_clustree %>%
-
+pre_clustree <- pre_clustree %>%
     left_join(get(paste("Haplotype_assignments_MP","_E",drez,sep="")))
 }
 
