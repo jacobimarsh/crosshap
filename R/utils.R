@@ -4,7 +4,7 @@
 #'
 #' @noRd
 #'
-##Dependencies
+##Dependencies to install
 library(data.table)
 library(tidyverse)
 library(factoextra)
@@ -29,7 +29,7 @@ mean_na.rm <- function(x){
 #Read correlation matrix between all SNPs in region
 read_LD <- function(LDin){
   fread(LDin, nThread = 10) %>%  as_tibble() %>%  column_to_rownames("V1")
-  }
+}
 
 ##Parse an imputed VCF as a matrix and convert alleles to base 3 integers
 read_vcf <- function(VCFin){
