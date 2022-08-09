@@ -1,15 +1,15 @@
 #' Call allelic states for each SNP marker group across individuals
 #'
-#' @param db40_clust SNP marker groups clustered using DBscan.
+#' @param MGfile SNP marker groups clustered using DBscan.
 #' @param vcf Input VCF for region of interest.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-create_pseudoSNP <- function(db40_clust, vcf) {
+create_pseudoSNP <- function(MGfile, vcf) {
 
-  db40_c1 <- db40_clust %>%
+  db40_c1 <- MGfile %>%
     dplyr::filter(cluster == 1) %>% tibble::as_tibble()
 
   c1_vcf <- vcf %>%
@@ -22,7 +22,7 @@ create_pseudoSNP <- function(db40_clust, vcf) {
 
 for (vel in c(2:max(db40$cluster))) {
 
-    db40_cvel <- db40_clust %>%
+    db40_cvel <- MGfile %>%
       dplyr::filter(cluster == vel) %>% as_tibble()
 
     cvel_vcf <- vcf %>%
