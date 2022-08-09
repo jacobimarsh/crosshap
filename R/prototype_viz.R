@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(root.dir = "C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3", 
+knitr::opts_chunk$set(root.dir = "UpSet_Plot/Rinputs/Rinputs2/Rinputs3", 
                       echo = TRUE)
 library(tidyverse)
 library(dplyr)
@@ -21,17 +21,17 @@ library(ggalt)
 
 
 ```{r Import}
-HF2 <- read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/U_S_haps_fin3.txt") %>% mutate(altalleles = ifelse(altalleles=='',NA,altalleles))
+HF2 <- read.csv("Rinputs3/U_S_haps_fin3.txt") %>% mutate(altalleles = ifelse(altalleles=='',NA,altalleles))
 
-AlleleFile <-read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/U_S_allele_fin3.txt")
+AlleleFile <-read.csv("Rinputs3/U_S_allele_fin3.txt")
 
-PhenoSum <- read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/allpheno_resum3.txt") 
+PhenoSum <- read.csv("Rinputs3/allpheno_resum3.txt") 
 
-AlleleCounts <- read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/ACAN_tagSNPs.txt")
+AlleleCounts <- read.csv("Rinputs3/ACAN_tagSNPs.txt")
 
-happhengrp <- read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/happhengrp.txt")
+happhengrp <- read.csv("Rinputs3/happhengrp.txt")
 
-TagPercDiffs <- read.csv("C:/Users/21485753/Desktop/cqProt003/UpSet_Plot/Rinputs/Rinputs2/Rinputs3/percdifftags3.csv") %>%
+TagPercDiffs <- read.csv("Rinputs3/percdifftags3.csv") %>%
   subset(select = -X) %>% filter(TAGGING >= 31604127 & TAGGING <= 31777346)
 
 ```
@@ -346,7 +346,7 @@ ggsave('ABCDE4.pdf',
        units = "mm")
 
 
-ts5 <- fread("C:/Users/21485753/Desktop/cqProt003/mg_locations/tableS5.txt", sep = "\t") %>% as_tibble() %>% 
+ts5 <- fread("mg_locations/tableS5.txt", sep = "\t") %>% as_tibble() %>% 
   mutate(MG=as.numeric(gsub('M0','',MG)))
 
 G <- ggplot() + 
