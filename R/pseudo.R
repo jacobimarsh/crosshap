@@ -1,12 +1,18 @@
 #' Call allelic states for each SNP marker group across individuals
 #'
+#' Have a drescription here.
+#' fjdklsa;jfkdl;sa
+#' fjdskal;jfkdls;a
+#'
 #' @param MGfile SNP marker groups clustered using DBscan.
 #' @param vcf Input VCF for region of interest.
 #'
 #' @return
 #' @export
 #'
-#' @examples
+#' @example
+#' create_pseudoSNP(MGfile, pdh1_100kb_vcf)
+#'
 create_pseudoSNP <- function(MGfile, vcf) {
 
   db40_c1 <- MGfile %>%
@@ -41,3 +47,4 @@ for (vel in c(2:max(db40$cluster))) {
 
   return(het_pseudoSNP)
 }
+

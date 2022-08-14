@@ -5,15 +5,14 @@
 #' @noRd
 #'
 ##Dependencies to install
-library(data.table)
-library(tidyverse)
-library(factoextra)
-library(janitor)
-library(dbscan)
-library(tsne)
-library(patchwork)
-library(clustree)
-library(conflicted)
+#library(data.table)
+#library(tidyverse)
+#library(factoextra)
+#library(janitor)
+#library(dbscan)
+#library(tsne)
+#library(patchwork)
+#library(clustree)
 
 ##Arithmetic mode for calling each individual's allelic states for pseudoSNP marker groups
 mode <- function(x) {

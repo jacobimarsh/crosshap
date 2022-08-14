@@ -23,12 +23,13 @@ pseudo2haps <- function(pSNP) {
   arrange(by_group = -n)
 
   over20_hhCounts <- dplyr::filter(het_hapCounts, n > 9) %>%
-  mutate(hap_eps=LETTERS[1:nrow(.)]) %>%
-  rename(!!paste0("hap_eps",arez) := 'hap_eps')
+  mutate(hap=LETTERS[1:nrow(.)])
 
   clustered_hpS <- left_join(pSNP, over20_hhCounts) %>%
   mutate_if(is.character,function(x){replace_na(x, '0')}) %>%
   select(1,ncol(.))
 
-  return(clustered_hpS)
+
+
+  return(list(Hapfile = over20_hhCounts, nophenIDfile = clustered_hpS))
 }

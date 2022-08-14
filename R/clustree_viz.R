@@ -9,11 +9,14 @@
 #' @examples
 #'
 run_clustree <- function(elon, pheno) {
-pre_clustree <- get(paste("Haplotype_assignments_MP","_E",elon[1],sep=""))
+
+pre_clustree <- get(paste("Haplotypes_MP_E",elon[1],sep=""))[["IDfile"]] %>%
+    rename(!!paste0("hap_eps",elon[1]) := 'hap')
 
 for (drez in elon[2:length(elon)]){
-pre_clustree <- pre_clustree %>%
-    left_join(get(paste("Haplotype_assignments_MP","_E",drez,sep="")))
+  pre_clustree <- pre_clustree %>%
+    left_join(get(paste("Haplotypes_MP_E",drez,sep=""))[["IDfile"]] %>%
+                rename(!!paste0("hap_eps",drez) := 'hap'))
 }
 
 pre_clustree_phen <- left_join(pre_clustree, pheno)
@@ -41,3 +44,4 @@ labeled_ctree <- ctree +
 
 return(labeled_ctree)
 }
+
