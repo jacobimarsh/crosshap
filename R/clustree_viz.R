@@ -1,6 +1,6 @@
 #' Run clustering on data
 #'
-#' @param elon Epsilon values to search.
+#' @param epsilon Epsilon values to search.
 #' @param pheno Input numeric phenotype data for colouring clustree.
 #'
 #' @return
@@ -8,12 +8,12 @@
 #'
 #' @examples
 #'
-run_clustree <- function(elon, pheno) {
+run_clustree <- function(epsilon, pheno) {
 
-pre_clustree <- get(paste("Haplotypes_MP_E",elon[1],sep=""))[["IDfile"]] %>%
-    rename(!!paste0("hap_eps",elon[1]) := 'hap')
+pre_clustree <- get(paste("Haplotypes_MP_E",epsilon[1],sep=""))[["IDfile"]] %>%
+    rename(!!paste0("hap_eps",epsilon[1]) := 'hap')
 
-for (drez in elon[2:length(elon)]){
+for (drez in epsilon[2:length(epsilon)]){
   pre_clustree <- pre_clustree %>%
     left_join(get(paste("Haplotypes_MP_E",drez,sep=""))[["IDfile"]] %>%
                 rename(!!paste0("hap_eps",drez) := 'hap'))
@@ -35,8 +35,8 @@ ctree <-
 #x and y extractd from clustree object
 lbls <-
   tibble(xval = max(ctree[["data"]][["x"]])*1.1,
-         yval=0:(length(elon)-1),
-         labelval = paste0("\u03b5"," = ",elon))
+         yval=0:(length(epsilon)-1),
+         labelval = paste0("\u03b5"," = ",epsilon))
 
 #re-plot using label data
 labeled_ctree <- ctree +
