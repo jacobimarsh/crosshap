@@ -9,17 +9,17 @@
 #'
 #' @examples
 #'
-run_clustree <- function(MGfile, vcf, pheno) {
+tagphenos <- function(MGfile, vcf, pheno) {
 
 vcf_long <- vcf %>%
   rownames_to_column("POS") %>%
-  left_join(MGfile) %>%
+  left_join(MGfile, by = "POS") %>%
   gather(ID, key, 2:(ncol(.)-1))
 
 VarFile <- vcf_long %>%
-  left_join(phen_early) %>%
+  left_join(pheno, by = "ID") %>%
   group_by(POS, cluster, key) %>%
-  summarize(nInd = n(),avPheno=mean(Pheno, na.rm = T))
+  summarize(nInd = n(),avPheno=mean(Pheno, na.rm = T), .groups = 'keep')
 
 return(VarFile)
 }

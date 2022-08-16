@@ -25,9 +25,9 @@ pseudo2haps <- function(pSNP) {
   over20_hhCounts <- dplyr::filter(het_hapCounts, n > 9) %>%
   mutate(hap=LETTERS[1:nrow(.)])
 
-  clustered_hpS <- left_join(pSNP, over20_hhCounts) %>%
+  suppressMessages(clustered_hpS <- left_join(pSNP, over20_hhCounts) %>%
   mutate_if(is.character,function(x){replace_na(x, '0')}) %>%
-  select(1,ncol(.))
+  select(1,ncol(.)))
 
 
 

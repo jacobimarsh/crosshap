@@ -26,7 +26,7 @@ create_pseudoSNP <- function(MGfile, vcf) {
 
   pseudoSNP <- tibble(ID = colnames(c1_vcf), MG1 = i_modes_1)
 
-for (vel in c(2:max(db40$cluster))) {
+for (vel in c(2:max(MGfile$cluster))) {
 
     db40_cvel <- MGfile %>%
       dplyr::filter(cluster == vel) %>% as_tibble()
@@ -47,4 +47,4 @@ for (vel in c(2:max(db40$cluster))) {
 
   return(het_pseudoSNP)
 }
-
+create_pseudoSNP(MGfile = MGfile, vcf = vcf)
