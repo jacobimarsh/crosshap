@@ -16,31 +16,31 @@
 
 ##Arithmetic mode for calling each individual's allelic states for pseudoSNP marker groups
 mode <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
+  ux <- base::unique(x)
+  ux[base::which.max(base::tabulate(base::match(x, ux)))]
 }
 
 ##Arithmetic mean of phenotype scores for each haplotype, removing NAs
 mean_na.rm <- function(x){
-  mean(x,na.rm=T)
+  base::mean(x,na.rm=T)
 }
 
 #Read correlation matrix between all SNPs in region
 read_LD <- function(LDin){
-  fread(LDin, nThread = 10) %>%  as_tibble() %>%  column_to_rownames("V1")
+  data.table::fread(LDin, nThread = 10) %>%  tibble::as_tibble() %>%  tibble::column_to_rownames("V1")
 }
 
 ##Parse an imputed VCF as a matrix and convert alleles to base 3 integers
 read_vcf <- function(VCFin){
-  fread(VCFin, nThread = 10) %>%  as_tibble() %>%
-    select(-c(1,2,4:9)) %>% column_to_rownames('ID') %>%
-    mutate_all(function(x){ifelse(x=='0|0',0,ifelse(x=='1|0'|x=='0|1',1,ifelse(x=='1|1',2,'failsave')))})
+  data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
+    dplyr::select(-c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
+    dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,'failsave')))})
 }
 
 ##Read phenotype data from two column text file without a header (ID | Pheno)
 read_pheno <- function(phenoin){
-  fread(phenoin) %>% as_tibble() %>%
-    rename('ID' = V1, 'Pheno' = V2)
+  data.table::fread(phenoin) %>% tibble::as_tibble() %>%
+    dplyr::rename('ID' = V1, 'Pheno' = V2)
 }
 
 

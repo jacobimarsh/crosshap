@@ -1,7 +1,12 @@
-#' Run clustering on data
+#' Visualize clusters
+#'
+#' This function reads haplotype objects calculated for a range of epsilon
+#' values. It calculates the mean phenotypic value for each haplotype group
+#' and rearranges the data into a single sheet. Visualization is conducted using
+#' the clustree package, with labeling manually added afterward.
 #'
 #' @param epsilon Epsilon values to search.
-#' @param pheno Input numeric phenotype data for colouring clustree.
+#' @param pheno Input numeric phenotype data for each individual.
 #'
 #' @return
 #' @export
@@ -10,37 +15,39 @@
 #'
 run_clustree <- function(epsilon, pheno) {
 
-pre_clustree <- get(paste("Haplotypes_MP_E",epsilon[1],sep=""))[["IDfile"]] %>%
-    rename(!!paste0("hap_eps",epsilon[1]) := 'hap')
+#Extract ID file first epsilon value and change column name to hap_epsXX
+pre_clustree <- base::get(base::paste("Haplotypes_MP_E",epsilon[1],sep=""))[["IDfile"]] %>%
+    dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')
 
-for (drez in epsilon[2:length(epsilon)]){
+#Iterate over all other epsilon values, adding hap_epsXX columns to tibble
+for (drez in epsilon[2:base::length(epsilon)]){
   pre_clustree <- pre_clustree %>%
-    left_join(get(paste("Haplotypes_MP_E",drez,sep=""))[["IDfile"]] %>%
-                rename(!!paste0("hap_eps",drez) := 'hap'))
+    dplyr::left_join(base::get(base::paste("Haplotypes_MP_E",drez,sep=""))[["IDfile"]] %>%
+                dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'))
 }
 
-pre_clustree_phen <- left_join(pre_clustree, pheno)
+pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno)
 
-#plot
+#Plot with clustree
 ctree <-
-  clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = 'mean_na.rm', edge_width = 1, node_alpha = 1)+
-  scale_colour_gradient(limits=c(max(top_frac(pre_clustree_phen,-0.1,Pheno)$Pheno),
-                                 min(top_frac(pre_clustree_phen,0.1,Pheno)$Pheno)),
+  clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = 'mean_na.rm', edge_width = 1, node_alpha = 1)+
+  ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,Pheno)$Pheno),
+                                 base::min(dplyr::top_frac(pre_clustree_phen,0.1,Pheno)$Pheno)),
                         high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'Pheno') +
-  scale_edge_color_continuous(high = 'black',low = 'grey80') +
-  labs(size = 'nIndividuals', edge_alpha = "Proportion") +
-  guides(edge_color = "none", size = guide_legend(order = 1))
+  ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
+  ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
+  ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
 
-#create label data
-#x and y extractd from clustree object
+#Create epsilon label data
+#Extract x and ay coordinates from clustree object and build labels
 lbls <-
-  tibble(xval = max(ctree[["data"]][["x"]])*1.1,
-         yval=0:(length(epsilon)-1),
-         labelval = paste0("\u03b5"," = ",epsilon))
+  tibble::tibble(xval = base::max(ctree[["data"]][["x"]])*1.1,
+         yval=0:(base::length(epsilon)-1),
+         labelval = base::paste0("\u03b5"," = ",epsilon))
 
-#re-plot using label data
+#Re-plot with epsilon label data added
 labeled_ctree <- ctree +
-  geom_text(data = lbls, aes(x=xval, y=yval, label=labelval), hjust = 0)
+  ggplot2::geom_text(data = lbls, ggplot2::aes(x=xval, y=yval, label=labelval), hjust = 0)
 
 return(labeled_ctree)
 }

@@ -1,8 +1,12 @@
-#' Calculate phenotypic associations for SNPs in each cluster
+#' Calculate SNP phenotypic associations
+#'
+#' Internal function that splits SNPs by their different allelic states and
+#' calculates frequencies across the population. In addition, the mean phenotype
+#' is calculated across all individuals that share a given allele for each loci.
 #'
 #' @param MGfile SNP marker groups clustered using DBscan.
 #' @param vcf Input VCF for region of interest.
-#' @param pheno Input numeric phenotype data for colouring clustree.
+#' @param pheno Input numeric phenotype data for each individual.
 #'
 #' @return
 #' @export
@@ -11,15 +15,17 @@
 #'
 tagphenos <- function(MGfile, vcf, pheno) {
 
+#Split by allele type
 vcf_long <- vcf %>%
-  rownames_to_column("POS") %>%
-  left_join(MGfile, by = "POS") %>%
-  gather(ID, key, 2:(ncol(.)-1))
+  tibble::rownames_to_column("POS") %>%
+  dplyr::left_join(MGfile, by = "POS") %>%
+  tidyr::gather(ID, key, 2:(base::ncol(.)-1))
 
+#Calculate phenotypic association of each allele type for each SNP
 VarFile <- vcf_long %>%
-  left_join(pheno, by = "ID") %>%
-  group_by(POS, cluster, key) %>%
-  summarize(nInd = n(),avPheno=mean(Pheno, na.rm = T), .groups = 'keep')
+  dplyr::left_join(pheno, by = "ID") %>%
+  dplyr::group_by(POS, cluster, key) %>%
+  dplyr::summarize(nInd = dplyr::n(),avPheno=base::mean(Pheno, na.rm = T), .groups = 'keep')
 
 return(VarFile)
 }

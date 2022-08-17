@@ -8,11 +8,10 @@ phen_early <- read_pheno('data/early_shatter565.txt')
 prot <- read_pheno('data/prot_phen.txt')
 
 ##DBscan epsilon values to be tested and compared using clustree visualization
-epsilon <- seq(0.42,2.42,by=0.5)
+epsilon <- seq(0.69,2.69,by=0.5)
+MGmin <- 40
 
-run_haplotyping(vcf, LD, epsilon, phen_early)
-
-#  return(get(paste("Haplotypes_MP", "_E", arez,sep = "")))
+run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
 
 ##Visualize differences between clusters based on epsilon value input to DBscan
 labeled_ctree <- run_clustree(epsilon,phen_early)
