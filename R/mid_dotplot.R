@@ -15,7 +15,7 @@
 #' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
 #'
 
-intersect <- Haplotypes_MP_E1.69$Hapfile %>%
+intersect <- Haplotypes_MP_E1.5$Hapfile %>%
   gather(MG, present, 1:(ncol(.)-2)) %>%
   mutate(present = as.factor(present)) %>%
   mutate(MG = as.numeric(str_remove(MG, "MG")))

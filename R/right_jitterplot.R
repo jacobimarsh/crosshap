@@ -16,31 +16,31 @@
 #'
 
 
-MP_E1.69_pdiff_altAF <- Haplotypes_MP_E1.69$Varfile %>%
+MP_E1.5_pdiff_altAF <- Haplotypes_MP_E1.5$Varfile %>%
   select(-nInd) %>%
   spread(key, avPheno) %>%
   rename(ref = '0', het = '1', alt = '2') %>%
-  mutate(percdiff = alt - ref) %>% select(POS, percdiff) %>%
-  left_join(Haplotypes_MP_E1.69$Varfile %>%
+  mutate(percdiff = alt - ref) %>% select(ID, percdiff) %>%
+  left_join(Haplotypes_MP_E1.5$Varfile %>%
               select(-avPheno) %>%
               spread(key, nInd) %>%
               rename(ref = '0', het = '1', alt = '2') %>%
               mutate(AltAF = alt/(ref + het + alt)) %>%
-              select(POS, AltAF))
+              select(ID, AltAF))
 
 
 #D right plot
 
 Dplot <- ggplot() +
-  geom_jitter(data = MP_E1.69_pdiff_altAF %>% dplyr::filter(cluster > 0),
+  geom_jitter(data = MP_E1.5_pdiff_altAF %>% dplyr::filter(cluster > 0),
               aes(x = abs(percdiff), y = as.character(cluster), fill = AltAF),
               alpha = 0.25, pch = 21, height = 0.25) +
   scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
-                        scale_x_continuous(breaks = scales::pretty_breaks(n = max(MP_E1.69_pdiff_altAF$cluster))) +
+                        scale_x_continuous(breaks = scales::pretty_breaks()) +
                         theme_minimal() +
                         theme(axis.title.y = element_blank(),
                               axis.text.y = element_text(face = "bold", size = 10, color = "black"),
-                              plot.margin = unit(c(0,0.1,0,0), "cm"),
+                              plot.margin = unit(c(0,0,0,0), "cm"),
                               legend.title = element_text(size = 7),
                               legend.text = element_text(size = 5),
                               legend.position = "none",
@@ -49,8 +49,8 @@ Dplot <- ggplot() +
                               axis.text.x = element_text(face = "bold", size = 10),
                               axis.title.x = element_text()) +
   xlab("Pheno association") +
-  scale_y_discrete(position = "left",
-                   labels = c(paste0(" MG",as.character(max(MP_E1.69_pdiff_altAF$cluster):1))))
+  scale_y_discrete(limits = rev, position = "left",
+                   labels = c(paste0("MG",as.character(max(MP_E1.69_pdiff_altAF$cluster):1))))
 
 
 #top mid bot right

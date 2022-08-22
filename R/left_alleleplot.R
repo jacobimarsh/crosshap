@@ -15,7 +15,7 @@
 #' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
 #'
 
-pre_leftplotdata <- Haplotypes_MP_E1.69$Varfile %>% dplyr::filter(cluster > 0) %>%
+pre_leftplotdata <- Haplotypes_MP_E1.5$Varfile %>% dplyr::filter(cluster > 0) %>%
   select(-avPheno) %>%
   spread(key, nInd) %>%
   rename(ref = '0', het = '1', alt = '2')
@@ -56,8 +56,8 @@ Cplot <- ggplot(leftplot_data %>% gather("Type", "nInd", 2:4) %>%
         plot.title = element_blank()) +
   scale_fill_manual(values = c("#FFFFFF", "#73D055FF", '#440154FF')) +
   xlab("Allele count") +
-  scale_y_discrete(position = "right",
-                   labels = c(paste0("MG",as.character(max(Haplotypes_MP_E1.69$Varfile$cluster):1))))
+  scale_y_discrete(position = "right", limits = rev,
+                   labels = c(paste0("MG",as.character(max(Haplotypes_MP_E1.5$Varfile$cluster):1))))
 
 
 #top mid bot right left

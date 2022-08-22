@@ -13,18 +13,18 @@
 #'
 #' @examples
 #'
-tagphenos <- function(MGfile, vcf, pheno) {
+tagphenos <- function(MGfile, bin_vcf, pheno) {
 
 #Split by allele type
-vcf_long <- vcf %>%
-  tibble::rownames_to_column("POS") %>%
-  dplyr::left_join(MGfile, by = "POS") %>%
-  tidyr::gather(ID, key, 2:(base::ncol(.)-1))
+bin_vcf_long <- bin_vcf %>%
+  tibble::rownames_to_column("ID") %>%
+  dplyr::left_join(MGfile, by = "ID") %>%
+  tidyr::gather(Ind, key, 2:(base::ncol(.)-2))
 
 #Calculate phenotypic association of each allele type for each SNP
-VarFile <- vcf_long %>%
-  dplyr::left_join(pheno, by = "ID") %>%
-  dplyr::group_by(POS, cluster, key) %>%
+VarFile <- bin_vcf_long %>%
+  dplyr::left_join(pheno, by = "Ind") %>%
+  dplyr::group_by(ID, cluster, key) %>%
   dplyr::summarize(nInd = dplyr::n(),avPheno=base::mean(Pheno, na.rm = T), .groups = 'keep')
 
 return(VarFile)

@@ -19,7 +19,7 @@
 #A top plot
 #Haplotypes_MP_E1.69$IDfile %>% group_by(hap) %>% tally()
 
-Aplot <- ggplot(Haplotypes_MP_E1.69$Hapfile,
+Aplot <- ggplot(Haplotypes_MP_E1.5$Hapfile,
        aes(y = n, x = hap)) +
   geom_bar(position="stack", stat = "identity", fill = "black") +
   theme_minimal() +

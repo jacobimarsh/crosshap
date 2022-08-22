@@ -13,11 +13,11 @@
 #' @examples
 #'
 pseudo2haps <- function(pSNP) {
-  cnames <- base::colnames(dplyr::select(pSNP, -ID))
+  cnames <- base::colnames(dplyr::select(pSNP, -Ind))
 
   het_hapCounts <- pSNP %>%
   tidyr::gather(mgs,value,2:base::ncol(.)) %>%
-  dplyr::group_by(ID) %>%
+  dplyr::group_by(Ind) %>%
   dplyr::mutate(mgs_new=base::paste(value, collapse = '_')) %>%
   dplyr::group_by(mgs_new) %>%
   dplyr::tally() %>% dplyr::mutate(n=n/(base::ncol(pSNP)-1)) %>%
@@ -32,5 +32,6 @@ pseudo2haps <- function(pSNP) {
   dplyr::mutate_if(is.character,function(x){tidyr::replace_na(x, '0')}) %>%
   dplyr::select(1,base::ncol(.)))
 
-  return(base::list(Hapfile = over20_hhCounts, nophenIDfile = clustered_hpS))
+  return(base::list(Hapfile = over20_hhCounts, nophenIndfile = clustered_hpS))
 }
+

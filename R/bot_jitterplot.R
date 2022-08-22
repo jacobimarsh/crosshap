@@ -18,24 +18,24 @@
 
 #B bot plot
 
-Bplot <- ggplot(data = Haplotypes_MP_E1.69$IDfile) +
+Bplot <- ggplot(data = Haplotypes_MP_E1.5$Indfile) +
   geom_jitter(aes(x = hap, y = Pheno), alpha = 0.25, pch = 21, width = 0.2) +
-  geom_crossbar(data = aggregate(Haplotypes_MP_E1.69$IDfile$Pheno,
-                                 list(Haplotypes_MP_E1.69$IDfile$hap), mean, na.rm = TRUE),
+  geom_crossbar(data = aggregate(Haplotypes_MP_E1.5$Indfile$Pheno,
+                                 list(Haplotypes_MP_E1.5$Indfile$hap), mean, na.rm = TRUE),
                 aes(x = as.factor(Group.1),
                     y = x,
-                    xmin= as.factor(Group.1) -1,
-                    xmax=as.factor(Group.1) +1,
+                    xmin= as.factor(Group.1),
+                    xmax=as.factor(Group.1),
                     ymin=x,
                     ymax=x,
                     colour=x)) +
   scale_colour_gradient('Mean',
                         low='red',
                         high='green',
-                        limits=c(max(top_frac(Haplotypes_MP_E1.69$IDfile,
+                        limits=c(max(top_frac(Haplotypes_MP_E1.5$Indfile,
                                               -0.05,
                                               Pheno)$Pheno),
-                                 min(top_frac(Haplotypes_MP_E1.69$IDfile,
+                                 min(top_frac(Haplotypes_MP_E1.5$Indfile,
                                               0.05,
                                               Pheno)$Pheno)),
                         oob = squish) +
@@ -43,10 +43,8 @@ Bplot <- ggplot(data = Haplotypes_MP_E1.69$IDfile) +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         axis.text.x  = element_blank(),
-        plot.margin = unit(c(0,0,0,0),
-                           "cm"),
-        axis.text.y = element_text(face = "bold",
-                                   size = 10)) +
+        plot.margin = unit(c(0,0,0,0), "cm"),
+        axis.text.y = element_text(face = "bold", size = 10, color = "black")) +
   ylab("Pheno") +
   scale_y_continuous(position = "left", breaks = scales::pretty_breaks())
 

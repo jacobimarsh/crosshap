@@ -16,13 +16,13 @@
 run_clustree <- function(epsilon, pheno) {
 
 #Extract ID file first epsilon value and change column name to hap_epsXX
-pre_clustree <- base::get(base::paste("Haplotypes_MP_E",epsilon[1],sep=""))[["IDfile"]] %>%
+pre_clustree <- base::get(base::paste("Haplotypes_MP_E",epsilon[1],sep=""))[["Indfile"]] %>%
     dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')
 
 #Iterate over all other epsilon values, adding hap_epsXX columns to tibble
 for (drez in epsilon[2:base::length(epsilon)]){
   pre_clustree <- pre_clustree %>%
-    dplyr::left_join(base::get(base::paste("Haplotypes_MP_E",drez,sep=""))[["IDfile"]] %>%
+    dplyr::left_join(base::get(base::paste("Haplotypes_MP_E",drez,sep=""))[["Indfile"]] %>%
                 dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'))
 }
 
