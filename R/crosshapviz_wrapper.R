@@ -7,15 +7,16 @@
 #' populations, grouped by haplotype. Horizontal plots (left/right) visualize
 #' SNP information, grouped by marker group cluster.
 #'
+#' @param plot_left
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
-#' @return
+#' @return Returns a crosshap visualization
 #' @export
 #'
 #' @example
 #' crosshap_viz(Haplotypes_MP_E2)
 #'
-crosshap_viz <- function(HapObject) {
+crosshap_viz <- function(HapObject, plot_left = "allele") {
   base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject)
 
@@ -26,7 +27,15 @@ crosshap_viz <- function(HapObject) {
   bot <- build_bot_jitterplot(HapObject)
 
   base::message(paste0("Building Left SNP info plot"))
-  left <- build_left_alleleplot(HapObject)
+  # if (left_plot == "allele") {
+  #   left <- build_left_alleleplot(HapObject)
+  # } else if (left_plot == "pos") {
+  #   left <- build_left_posplot(HapObject)
+  # }
+
+  left <- switch(plot_left,
+                 "allele" = build_left_alleleplot(HapObject),
+                 "pos" = build_left_posplot(HapObject))
 
   base::message(paste0("Building Right SNP-Pheno plot"))
   right <- build_right_jitterplot(HapObject)

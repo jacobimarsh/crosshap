@@ -11,14 +11,15 @@
 #' @param pheno Input numeric phenotype data for each individual.
 #' @param epsilon Epsilon values for clustering SNPs with DBscan.
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
+#' @param minHap Minimum nIndividuals to keep haplotype combinations
 #'
 #' @return
 #' @export
 #'
 #' @example
-#' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
+#' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin, minHap)
 #'
-run_haplotyping <- function(vcf, LD, pheno, epsilon, MGmin) {
+run_haplotyping <- function(vcf, LD, pheno, epsilon, MGmin, minHap) {
     #Reformat VCF
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
   dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,'failsave')))})
@@ -28,19 +29,19 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon, MGmin) {
     base::message(paste0("Clustering SNPs into marker groups (eps = ",arez,")"))
     db40 <- dbscan::dbscan(LD, eps = arez, minPts = MGmin)
     MGfile <- tibble::tibble(ID=rownames(LD),cluster=db40$cluster) %>%
-      left_join(select(vcf, 2:3), by = "ID")
+      dplyr::left_join(dplyr::select(vcf, 2:3), by = "ID")
 
     ##Call allelic states for each SNP marker group across individuals
     base::message(paste0("Classifying marker group alleles in individuals (eps = ",arez,")"))
-    het_pseudoSNP <- create_pseudoSNP(MGfile = MGfile, bin_vcf = bin_vcf)
+    het_pseudoSNP <- crosshap::create_pseudoSNP(MGfile = MGfile, bin_vcf = bin_vcf)
 
     ##Identify haplotype frequencies for different marker group combinations
     base::message(paste0("Calculating haplotype combination frequencies (eps = ",arez,")"))
-    clustered_hpS <- pseudo2haps(het_pseudoSNP)
+    clustered_hpS <- crosshap::pseudo2haps(het_pseudoSNP, minHap)
 
     ##Build summary object with all relevant haplotyping information
     base::message(paste0("Collating haplotype information (eps = ",arez,")"))
-    Varfile <- tagphenos(MGfile, bin_vcf, pheno)
+    Varfile <- crosshap::tagphenos(MGfile, bin_vcf, pheno)
     clustered_hpS_obj <-  base::list(epsilon = db40$eps,
                                MGmin = db40$minPts,
                                Hapfile = clustered_hpS$Hapfile,

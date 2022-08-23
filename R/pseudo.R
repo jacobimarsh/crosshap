@@ -23,7 +23,7 @@ create_pseudoSNP <- function(MGfile, bin_vcf) {
 
 #Calculate most common (alternate or ref) allele for MG1 across all individuals
   i_modes_1 <- base::apply(c1_vcf %>% base::sapply(as.double), 2, mode) %>% tibble::as_tibble() %>%
-    pull(value)
+    dplyr::pull(value)
 
 #Build a dummy VCF with one pseudoSNP position (MG1)
   pseudoSNP <- tibble::tibble(Ind = base::colnames(c1_vcf), MG1 = i_modes_1)

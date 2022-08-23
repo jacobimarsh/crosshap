@@ -21,6 +21,8 @@ pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(cluster > 0) %>%
   spread(key, nInd) %>%
   rename(ref = '0', het = '1', alt = '2')
 
+pre_leftplotdata[is.na(pre_leftplotdata)] <- 0
+
 leftplot_data <- aggregate(pre_leftplotdata$ref,
           list(pre_leftplotdata$cluster),
           mean) %>% rename(cluster = 'Group.1', ref = 'x') %>%

@@ -6,13 +6,15 @@
 #' individual.
 #'
 #' @param pSNP 'pseudoSNPs' created by pseudo.R
+#' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#' pseudo2haps(het_pseudoSNP, 9)
 #'
-pseudo2haps <- function(pSNP) {
+pseudo2haps <- function(pSNP, minHap) {
   cnames <- base::colnames(dplyr::select(pSNP, -Ind))
 
   het_hapCounts <- pSNP %>%
@@ -25,7 +27,7 @@ pseudo2haps <- function(pSNP) {
   tibble::as_tibble() %>%
   dplyr::arrange(by_group = -n)
 
-  over20_hhCounts <- dplyr::filter(het_hapCounts, n > 9) %>%
+  over20_hhCounts <- dplyr::filter(het_hapCounts, n > minHap) %>%
   dplyr::mutate(hap=LETTERS[1:base::nrow(.)])
 
   base::suppressMessages(clustered_hpS <- dplyr::left_join(pSNP, over20_hhCounts) %>%

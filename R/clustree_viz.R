@@ -13,16 +13,16 @@
 #'
 #' @examples
 #'
-run_clustree <- function(epsilon, pheno) {
+run_clustree <- function(epsilon, MGmin, pheno) {
 
 #Extract ID file first epsilon value and change column name to hap_epsXX
-pre_clustree <- base::get(base::paste("Haplotypes_MP_E",epsilon[1],sep=""))[["Indfile"]] %>%
+pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Indfile"]] %>%
     dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')
 
 #Iterate over all other epsilon values, adding hap_epsXX columns to tibble
 for (drez in epsilon[2:base::length(epsilon)]){
   pre_clustree <- pre_clustree %>%
-    dplyr::left_join(base::get(base::paste("Haplotypes_MP_E",drez,sep=""))[["Indfile"]] %>%
+    dplyr::left_join(base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",drez,sep=""))[["Indfile"]] %>%
                 dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'))
 }
 
@@ -30,7 +30,7 @@ pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno)
 
 #Plot with clustree
 ctree <-
-  clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = 'mean_na.rm', edge_width = 1, node_alpha = 1)+
+  clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
   ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,Pheno)$Pheno),
                                  base::min(dplyr::top_frac(pre_clustree_phen,0.1,Pheno)$Pheno)),
                         high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'Pheno') +
