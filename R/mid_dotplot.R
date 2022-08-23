@@ -1,21 +1,21 @@
 #' Middle MG/Hap dotplot
 #'
-#' DESCRIPTION
+#' Internal function that creates central dotplot displaying the relationship
+#' between haplotype combinations and the characteristic marker groups they
+#' possess. Makes use of the $Hapfile 'pseudoSNP' information. Required as an
+#' anchor for all peripheral plots in the 'crosshap' visualization.
 #'
-#' @param vcf Input VCF for region of interest.
-#' @param LD Pairwise correlation matrix of SNPs in region from PLINK.
-#' @param pheno Input numeric phenotype data for each individual.
-#' @param epsilon Epsilon values for clustering SNPs with DBscan.
-#' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
+#' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
 #' @return
 #' @export
 #'
 #' @example
-#' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
+#' build_mid_dotplot(Haplotypes_MP_E2)
 #'
 
-intersect <- Haplotypes_MP_E1.5$Hapfile %>%
+build_mid_dotplot <- function(HapObject) {
+intersect <- HapObject$Hapfile %>%
   gather(MG, present, 1:(ncol(.)-2)) %>%
   mutate(present = as.factor(present)) %>%
   mutate(MG = as.numeric(str_remove(MG, "MG")))
@@ -26,7 +26,7 @@ intersect_lines <- intersect %>%
   summarise(max = max(MG), min = min(MG)) %>%
   mutate(min = as.character(min), max = as.character(max))
 
-Eplot <- ggplot() +
+mid_dotplot <- ggplot() +
   geom_segment(data = intersect_lines, col = "grey", size = 1.5,
                aes(x = hap, xend = hap, y = min, yend = max)) +
   geom_point(data = intersect, col = 'black', pch = 21,
@@ -42,3 +42,6 @@ Eplot <- ggplot() +
   xlab("Haplotype combination") +
   scale_y_discrete(limits = rev, position = "left",
                    labels = c(paste0("MG",as.character(max(intersect$MG):1))))
+
+return(mid_dotplot)
+}

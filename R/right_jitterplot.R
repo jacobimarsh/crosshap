@@ -1,39 +1,39 @@
 #' Right SNP-Pheno jitterplot
 #'
-#' DESCRIPTION
+#' Internal function that creates a horizontal jitterplot displaying the
+#' difference in phenotype means between alternate and reference alleles for
+#' each SNP loci, grouped by marker group. Makes use of the $Varfile phenotypic
+#' information for each allele, first calculating the difference between alt/ref
+#' before plotting. May be missing some axis to allow for 'crosshap' stitching.
 #'
-#' @param vcf Input VCF for region of interest.
-#' @param LD Pairwise correlation matrix of SNPs in region from PLINK.
-#' @param pheno Input numeric phenotype data for each individual.
-#' @param epsilon Epsilon values for clustering SNPs with DBscan.
-#' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
+#' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
 #' @return
 #' @export
 #'
 #' @example
-#' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin)
+#' build_right_jitterplot(Haplotypes_MP_E2)
 #'
 
-
-MP_E1.5_pdiff_altAF <- Haplotypes_MP_E1.5$Varfile %>%
+build_right_jitterplot <- function(HapObject) {
+  pdiff_altAF <- HapObject$Varfile %>%
   select(-nInd) %>%
   spread(key, avPheno) %>%
   rename(ref = '0', het = '1', alt = '2') %>%
-  mutate(percdiff = alt - ref) %>% select(ID, percdiff) %>%
-  left_join(Haplotypes_MP_E1.5$Varfile %>%
+  mutate(percdiff = alt - ref) %>%
+  select(cluster, ID, percdiff) %>%
+  left_join(HapObject$Varfile %>%
               select(-avPheno) %>%
               spread(key, nInd) %>%
               rename(ref = '0', het = '1', alt = '2') %>%
               mutate(AltAF = alt/(ref + het + alt)) %>%
-              select(ID, AltAF))
-
+              select(cluster, ID, AltAF), by = c("ID","cluster"))
 
 #D right plot
 
-Dplot <- ggplot() +
-  geom_jitter(data = MP_E1.5_pdiff_altAF %>% dplyr::filter(cluster > 0),
-              aes(x = abs(percdiff), y = as.character(cluster), fill = AltAF),
+right_jitterplot <- ggplot() +
+  geom_jitter(data = pdiff_altAF %>% dplyr::filter(cluster > 0),
+              aes(x = abs(percdiff), y = as.factor(cluster), fill = AltAF),
               alpha = 0.25, pch = 21, height = 0.25) +
   scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
                         scale_x_continuous(breaks = scales::pretty_breaks()) +
@@ -50,13 +50,7 @@ Dplot <- ggplot() +
                               axis.title.x = element_text()) +
   xlab("Pheno association") +
   scale_y_discrete(limits = rev, position = "left",
-                   labels = c(paste0("MG",as.character(max(MP_E1.69_pdiff_altAF$cluster):1))))
+                   labels = c(paste0("MG",as.character(max(HapObject$Varfile$cluster):1))))
 
-
-#top mid bot right
-layout <-
-"A#
- BD
- C#"
-
-Aplot + Eplot + Bplot + Dplot + plot_layout(design = layout)
+return(right_jitterplot)
+}

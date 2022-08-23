@@ -47,7 +47,7 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon, MGmin) {
                                Indfile = dplyr::left_join(clustered_hpS$nophenIndfile,pheno, by = "Ind"),
                                Varfile = Varfile,
                                MGfile = MGfile)
-    base::assign(paste("Haplotypes_MP", "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
-    base::message(paste0("Done! (object saved as Haplotypes_MP",MGmin,"_E",arez,")",sep = ""))
+    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
+    base::message(paste0("Done! (object saved as Haplotypes_MGmin",MGmin,"_E",arez,")",sep = ""))
   }
 }
