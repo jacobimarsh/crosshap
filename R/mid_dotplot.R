@@ -18,7 +18,7 @@ build_mid_dotplot <- function(HapObject) {
 intersect <- HapObject$Hapfile %>%
   tidyr::gather(MG, present, 1:(base::ncol(.)-2)) %>%
   dplyr::mutate(present = base::as.factor(present)) %>%
-  dplyr::mutate(MG = base::as.numeric(str_remove(MG, "MG")))
+  dplyr::mutate(MG = base::as.numeric(stringr::str_remove(MG, "MG")))
 
 intersect_lines <- intersect %>%
   dplyr::filter(present == 2) %>%
