@@ -17,25 +17,25 @@
 #'
 
 build_left_posplot <- function(HapObject) {
-IQRs <- c(((max(HapObject$MGfile$POS) - min(HapObject$MGfile$POS))*0.1 + min(HapObject$MGfile$POS)),
-          ((max(HapObject$MGfile$POS) - min(HapObject$MGfile$POS))*0.5 + min(HapObject$MGfile$POS)),
-          ((max(HapObject$MGfile$POS) - min(HapObject$MGfile$POS))*0.9 + min(HapObject$MGfile$POS)))
+IQRs <- c(((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.1 + base::min(HapObject$MGfile$POS)),
+          ((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.5 + base::min(HapObject$MGfile$POS)),
+          ((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.9 + base::min(HapObject$MGfile$POS)))
 
 
-left_posplot <- filter(HapObject$MGfile) %>% dplyr::filter(cluster > 0) %>% ggplot() +
-  geom_segment(size = 0.2,
-    aes(x = POS, xend = POS, y = cluster-0.2, yend = cluster+0.2)) +
-  scale_x_continuous(breaks = IQRs) +
-  scale_y_reverse(breaks = 1:max(HapObject$MGfile$cluster),
-    labels = c(paste0("MG",as.character(max(HapObject$MGfile$cluster):1))),
+left_posplot <- dplyr::filter(HapObject$MGfile) %>% dplyr::filter(cluster > 0) %>% ggplot2::ggplot() +
+  ggplot2::geom_segment(size = 0.2,
+                        ggplot2::aes(x = POS, xend = POS, y = cluster-0.2, yend = cluster+0.2)) +
+  ggplot2::scale_x_continuous(breaks = IQRs) +
+  ggplot2::scale_y_reverse(breaks = 1:base::max(HapObject$MGfile$cluster),
+    labels = c(paste0("MG", base::as.character(max(HapObject$MGfile$cluster):1))),
     position = "right") +
-  labs(x = "Position") +
-  theme_minimal() +
-  theme(axis.title.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(face = "bold", size = 10, color = "black"),
-        plot.margin = unit(c(0,0,0,0), "cm"),
-        axis.title.x = element_text(face = "bold", size = 10, color = "black"))
+  ggplot2::labs(x = "Position") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.title.y = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_text(face = "bold", size = 10, color = "black"),
+        plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+        axis.title.x = ggplot2::element_text(face = "bold", size = 10, color = "black"))
 
 return(left_posplot)
 }

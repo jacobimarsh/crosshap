@@ -17,40 +17,40 @@
 
 build_right_jitterplot <- function(HapObject) {
   pdiff_altAF <- HapObject$Varfile %>%
-  select(-nInd) %>%
-  spread(key, avPheno) %>%
-  rename(ref = '0', het = '1', alt = '2') %>%
-  mutate(percdiff = alt - ref) %>%
-  select(cluster, ID, percdiff) %>%
-  left_join(HapObject$Varfile %>%
-              select(-avPheno) %>%
-              spread(key, nInd) %>%
-              rename(ref = '0', het = '1', alt = '2') %>%
-              mutate(AltAF = alt/(ref + het + alt)) %>%
-              select(cluster, ID, AltAF), by = c("ID","cluster"))
+  dplyr::select(-nInd) %>%
+  tidyr::spread(key, avPheno) %>%
+  dplyr::rename(ref = '0', het = '1', alt = '2') %>%
+  dplyr::mutate(percdiff = alt - ref) %>%
+  dplyr::select(cluster, ID, percdiff) %>%
+  dplyr::left_join(HapObject$Varfile %>%
+              dplyr::select(-avPheno) %>%
+              tidyr::spread(key, nInd) %>%
+              dplyr::rename(ref = '0', het = '1', alt = '2') %>%
+              dplyr::mutate(AltAF = alt/(ref + het + alt)) %>%
+              dplyr::select(cluster, ID, AltAF), by = c("ID","cluster"))
 
 #D right plot
 
-right_jitterplot <- ggplot() +
-  geom_jitter(data = pdiff_altAF %>% dplyr::filter(cluster > 0),
-              aes(x = abs(percdiff), y = as.factor(cluster), fill = AltAF),
+right_jitterplot <- ggplot2::ggplot() +
+  ggplot2::geom_jitter(data = pdiff_altAF %>% dplyr::filter(cluster > 0),
+                       ggplot2::aes(x = base::abs(percdiff), y = base::as.factor(cluster), fill = AltAF),
               alpha = 0.25, pch = 21, height = 0.25) +
-  scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
-                        scale_x_continuous(breaks = scales::pretty_breaks()) +
-                        theme_minimal() +
-                        theme(axis.title.y = element_blank(),
-                              axis.text.y = element_text(face = "bold", size = 10, color = "black"),
-                              plot.margin = unit(c(0,0,0,0), "cm"),
-                              legend.title = element_text(size = 7),
-                              legend.text = element_text(size = 5),
+  ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
+  ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.title.y = ggplot2::element_blank(),
+                              axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black"),
+                              plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+                              legend.title = ggplot2::element_text(size = 7),
+                              legend.text = ggplot2::element_text(size = 5),
                               legend.position = "none",
-                              legend.key.size = unit(5, "mm"),
-                              plot.title = element_blank(),
-                              axis.text.x = element_text(face = "bold", size = 10),
-                              axis.title.x = element_text()) +
-  xlab("Pheno association") +
-  scale_y_discrete(limits = rev, position = "left",
-                   labels = c(paste0("MG",as.character(max(HapObject$Varfile$cluster):1))))
+                              legend.key.size = ggplot2::unit(5, "mm"),
+                              plot.title = ggplot2::element_blank(),
+                              axis.text.x = ggplot2::element_text(face = "bold", size = 10),
+                              axis.title.x = ggplot2::element_text()) +
+  ggplot2::xlab("Pheno association") +
+  ggplot2::scale_y_discrete(limits = rev, position = "left",
+                   labels = c(paste0("MG",base::as.character(base::max(HapObject$Varfile$cluster):1))))
 
 return(right_jitterplot)
 }

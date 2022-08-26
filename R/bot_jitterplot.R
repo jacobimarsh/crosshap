@@ -15,35 +15,35 @@
 #'
 
 build_bot_jitterplot <- function(HapObject) {
-bot_jitterplot <- ggplot(data = HapObject$Indfile) +
-  geom_jitter(aes(x = hap, y = Pheno), alpha = 0.25, pch = 21, width = 0.2) +
-  geom_crossbar(data = aggregate(HapObject$Indfile$Pheno,
-                                 list(HapObject$Indfile$hap), mean, na.rm = TRUE),
-                aes(x = as.factor(Group.1),
+bot_jitterplot <- ggplot2::ggplot(data = HapObject$Indfile) +
+  ggplot2::geom_jitter(ggplot2::aes(x = hap, y = Pheno), alpha = 0.25, pch = 21, width = 0.2) +
+  ggplot2::geom_crossbar(data = stats::aggregate(HapObject$Indfile$Pheno,
+                                 base::list(HapObject$Indfile$hap), mean, na.rm = TRUE),
+                         ggplot2::aes(x = as.factor(Group.1),
                     y = x,
-                    xmin= as.factor(Group.1),
-                    xmax=as.factor(Group.1),
-                    ymin=x,
-                    ymax=x,
-                    colour=x)) +
-  scale_colour_gradient('Mean',
+                    xmin = base::as.factor(Group.1),
+                    xmax = base::as.factor(Group.1),
+                    ymin = x,
+                    ymax = x,
+                    colour = x)) +
+  ggplot2::scale_colour_gradient('Mean',
                         low='red',
                         high='green',
-                        limits=c(max(top_frac(HapObject$Indfile,
+                        limits=c(base::max(dplyr::top_frac(HapObject$Indfile,
                                               -0.05,
                                               Pheno)$Pheno),
-                                 min(top_frac(HapObject$Indfile,
+                                 base::min(dplyr::top_frac(HapObject$Indfile,
                                               0.05,
                                               Pheno)$Pheno)),
                         oob = scales::squish) +
-  theme_minimal() +
-  theme(legend.position = "none",
-        axis.title.x = element_blank(),
-        axis.text.x  = element_blank(),
-        plot.margin = unit(c(0,0,0,0), "cm"),
-        axis.text.y = element_text(face = "bold", size = 10, color = "black")) +
-  ylab("Pheno") +
-  scale_y_continuous(position = "left", breaks = scales::pretty_breaks())
+  ggplot2::theme_minimal() +
+  ggplot2::theme(legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.text.x  = ggplot2::element_blank(),
+        plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+        axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black")) +
+  ggplot2::ylab("Pheno") +
+  ggplot2::scale_y_continuous(position = "left", breaks = scales::pretty_breaks())
 
 return(bot_jitterplot)
 }

@@ -17,50 +17,50 @@
 
 build_left_alleleplot <- function(HapObject) {
 pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(cluster > 0) %>%
-  select(-avPheno) %>%
-  spread(key, nInd) %>%
-  rename(ref = '0', het = '1', alt = '2')
+  dplyr::select(-avPheno) %>%
+  tidyr::spread(key, nInd) %>%
+  dplyr::rename(ref = '0', het = '1', alt = '2')
 
-pre_leftplotdata[is.na(pre_leftplotdata)] <- 0
+pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
 
-leftplot_data <- aggregate(pre_leftplotdata$ref,
-          list(pre_leftplotdata$cluster),
-          mean) %>% rename(cluster = 'Group.1', ref = 'x') %>%
-  left_join(aggregate(pre_leftplotdata$het,
-                      list(pre_leftplotdata$cluster),
-                      mean) %>% rename(cluster = 'Group.1', het = 'x'), by = "cluster") %>%
-  left_join(aggregate(pre_leftplotdata$alt,
-                      list(pre_leftplotdata$cluster),
-                      mean) %>% rename(cluster = 'Group.1', alt = 'x'), by = "cluster")
+leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
+          base::list(pre_leftplotdata$cluster),
+          mean) %>% dplyr::rename(cluster = 'Group.1', ref = 'x') %>%
+  dplyr::left_join(stats::aggregate(pre_leftplotdata$het,
+                      base::list(pre_leftplotdata$cluster),
+                      mean) %>% dplyr::rename(cluster = 'Group.1', het = 'x'), by = "cluster") %>%
+  dplyr::left_join(stats::aggregate(pre_leftplotdata$alt,
+                      base::list(pre_leftplotdata$cluster),
+                      mean) %>% dplyr::rename(cluster = 'Group.1', alt = 'x'), by = "cluster")
 
-left_alleleplot <- ggplot(leftplot_data %>% gather("Type", "nInd", 2:4) %>%
-           mutate(Type = factor(Type, levels = c("ref", "het", "alt"))),
-         aes(x = nInd,
-             y = as.character(cluster),
+left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd", 2:4) %>%
+           dplyr::mutate(Type = base::factor(Type, levels = c("ref", "het", "alt"))),
+           ggplot2::aes(x = nInd,
+             y = base::as.character(cluster),
              fill = Type,
              color = Type),
-         ylim()) +
-  geom_bar(aes(), position = 'stack', stat = "identity", width = 0.8, color = "black") +
-  scale_x_reverse(breaks = scales::pretty_breaks(),
+           ggplot2::ylim()) +
+  ggplot2::geom_bar(ggplot2::aes(), position = 'stack', stat = "identity", width = 0.8, color = "black") +
+  ggplot2::scale_x_reverse(breaks = scales::pretty_breaks(),
                   expand = c(0,0)) +
-  theme_void() +
-  theme(axis.text.y = element_blank(),
-        axis.title.x = element_text(),
-        axis.title.y = element_blank(),
-        legend.title = element_text(size = 7),
-        legend.text = element_text(size = 5),
-        legend.key.size = unit(5,
+  ggplot2::theme_void() +
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+        axis.title.x = ggplot2::element_text(),
+        axis.title.y = ggplot2::element_blank(),
+        legend.title = ggplot2::element_text(size = 7),
+        legend.text = ggplot2::element_text(size = 5),
+        legend.key.size = ggplot2::unit(5,
                                "mm"),
-        axis.text.x = element_text(face = "bold",
+        axis.text.x = ggplot2::element_text(face = "bold",
                                    size = 10),
         legend.position = "none",
-        plot.margin = unit(c(0,0,0,0.1),
+        plot.margin = ggplot2::unit(c(0,0,0,0.1),
                            "cm"),
-        plot.title = element_blank()) +
-  scale_fill_manual(values = c("#FFFFFF", "#73D055FF", '#440154FF')) +
-  xlab("Allele count") +
-  scale_y_discrete(position = "right", limits = rev,
-                   labels = c(paste0("MG",as.character(max(HapObject$Varfile$cluster):1))))
+        plot.title = ggplot2::element_blank()) +
+  ggplot2::scale_fill_manual(values = c("#FFFFFF", "#73D055FF", '#440154FF')) +
+  ggplot2::xlab("Allele count") +
+  ggplot2::scale_y_discrete(position = "right", limits = rev,
+                   labels = c(paste0("MG",base::as.character(base::max(HapObject$Varfile$cluster):1))))
 
 return(left_alleleplot)
 }
