@@ -19,7 +19,7 @@
 #' @example
 #' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin, minHap)
 #'
-run_haplotyping <- function(vcf, LD, pheno, epsilon, MGmin, minHap) {
+run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.5,1,1.5,2,2.5,3), MGmin, minHap) {
     #Reformat VCF
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
   dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,'failsave')))})
