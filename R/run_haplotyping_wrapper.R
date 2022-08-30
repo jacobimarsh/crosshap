@@ -28,26 +28,22 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.5,1,1.5,2,2.5,3), MGmi
     #Run DBscan on LD matrix
     base::message(paste0("Clustering SNPs into marker groups (eps = ",arez,")"))
     db40 <- dbscan::dbscan(LD, eps = arez, minPts = MGmin)
-    MGfile <- tibble::tibble(ID=rownames(LD),cluster=db40$cluster) %>%
+    preMGfile <- tibble::tibble(ID=rownames(LD),cluster=db40$cluster) %>%
       dplyr::left_join(dplyr::select(vcf, 2:3), by = "ID")
 
-    ##Call allelic states for each SNP marker group across individuals
-    base::message(paste0("Classifying marker group alleles in individuals (eps = ",arez,")"))
-    het_pseudoSNP <- crosshap::create_pseudoSNP(MGfile = MGfile, bin_vcf = bin_vcf)
-
     ##Identify haplotype frequencies for different marker group combinations
-    base::message(paste0("Calculating haplotype combination frequencies (eps = ",arez,")"))
-    clustered_hpS <- crosshap::pseudo2haps(het_pseudoSNP, minHap)
+    base::message(paste0("Determining haplotypes from marker group clusters (eps = ",arez,")"))
+    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap)
 
     ##Build summary object with all relevant haplotyping information
     base::message(paste0("Collating haplotype information (eps = ",arez,")"))
-    Varfile <- crosshap::tagphenos(MGfile, bin_vcf, pheno)
+    Varfile <- tagphenos(MGfile = phaps_out$MGfile, bin_vcf, pheno)
     clustered_hpS_obj <-  base::list(epsilon = db40$eps,
                                MGmin = db40$minPts,
-                               Hapfile = clustered_hpS$Hapfile,
-                               Indfile = dplyr::left_join(clustered_hpS$nophenIndfile,pheno, by = "Ind"),
+                               Hapfile = phaps_out$Hapfile,
+                               Indfile = dplyr::left_join(phaps_out$nophenIndfile,pheno, by = "Ind"),
                                Varfile = Varfile,
-                               MGfile = MGfile)
+                               MGfile = phaps_out$MGfile)
     base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
     base::message(paste0("Done! (object saved as Haplotypes_MGmin",MGmin,"_E",arez,")",sep = ""))
   }

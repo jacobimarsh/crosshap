@@ -24,7 +24,7 @@ bin_vcf_long <- bin_vcf %>%
 #Calculate phenotypic association of each allele type for each SNP
 VarFile <- bin_vcf_long %>%
   dplyr::left_join(pheno, by = "Ind") %>%
-  dplyr::group_by(ID, cluster, key) %>%
+  dplyr::group_by(ID, MGs, key) %>%
   dplyr::summarize(nInd = dplyr::n(),avPheno=base::mean(Pheno, na.rm = T), .groups = 'keep')
 
 return(VarFile)
