@@ -4,7 +4,14 @@
 \alias{run_haplotyping}
 \title{Cluster SNPs and identify haplotypes}
 \usage{
-run_haplotyping(vcf, LD, pheno, epsilon, MGmin, minHap)
+run_haplotyping(
+  vcf,
+  LD,
+  pheno,
+  epsilon = c(0.5, 1, 1.5, 2, 2.5, 3),
+  MGmin,
+  minHap
+)
 }
 \arguments{
 \item{vcf}{Input VCF for region of interest.}
