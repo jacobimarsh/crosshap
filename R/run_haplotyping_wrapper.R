@@ -48,3 +48,4 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.5,1,1.5,2,2.5,3), MGmi
     base::message(paste0("Done! (object saved as Haplotypes_MGmin",MGmin,"_E",arez,")",sep = ""))
   }
 }
+

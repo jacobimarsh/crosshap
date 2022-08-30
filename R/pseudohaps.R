@@ -56,7 +56,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
     dplyr::group_by(Ind) %>%
     dplyr::mutate(mgs_new=base::paste(value, collapse = '_')) %>%
     dplyr::group_by(mgs_new) %>%
-    dplyr::tally() %>% dplyr::mutate(n=n/(base::ncol(pSNP)-1)) %>%
+    dplyr::tally() %>% dplyr::mutate(n=n/(base::ncol(het_pseudoSNP)-1)) %>%
     tidyr::separate(col = mgs_new, into = cnames, sep = "_") %>%
     tibble::as_tibble() %>%
     dplyr::arrange(by_group = -n)
@@ -69,25 +69,25 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
                            dplyr::select(1,base::ncol(.)))
 
 #Change clusters to as.numeric
-   over20_hhCounts[,1:(ncol(over20_hhCounts)-1)] <-
-    sapply(over20_hhCounts[, 1:(ncol(over20_hhCounts)-1)], as.numeric)
+   over20_hhCounts[,1:(base::ncol(over20_hhCounts)-1)] <-
+    base::sapply(over20_hhCounts[, 1:(base::ncol(over20_hhCounts)-1)], as.numeric)
 
-   no0clust <- over20_hhCounts %>% select(where(~ is.numeric(.x) && sum(.x) != 0))
+   no0clust <- over20_hhCounts %>% dplyr::select(where(~ base::is.numeric(.x) && base::sum(.x) != 0))
 
-   dat1 <- cbind(over20_hhCounts$hap,no0clust[,names(sort(colSums(no0clust), decreasing = TRUE))]) %>%
-     rename(hap = "over20_hhCounts$hap")
+   dat1 <- base::cbind(over20_hhCounts$hap,no0clust[,base::names(base::sort(base::colSums(no0clust), decreasing = TRUE))]) %>%
+     dplyr::rename(hap = "over20_hhCounts$hap")
 
-   clust_preMGs <- colnames(dat1 %>% select(-c(hap, n)))
+   clust_preMGs <- base::colnames(dat1 %>% dplyr::select(-c(hap, n)))
 
-   for (veal in c(1:(base::max(preMGfile$cluster)-2))) {
-     colnames(dat1)[veal+2] <- paste0("MG",veal)
+   for (veal in c(1:(base::length(clust_preMGs)))) {
+     base::colnames(dat1)[veal+2] <- base::paste0("MG",veal)
      }
 
-   cluster2MGs <- cbind(clust_preMGs, colnames(dat1[3:ncol(dat1)])) %>% as_tibble() %>%
-     mutate("cluster" = as.numeric(clust_preMGs), MGs = V2) %>%
-     select(c(cluster, MGs))
+   cluster2MGs <- base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>% tibble::as_tibble() %>%
+     dplyr::mutate("cluster" = base::as.numeric(clust_preMGs), MGs = V2) %>%
+     dplyr::select(c(cluster, MGs))
 
-  MGfile <- left_join(preMGfile, cluster2MGs, by = "cluster")
+  MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
 
   return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
 }
