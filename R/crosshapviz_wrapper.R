@@ -45,8 +45,10 @@ crosshap_viz <- function(HapObject, plot_left = "allele") {
   #CF"
 
   base::message(paste0("Stitching plots"))
-  crosshap_stitched <- mid + top + bot + left + right + patchwork::guide_area() + patchwork::plot_layout(design = layout)
+  crosshap_stitched <-
+    patchwork::wrap_plots(mid, top, bot, left, right) + patchwork::guide_area() + patchwork::plot_layout(design = layout)
 
   base::message(paste0("Done!"))
   return(crosshap_stitched)
 }
+

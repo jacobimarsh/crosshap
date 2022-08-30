@@ -15,10 +15,13 @@
 #'
 
 build_bot_jitterplot <- function(HapObject) {
-bot_jitterplot <- ggplot2::ggplot(data = HapObject$Indfile) +
+
+no0data <- HapObject$Indfile %>% dplyr::filter(hap !=0)
+
+bot_jitterplot <- ggplot2::ggplot(data = no0data) +
   ggplot2::geom_jitter(ggplot2::aes(x = hap, y = Pheno), alpha = 0.25, pch = 21, width = 0.2) +
-  ggplot2::geom_crossbar(data = stats::aggregate(HapObject$Indfile$Pheno,
-                                 base::list(HapObject$Indfile$hap), mean, na.rm = TRUE),
+  ggplot2::geom_crossbar(data = stats::aggregate(no0data$Pheno,
+                                 base::list(no0data$hap), mean, na.rm = TRUE),
                          ggplot2::aes(x = as.factor(Group.1),
                     y = x,
                     xmin = base::as.factor(Group.1),
@@ -29,10 +32,10 @@ bot_jitterplot <- ggplot2::ggplot(data = HapObject$Indfile) +
   ggplot2::scale_colour_gradient('Mean',
                         low='red',
                         high='green',
-                        limits=c(base::max(dplyr::top_frac(HapObject$Indfile,
+                        limits=c(base::max(dplyr::top_frac(no0data,
                                               -0.05,
                                               Pheno)$Pheno),
-                                 base::min(dplyr::top_frac(HapObject$Indfile,
+                                 base::min(dplyr::top_frac(no0data,
                                               0.05,
                                               Pheno)$Pheno)),
                         oob = scales::squish) +

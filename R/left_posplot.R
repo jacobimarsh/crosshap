@@ -22,17 +22,18 @@ IQRs <- c(((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0
           ((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.9 + base::min(HapObject$MGfile$POS)))
 
 
-left_posplot <- dplyr::filter(HapObject$MGfile) %>% dplyr::filter(cluster > 0) %>% ggplot2::ggplot() +
+left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != "NA") %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
+  ggplot2::ggplot() +
   ggplot2::geom_segment(size = 0.2,
-                        ggplot2::aes(x = POS, xend = POS, y = cluster-0.2, yend = cluster+0.2)) +
+                        ggplot2::aes(x = POS, xend = POS, y = MGs-0.2, yend = MGs+0.2)) +
   ggplot2::scale_x_continuous(breaks = IQRs) +
-  ggplot2::scale_y_reverse(breaks = 1:base::max(HapObject$MGfile$cluster),
-    labels = c(paste0("MG", base::as.character(max(HapObject$MGfile$cluster):1))),
+  ggplot2::scale_y_reverse(breaks = (base::length(unique(HapObject$Varfile$MGs))-1):1,
+    labels = c(paste0("MG", base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))),
     position = "right") +
   ggplot2::labs(x = "Position") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(),
-        axis.text.y = ggplot2::element_blank(),
+#        axis.text.y = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, color = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.title.x = ggplot2::element_text(face = "bold", size = 10, color = "black"))
