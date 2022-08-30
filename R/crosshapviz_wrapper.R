@@ -5,7 +5,7 @@
 #' clusters of linked SNPs (marker groups), and distinct haplotypes present
 #' within the population. Vertical plots (top/bottom) visualize individuals and
 #' populations, grouped by haplotype. Horizontal plots (left/right) visualize
-#' SNP information, grouped by marker group cluster.
+#' SNP information, grouped by marker group cluster. ABDCASCACSACS
 #'
 #' @param plot_left
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
