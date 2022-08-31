@@ -37,7 +37,8 @@ read_LD <- function(LDin){
 #' @param VCFin Input VCF
 #' @export
 read_vcf <- function(VCFin){
-  data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() #%>%
+  data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
+    dplyr::mutate(dplyr::across(dplyr::everything(),~ base::gsub(":.*","",base::gsub("/","|",.)))) #%>%
 #    dplyr::select(-c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
 #    dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,'failsave')))})
 }
@@ -58,3 +59,4 @@ read_pheno <- function(Phenoin){
   data.table::fread(Phenoin) %>% tibble::as_tibble() %>%
     dplyr::rename('Ind' = V1, 'Pheno' = V2)
 }
+
