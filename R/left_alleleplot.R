@@ -19,13 +19,16 @@ build_left_alleleplot <- function(HapObject) {
 pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != "NA") %>%
   dplyr::select(-avPheno) %>%
   tidyr::spread(key, nInd) %>%
-  dplyr::rename(ref = '0', het = '1', alt = '2')
+  dplyr::rename(ref = '0', het = '1', alt = '2', miss = '<NA>')
 
 pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
 
 leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
           base::list(pre_leftplotdata$MGs),
           mean) %>% dplyr::rename(MGs = 'Group.1', ref = 'x') %>%
+  dplyr::left_join(stats::aggregate(pre_leftplotdata$miss,
+                                    base::list(pre_leftplotdata$MGs),
+                                    mean) %>% dplyr::rename(MGs = 'Group.1', miss = 'x'), by = "MGs") %>%
   dplyr::left_join(stats::aggregate(pre_leftplotdata$het,
                       base::list(pre_leftplotdata$MGs),
                       mean) %>% dplyr::rename(MGs = 'Group.1', het = 'x'), by = "MGs") %>%
@@ -33,8 +36,8 @@ leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
                       base::list(pre_leftplotdata$MGs),
                       mean) %>% dplyr::rename(MGs = 'Group.1', alt = 'x'), by = "MGs")
 
-left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd", 2:4) %>%
-           dplyr::mutate(Type = base::factor(Type, levels = c("ref", "het", "alt"))),
+left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd", 2:5) %>%
+           dplyr::mutate(Type = base::factor(Type, levels = c("ref", "miss", "het", "alt"))),
            ggplot2::aes(x = nInd,
              y = base::as.character(MGs),
              fill = Type,
@@ -57,7 +60,7 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
         plot.margin = ggplot2::unit(c(0,0,0,0.1),
                            "cm"),
         plot.title = ggplot2::element_blank()) +
-  ggplot2::scale_fill_manual(values = c("#FFFFFF", "#73D055FF", '#440154FF')) +
+  ggplot2::scale_fill_manual(values = c("#FFFFFF", '#FDE725FF', "#73D055FF", '#440154FF')) +
   ggplot2::xlab("Allele count") +
   ggplot2::scale_y_discrete(position = "right", limits = rev,
                    labels = c(paste0("MG",base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))))

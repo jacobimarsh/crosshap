@@ -19,8 +19,9 @@ tagphenos <- function(MGfile, bin_vcf, pheno) {
 bin_vcf_long <- bin_vcf %>%
   tibble::rownames_to_column("ID") %>%
   dplyr::left_join(MGfile, by = "ID") %>%
-  tidyr::gather(Ind, key, 2:(base::ncol(.)-3))
-
+  tidyr::gather(Ind, key, 2:(base::ncol(.)-3)) %>%
+  dplyr::mutate(key = )
+mutate_if(is.numeric,function(x) {base::gsub(1, 2, x,fixed = T, )})
 #Calculate phenotypic association of each allele type for each SNP
 VarFile <- bin_vcf_long %>%
   dplyr::left_join(pheno, by = "Ind") %>%

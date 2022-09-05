@@ -17,10 +17,10 @@
 #'
 
 build_left_posplot <- function(HapObject) {
-IQRs <- c(((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.1 + base::min(HapObject$MGfile$POS)),
-          ((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.5 + base::min(HapObject$MGfile$POS)),
-          ((base::max(HapObject$MGfile$POS) - base::min(HapObject$MGfile$POS))*0.9 + base::min(HapObject$MGfile$POS)))
 
+IQRs <- base::as.numeric(HapObject$MGfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
+                                        ((base::max(.) - base::min(.))*0.5 + base::min(.)),
+                                        ((base::max(.) - base::min(.))*0.9 + base::min(.)))}
 
 left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != "NA") %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
   ggplot2::ggplot() +
@@ -33,7 +33,7 @@ left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != "NA") %>% dplyr::mutat
   ggplot2::labs(x = "Position") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(),
-#        axis.text.y = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, color = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.title.x = ggplot2::element_text(face = "bold", size = 10, color = "black"))
