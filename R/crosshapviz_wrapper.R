@@ -27,11 +27,6 @@ crosshap_viz <- function(HapObject, plot_left = "allele") {
   bot <- build_bot_jitterplot(HapObject)
 
   base::message(paste0("Building Left SNP info plot"))
-  # if (left_plot == "allele") {
-  #   left <- build_left_alleleplot(HapObject)
-  # } else if (left_plot == "pos") {
-  #   left <- build_left_posplot(HapObject)
-  # }
 
   left <- switch(plot_left,
                  "allele" = build_left_alleleplot(HapObject),

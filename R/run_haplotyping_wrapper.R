@@ -11,18 +11,25 @@
 #' @param pheno Input numeric phenotype data for each individual.
 #' @param epsilon Epsilon values for clustering SNPs with DBscan.
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
-#' @param minHap Minimum nIndividuals to keep haplotype combinations
+#' @param minHap Minimum nIndividuals to keep haplotype combinations.
+#' @param hetmiss_as Treat heterozygous missing './X' as missing or allele.
 #'
 #' @return
 #' @export
 #'
 #' @example
-#' run_haplotyping(vcf, LD, phen_early, epsilon, MGmin, minHap)
+#' run_haplotyping(vcf, LD, phen_early, MGmin, minHap)
 #'
-run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.5,1,1.5,2,2.5,3), MGmin, minHap) {
+run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele') {
     #Reformat VCF
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
-  dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,NA)))})
+  dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
+                                             base::ifelse(x=='1|0'|x=='0|1',1,
+                                                          base::ifelse(x=='1|1',2,
+                                                                       switch(hetmiss_as, "allele" = base::ifelse(x=='1|.'|x=='.|1',1,
+                                                                                                                 base::ifelse(x=='0|.'|x=='.|0',0,NA)),
+                                                                                         "miss" = NA))))})
+
 
   for (arez in epsilon){
     #Run DBscan on LD matrix
