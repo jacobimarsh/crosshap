@@ -13,7 +13,7 @@
 #'
 #' @examples
 #'
-run_clustree <- function(epsilon, MGmin, pheno) {
+run_clustree <- function(epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, pheno) {
 
 #Extract ID file first epsilon value and change column name to hap_epsXX
 pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Indfile"]] %>%
