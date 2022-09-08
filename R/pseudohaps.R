@@ -83,9 +83,9 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
      base::colnames(dat1)[veal+2] <- base::paste0("MG",veal)
      }
 
-   cluster2MGs <- base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>% tibble::as_tibble() %>%
+   cluster2MGs <- base::suppressMessages(base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>% tibble::as_tibble() %>%
      dplyr::mutate("cluster" = base::as.numeric(clust_preMGs), MGs = V2) %>%
-     dplyr::select(c(cluster, MGs))
+     dplyr::select(c(cluster, MGs)))
 
   MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
 

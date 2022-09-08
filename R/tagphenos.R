@@ -22,10 +22,29 @@ bin_vcf_long <- bin_vcf %>%
   tidyr::gather(Ind, key, 2:(base::ncol(.)-3))
 
 #Calculate phenotypic association of each allele type for each SNP
-VarFile <- bin_vcf_long %>%
+preVarfile <- bin_vcf_long %>%
   dplyr::left_join(pheno, by = "Ind") %>%
   dplyr::group_by(ID, MGs, key) %>%
   dplyr::summarize(nInd = dplyr::n(),avPheno=base::mean(Pheno, na.rm = T), .groups = 'keep')
 
-return(VarFile)
+types <- c(ref = '0', het = '1', alt = '2', miss = '<NA>')
+
+noNA_preVarfile <- preVarfile %>%
+  dplyr::select(-avPheno) %>%
+  tidyr::spread(key, nInd) %>%
+  dplyr::rename(dplyr::any_of(types))
+
+noNA_preVarfile$MGs[is.na(noNA_preVarfile$MGs)] <- "0"
+noNA_preVarfile[is.na(noNA_preVarfile)] <- 0
+
+Varfile <- preVarfile %>% dplyr::select(-nInd) %>%
+            tidyr::spread(key, avPheno) %>%
+            dplyr::rename(dplyr::any_of(types)) %>%
+            dplyr::mutate(percdiff = alt - ref) %>%
+            dplyr::ungroup() %>%
+            dplyr::select(ID, percdiff) %>%
+            dplyr::left_join(noNA_preVarfile %>%
+                              dplyr::mutate(AltAF = (2*alt+het)/(2*(ref + het + alt))),
+                             by = c("ID"))
+return(Varfile)
 }
