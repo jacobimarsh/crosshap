@@ -22,7 +22,7 @@ IQRs <- base::as.numeric(HapObject$MGfile$POS) %>% {c(((base::max(.) - base::min
                                         ((base::max(.) - base::min(.))*0.5 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.9 + base::min(.)))}
 
-left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != "NA") %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
+left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
   ggplot2::ggplot() +
   ggplot2::geom_segment(size = 0.2,
                         ggplot2::aes(x = POS, xend = POS, y = MGs-0.2, yend = MGs+0.2)) +

@@ -34,6 +34,14 @@ noNA_preVarfile <- preVarfile %>%
   tidyr::spread(key, nInd) %>%
   dplyr::rename(dplyr::any_of(types))
 
+if(!("miss" %in% colnames(noNA_preVarfile))){
+  noNA_preVarfile <- dplyr::mutate(noNA_preVarfile, miss = 0)
+}
+
+if(!("het" %in% colnames(noNA_preVarfile))){
+  noNA_preVarfile <- dplyr::mutate(noNA_preVarfile, het = 0)
+}
+
 noNA_preVarfile$MGs[is.na(noNA_preVarfile$MGs)] <- "0"
 noNA_preVarfile[is.na(noNA_preVarfile)] <- 0
 
@@ -48,3 +56,4 @@ Varfile <- preVarfile %>% dplyr::select(-nInd) %>%
                              by = c("ID"))
 return(Varfile)
 }
+

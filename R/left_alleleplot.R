@@ -16,12 +16,9 @@
 #'
 
 build_left_alleleplot <- function(HapObject) {
-pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != "NA") %>%
-  dplyr::select(-avPheno) %>%
-  tidyr::spread(key, nInd) %>%
-  dplyr::rename(ref = '0', het = '1', alt = '2', miss = '<NA>')
+pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
-pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
+#pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
 
 leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
           base::list(pre_leftplotdata$MGs),

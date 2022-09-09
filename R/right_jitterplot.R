@@ -16,23 +16,11 @@
 #'
 
 build_right_jitterplot <- function(HapObject) {
-  pdiff_altAF <- HapObject$Varfile %>%
-  dplyr::select(-nInd) %>%
-  tidyr::spread(key, avPheno) %>%
-  dplyr::rename(ref = '0', het = '1', alt = '2') %>%
-  dplyr::mutate(percdiff = alt - ref) %>%
-  dplyr::select(MGs, ID, percdiff) %>%
-  dplyr::left_join(HapObject$Varfile %>%
-              dplyr::select(-avPheno) %>%
-              tidyr::spread(key, nInd) %>%
-              dplyr::rename(ref = '0', het = '1', alt = '2') %>%
-              dplyr::mutate(AltAF = alt/(ref + het + alt)) %>%
-              dplyr::select(MGs, ID, AltAF), by = c("ID","MGs"))
 
 #D right plot
 
 right_jitterplot <- ggplot2::ggplot() +
-  ggplot2::geom_jitter(data = pdiff_altAF %>% dplyr::filter(MGs != "NA"),
+  ggplot2::geom_jitter(data = HapObject$Varfile %>% dplyr::filter(MGs != 0),
                        ggplot2::aes(x = base::abs(percdiff), y = base::as.factor(MGs), fill = AltAF),
               alpha = 0.25, pch = 21, height = 0.25) +
   ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
