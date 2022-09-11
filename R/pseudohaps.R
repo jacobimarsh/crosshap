@@ -83,11 +83,14 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
      base::colnames(dat1)[veal+2] <- base::paste0("MG",veal)
      }
 
-   cluster2MGs <- base::suppressMessages(base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>% tibble::as_tibble() %>%
-     dplyr::mutate("cluster" = base::as.numeric(clust_preMGs), MGs = V2) %>%
-     dplyr::select(c(cluster, MGs)))
+   cluster2MGs <- base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>%
+     magrittr::set_colnames(c("cluster", "MGs")) %>%
+     tibble::as_tibble() %>%
+     dplyr::mutate(cluster = as.numeric(cluster))
 
   MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
+
+  MGfile[is.na(MGfile)] <- "0"
 
   return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
 }

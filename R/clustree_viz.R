@@ -23,13 +23,13 @@ pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], 
 for (drez in epsilon[2:base::length(epsilon)]){
   pre_clustree <- pre_clustree %>%
     dplyr::left_join(base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",drez,sep=""))[["Indfile"]] %>%
-                dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'))
+                dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'), by = c("Ind", "Pheno"))
 }
 
-pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno)
+pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno, by = c("Ind", "Pheno"))
 
 #Plot with clustree
-haptree <-
+haptree <- base::suppressMessages(
   clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
   ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,Pheno)$Pheno),
                                  base::min(dplyr::top_frac(pre_clustree_phen,0.1,Pheno)$Pheno)),
@@ -37,7 +37,7 @@ haptree <-
   ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
   ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
-
+)
 #Create epsilon label data
 #Extract x and ay coordinates from clustree object and build labels
 haplbls <-
@@ -59,14 +59,15 @@ for (drez in epsilon[2:base::length(epsilon)]){
                                    dplyr::rename(!!base::paste0("MGs_eps",drez) := 'MGs'), by = "ID")
 }
 
-MGtree <- clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'percdiff',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1) +
+MGtree <- base::suppressMessages(
+clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'percdiff',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1) +
   ggplot2::scale_colour_gradient(limits=c(base::max(pre_MGtree$percdiff),
                                           base::min(pre_MGtree$percdiff)),
                                  high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'percdiff') +
   ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
   ggplot2::labs(size = 'nSNPs', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
-
+)
 #Create epsilon label data
 #Extract x and ay coordinates from clustree object and build labels
 MGlbls <-
@@ -80,5 +81,6 @@ labeled_MGtree <- MGtree +
 
 return(switch(type,
        "hap" = labeled_haptree,
-       "MG" = MGtree))
+       "MG" = labeled_MGtree))
 }
+
