@@ -64,9 +64,11 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
   over20_hhCounts <- dplyr::filter(het_hapCounts, n > minHap) %>%
     dplyr::mutate(hap=LETTERS[1:base::nrow(.)])
 
-  base::suppressMessages(clustered_hpS <- dplyr::left_join(het_pseudoSNP, over20_hhCounts) %>%
+  base::suppressMessages(
+    clustered_hpS <- dplyr::left_join(het_pseudoSNP, over20_hhCounts, by = c(as.character(1:max(db40_cvel$cluster)))) %>%
                            dplyr::mutate_if(is.character,function(x){tidyr::replace_na(x, '0')}) %>%
-                           dplyr::select(1,base::ncol(.)))
+                           dplyr::select(1,base::ncol(.))
+    )
 
 #Change clusters to as.numeric
    over20_hhCounts[,1:(base::ncol(over20_hhCounts)-1)] <-
