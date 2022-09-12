@@ -6,6 +6,7 @@
 #' stitching.
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
+#' @param hide_labels
 #'
 #' @return
 #' @export
@@ -14,7 +15,7 @@
 #' build_bot_jitterplot(Haplotypes_MP_E2)
 #'
 
-build_bot_jitterplot <- function(HapObject) {
+build_bot_jitterplot <- function(HapObject, hide_labels) {
 
 no0data <- HapObject$Indfile %>% dplyr::filter(hap !=0)
 
@@ -48,5 +49,9 @@ bot_jitterplot <- ggplot2::ggplot(data = no0data) +
   ggplot2::ylab("Pheno") +
   ggplot2::scale_y_continuous(position = "left", breaks = scales::pretty_breaks())
 
-return(bot_jitterplot)
+if(hide_labels == T){
+  return(bot_jitterplot + ggplot2::theme(legend.position = "none"))
+} else {
+  return(bot_jitterplot)
+}
 }

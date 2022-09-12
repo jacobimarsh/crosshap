@@ -8,6 +8,7 @@
 #' allow for 'crosshap' stitching.
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
+#' @param hide_labels
 #'
 #' @return
 #' @export
@@ -16,7 +17,7 @@
 #' build_left_posplot(Haplotypes_MP_E2)
 #'
 
-build_left_posplot <- function(HapObject) {
+build_left_posplot <- function(HapObject, hide_labels) {
 
 IQRs <- base::as.numeric(HapObject$MGfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.5 + base::min(.)),
@@ -38,5 +39,11 @@ left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(M
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.title.x = ggplot2::element_text(face = "bold", size = 10, color = "black"))
 
-return(left_posplot)
+
+
+if(hide_labels == T){
+  return(left_posplot + ggplot2::theme(legend.position = "none"))
+} else {
+  return(left_posplot)
+}
 }

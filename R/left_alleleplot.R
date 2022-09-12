@@ -7,6 +7,7 @@
 #' 'crosshap' stitching.
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
+#' @param hide_labels
 #'
 #' @return
 #' @export
@@ -15,7 +16,7 @@
 #' build_left_alleleplot(Haplotypes_MP_E2)
 #'
 
-build_left_alleleplot <- function(HapObject) {
+build_left_alleleplot <- function(HapObject, hide_labels) {
 pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
 #pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
@@ -51,9 +52,9 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
         legend.text = ggplot2::element_text(size = 5),
         legend.key.size = ggplot2::unit(5,
                                "mm"),
+        legend.direction = "horizontal",
         axis.text.x = ggplot2::element_text(face = "bold",
                                    size = 10),
-        legend.position = "none",
         plot.margin = ggplot2::unit(c(0,0,0,0.1),
                            "cm"),
         plot.title = ggplot2::element_blank()) +
@@ -62,5 +63,10 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
   ggplot2::scale_y_discrete(position = "right", limits = rev,
                    labels = c(paste0("MG",base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))))
 
-return(left_alleleplot)
+
+if(hide_labels == T){
+  return(left_alleleplot + ggplot2::theme(legend.position = "none"))
+} else {
+  return(left_alleleplot)
+}
 }

@@ -14,7 +14,7 @@
 #' build_top_metaplot(Haplotypes_MP_E2)
 #'
 
-build_top_metaplot <- function(HapObject) {
+build_top_metaplot <- function(HapObject, hide_labels) {
 top_metaplot <- ggplot2::ggplot(HapObject$Hapfile,
        ggplot2::aes(y = n, x = hap)) +
   ggplot2::geom_bar(position="stack", stat = "identity", fill = "black") +
@@ -32,5 +32,9 @@ top_metaplot <- ggplot2::ggplot(HapObject$Hapfile,
   ggplot2::ylab("Population size") +
   ggplot2::xlab("Haplotype combination")
 
-return(top_metaplot)
+if(hide_labels == T){
+  return(top_metaplot + ggplot2::theme(legend.position = "none"))
+} else {
+  return(top_metaplot)
+}
 }
