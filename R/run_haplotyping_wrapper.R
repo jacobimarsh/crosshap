@@ -21,6 +21,7 @@
 #' @example
 #' run_haplotyping(vcf, LD, phen_early, MGmin, minHap)
 #'
+##test_branch
 run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL) {
     #Reformat VCF
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
