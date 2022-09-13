@@ -4,12 +4,14 @@
 \alias{run_clustree}
 \title{Visualize clusters}
 \usage{
-run_clustree(epsilon, MGmin, pheno)
+run_clustree(epsilon = c(0.4, 0.8, 1.2, 1.6, 2), MGmin, pheno, type = "MG")
 }
 \arguments{
 \item{epsilon}{Epsilon values to search.}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
+
+\item{type}{Hap or MG clustree}
 }
 \description{
 This function reads haplotype objects calculated for a range of epsilon

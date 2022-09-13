@@ -4,10 +4,12 @@
 \alias{crosshap_viz}
 \title{Build 'crosshap' visualization}
 \usage{
-crosshap_viz(HapObject, plot_left = "allele")
+crosshap_viz(HapObject, plot_left = "allele", hide_labels = T)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \value{
 Returns a crosshap visualization

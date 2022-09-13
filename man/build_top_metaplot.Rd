@@ -4,7 +4,7 @@
 \alias{build_top_metaplot}
 \title{Top Metadata-hap Plot}
 \usage{
-build_top_metaplot(HapObject)
+build_top_metaplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}

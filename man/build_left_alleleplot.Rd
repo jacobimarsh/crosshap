@@ -4,10 +4,12 @@
 \alias{build_left_alleleplot}
 \title{Left SNP-info alleleplot}
 \usage{
-build_left_alleleplot(HapObject)
+build_left_alleleplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \description{
 Internal function that plots the mean frequencies of all alleles for loci

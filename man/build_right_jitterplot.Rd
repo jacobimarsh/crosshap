@@ -4,10 +4,12 @@
 \alias{build_right_jitterplot}
 \title{Right SNP-Pheno jitterplot}
 \usage{
-build_right_jitterplot(HapObject)
+build_right_jitterplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \description{
 Internal function that creates a horizontal jitterplot displaying the

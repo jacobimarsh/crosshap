@@ -8,9 +8,10 @@ run_haplotyping(
   vcf,
   LD,
   pheno,
-  epsilon = c(0.5, 1, 1.5, 2, 2.5, 3),
+  epsilon = c(0.4, 0.8, 1.2, 1.6, 2),
   MGmin,
-  minHap
+  minHap,
+  hetmiss_as = "allele"
 )
 }
 \arguments{
@@ -24,7 +25,9 @@ run_haplotyping(
 
 \item{MGmin}{Minimum SNPs in marker groups, MinPts parameter for DBscan.}
 
-\item{minHap}{Minimum nIndividuals to keep haplotype combinations}
+\item{minHap}{Minimum nIndividuals to keep haplotype combinations.}
+
+\item{hetmiss_as}{Treat heterozygous missing './X' as missing or allele.}
 }
 \description{
 Performs density-based clustering of SNPs in region of interest to identify

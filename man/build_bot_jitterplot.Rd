@@ -4,10 +4,12 @@
 \alias{build_bot_jitterplot}
 \title{Bot Hap-Pheno jitterplot}
 \usage{
-build_bot_jitterplot(HapObject)
+build_bot_jitterplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \description{
 Internal function that creates a vertical jitterplot displaying the

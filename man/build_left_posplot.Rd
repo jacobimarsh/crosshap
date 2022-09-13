@@ -4,10 +4,12 @@
 \alias{build_left_posplot}
 \title{Left SNP posplot}
 \usage{
-build_left_posplot(HapObject)
+build_left_posplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \description{
 Internal function that plots the position of each SNP in each marker group
