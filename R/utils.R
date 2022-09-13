@@ -52,7 +52,7 @@ position_vcf <- function(VCFin){
     dplyr::select(c(2,3))
 }
 
-#' Read phenotype data from two column text file without a header (ID | Pheno)
+#' Read phenotype data from two column text file without a header (Ind | Pheno)
 #'
 #' @param Phenoin Input phenotype file
 #' @export
@@ -60,4 +60,15 @@ read_pheno <- function(Phenoin){
   data.table::fread(Phenoin) %>% tibble::as_tibble() %>%
     dplyr::rename('Ind' = V1, 'Pheno' = V2)
 }
+
+#' Read metadat from two column text file without a header (Ind | Metadata)
+#'
+#' @param Metain Input phenotype file
+#' @export
+read_metadata <- function(Metain){
+  data.table::fread(Metain, header = F) %>% tibble::as_tibble() %>%
+    dplyr::rename('Ind' = V1, 'Metadata' = V2)
+}
+
+
 
