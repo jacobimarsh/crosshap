@@ -19,8 +19,11 @@ build_bot_jitterplot <- function(HapObject, hide_labels) {
 
 no0data <- HapObject$Indfile %>% dplyr::filter(hap !=0)
 
-bot_jitterplot <- ggplot2::ggplot(data = no0data) +
-  ggplot2::geom_jitter(ggplot2::aes(x = hap, y = Pheno), alpha = 0.25, pch = 21, width = 0.2) +
+bot_jitterplot <-
+  ggplot2::ggplot(data = no0data) +
+  ggplot2::geom_jitter(ggplot2::aes(x = hap, y = Pheno, fill = Metadata),
+                       alpha = 0.3, pch = 21, width = 0.2)  +
+  ggplot2::scale_fill_brewer(palette = "Dark2") +
   ggplot2::geom_crossbar(data = stats::aggregate(no0data$Pheno,
                                  base::list(no0data$hap), mean, na.rm = TRUE),
                          ggplot2::aes(x = as.factor(Group.1),
@@ -41,7 +44,7 @@ bot_jitterplot <- ggplot2::ggplot(data = no0data) +
                                               Pheno)$Pheno)),
                         oob = scales::squish) +
   ggplot2::theme_minimal() +
-  ggplot2::theme(legend.position = "none",
+  ggplot2::theme(#legend.position = "none",
         axis.title.x = ggplot2::element_blank(),
         axis.text.x  = ggplot2::element_blank(),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),

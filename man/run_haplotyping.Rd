@@ -11,7 +11,8 @@ run_haplotyping(
   epsilon = c(0.4, 0.8, 1.2, 1.6, 2),
   MGmin,
   minHap,
-  hetmiss_as = "allele"
+  hetmiss_as = "allele",
+  metadata = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ run_haplotyping(
 \item{minHap}{Minimum nIndividuals to keep haplotype combinations.}
 
 \item{hetmiss_as}{Treat heterozygous missing './X' as missing or allele.}
+
+\item{metadata}{}
 }
 \description{
 Performs density-based clustering of SNPs in region of interest to identify

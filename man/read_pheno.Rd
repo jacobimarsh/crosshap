@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{read_pheno}
 \alias{read_pheno}
-\title{Read phenotype data from two column text file without a header (ID | Pheno)}
+\title{Read phenotype data from two column text file without a header (Ind | Pheno)}
 \usage{
 read_pheno(Phenoin)
 }
@@ -10,5 +10,5 @@ read_pheno(Phenoin)
 \item{Phenoin}{Input phenotype file}
 }
 \description{
-Read phenotype data from two column text file without a header (ID | Pheno)
+Read phenotype data from two column text file without a header (Ind | Pheno)
 }

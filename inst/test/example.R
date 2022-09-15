@@ -40,23 +40,23 @@ vcf <- read_vcf('~/Desktop/bash_misc/crosshap_data/data/dummy_test.vcf')
 protLD <- crosshap::read_LD("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/LD_173kb.mtx")
 prot_phen <- crosshap::read_pheno("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/prot_phen.txt")
 prot_vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/fin_b51_173kb_only.vcf")
-metadata <- read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/namepopfile.txt')
+metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/namepopfile.txt')
 
-eps <- seq(0.4,2,by=0.5)
+eps <- seq(.2,1,by=.2)
 
-run_haplotyping(vcf = prot_vcf,
+crosshap::run_haplotyping(vcf = prot_vcf,
                 LD = protLD,
                 pheno = prot_phen,
                 metadata = metadata,
-                #epsilon = eps,
+                epsilon = eps,
                 MGmin = 30,
                 minHap = 9)
 
-prot_clustree <- crosshap::run_clustree(#epsilon = eps,
+prot_clustree <- run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen)
 
-prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.8, hide_labels = F)
+prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = T)
 
 #tprot <- tsne(protLD)
 #
