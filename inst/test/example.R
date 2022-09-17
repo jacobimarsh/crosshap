@@ -20,8 +20,8 @@ crosshap::run_haplotyping(vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin,
 labeled_haptree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early, type = "hap")
 labeled_MGtree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early)
 
-Hap2_viz <- crosshap_viz(Haplotypes_MGmin30_E0.8, plot_left = "pos")
-Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.8, hide_labels = F)
+Hap2_viz <- crosshap_viz(Haplotypes_MGmin30_E2, plot_left = "pos")
+Hap2_labs_viz <- crosshap_viz(Haplotypes_MGmin30_E2, hide_labels = F)
 
 ggplot2::ggsave("botrightlabs.pdf",crosshap_stitched,device = 'pdf',dpi = 300,height = 9,width = 16,units = 'in')
 
@@ -52,11 +52,11 @@ crosshap::run_haplotyping(vcf = prot_vcf,
                 MGmin = 30,
                 minHap = 9)
 
-prot_clustree <- run_clustree(epsilon = eps,
+prot_clustree <- crosshap::run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen)
 
-prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = T)
+prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F)
 
 #tprot <- tsne(protLD)
 #

@@ -32,7 +32,8 @@ bot_jitterplot <-
                     xmax = base::as.factor(Group.1),
                     ymin = x,
                     ymax = x,
-                    colour = x)) +
+                    colour = x),
+                    show.legend = F) +
   ggplot2::scale_colour_gradient('Mean',
                         low='red',
                         high='green',
@@ -44,7 +45,7 @@ bot_jitterplot <-
                                               Pheno)$Pheno)),
                         oob = scales::squish) +
   ggplot2::theme_minimal() +
-  ggplot2::theme(#legend.position = "none",
+  ggplot2::theme(legend.position = "none",
         axis.title.x = ggplot2::element_blank(),
         axis.text.x  = ggplot2::element_blank(),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),

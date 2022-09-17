@@ -17,7 +17,7 @@
 #' @example
 #' crosshap_viz(Haplotypes_MP_E2)
 #'
-crosshap_viz <- function(HapObject, plot_left = "allele", hide_labels = T) {
+crosshap_viz <- function(HapObject, plot_left = "allele", hide_labels = F) {
   base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject)
 
