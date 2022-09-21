@@ -17,7 +17,7 @@
 
 build_bot_jitterplot <- function(HapObject, hide_labels) {
 
-no0data <- HapObject$Indfile %>% dplyr::filter(hap !=0)
+no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
 
 bot_halfeyeplot <-
   ggplot2::ggplot(data = no0data, ggplot2::aes(x = hap, y = Pheno#, fill = Metadata
