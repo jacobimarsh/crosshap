@@ -11,28 +11,29 @@ phen_early <- crosshap::read_pheno('~/Desktop/bash_misc/crosshap_data/data/early
 prot <- crosshap::read_pheno('~/Desktop/bash_misc/crosshap_data/data/prot_phen.txt')
 
 ##DBscan epsilon values to be tested and compared using clustree visualization
-epsilon <- seq(1.5,2,by=0.5)
+epsilon <- seq(.5,1,by=0.5)
 MGmin <- 30
 minHap <- 9
 
-crosshap::run_haplotyping(vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap, hetmiss_as = "miss")
+
+crosshap::run_haplotyping(vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap)
 ##Visualize differences between clusters based on epsilon value input to DBscan
 labeled_haptree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early, type = "hap")
 labeled_MGtree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early)
 
-Hap2_viz <- crosshap_viz(Haplotypes_MGmin30_E2, plot_left = "pos")
-Hap2_labs_viz <- crosshap_viz(Haplotypes_MGmin30_E2, hide_labels = F)
+Hap2_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E2, plot_left = "pos")
+Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E2, hide_labels = F)
 
-ggplot2::ggsave("botrightlabs.pdf",crosshap_stitched,device = 'pdf',dpi = 300,height = 9,width = 16,units = 'in')
+#ggplot2::ggsave("botrightlabs.pdf",crosshap_stitched,device = 'pdf',dpi = 300,height = 9,width = 16,units = 'in')
 
 
 ##nonImpu
 
-nonimpu_vcf <- read_vcf('~/Desktop/bash_misc/crosshap_data/data/headed_100kb_pdh1.vcf')
+nonimpu_vcf <- crosshap::read_vcf('~/Desktop/bash_misc/crosshap_data/data/headed_100kb_pdh1.vcf')
 
 
 
-vcf <- read_vcf('~/Desktop/bash_misc/crosshap_data/data/dummy_test.vcf')
+vcf <- crosshap::read_vcf('~/Desktop/bash_misc/crosshap_data/data/dummy_test.vcf')
 
 
 #prot
@@ -58,6 +59,8 @@ prot_clustree <- crosshap::run_clustree(epsilon = eps,
 
 prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F)
 
+posplot_prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos")
+
 #tprot <- tsne(protLD)
 #
 #pca_protLD <- prcomp(protLD)
@@ -69,4 +72,14 @@ prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F)
 #ggplot(Haplotypes_MGmin40_E2.5$MGfile %>% select(-POS) %>%
 #         left_join(tprot_labeled), aes(X, Y)) +
 #  geom_point(aes(colour = factor(cluster)))
+library(tidyverse)
+
+
+xxxx <- tibble(ID = character(), meanr2 = double(), MG = character())
+
+for (grev in unique(clustered_hpS_obj$MGfile$MGs)){
+xxxx <-  xxxx %>% rbind(tibble::enframe(colMeans((LD %>%
+                              dplyr::filter(row.names(LD) %in% dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID))[,dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID])) %>%
+            dplyr::rename(ID = "name", meanr2 = "value") %>% dplyr::mutate(MG = grev))
+}
 

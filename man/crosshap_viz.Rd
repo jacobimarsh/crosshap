@@ -4,7 +4,7 @@
 \alias{crosshap_viz}
 \title{Build 'crosshap' visualization}
 \usage{
-crosshap_viz(HapObject, plot_left = "allele", hide_labels = F)
+crosshap_viz(HapObject, plot_left = "allele", hide_labels = T)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
@@ -20,5 +20,5 @@ crosshap::run_haplotyping. The central dotplot displays relationship between
 clusters of linked SNPs (marker groups), and distinct haplotypes present
 within the population. Vertical plots (top/bottom) visualize individuals and
 populations, grouped by haplotype. Horizontal plots (left/right) visualize
-SNP information, grouped by marker group cluster. ABDCASCACSACS
+SNP information, grouped by marker group cluster.
 }

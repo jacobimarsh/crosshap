@@ -4,7 +4,7 @@
 \alias{pseudo_haps}
 \title{Identify haplotypes from SNP clusters}
 \usage{
-pseudo_haps(preMGfile, bin_vcf, minHap)
+pseudo_haps(preMGfile, bin_vcf, minHap, LD)
 }
 \arguments{
 \item{preMGfile}{SNP clusters from DBscan.}
@@ -12,6 +12,8 @@ pseudo_haps(preMGfile, bin_vcf, minHap)
 \item{bin_vcf}{Input binary VCF for region of interest.}
 
 \item{minHap}{Minimum size (nIndividuals) to keep haplotype combinations}
+
+\item{LD}{}
 }
 \description{
 Internal function that calls the most common allelic states for each SNP
