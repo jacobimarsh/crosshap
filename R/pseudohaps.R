@@ -92,12 +92,12 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
 
   MGfile[is.na(MGfile)] <- "0"
 
-  r2file <- tibble(ID = character(), meanr2 = double(), MGs = character())
+  r2file <- tibble::tibble(ID = character(), meanr2 = double(), MGs = character())
 
   for (grev in unique(MGfile$MGs)){
     r2file <-  r2file %>% rbind(tibble::enframe(colMeans((LD %>%
                                                         dplyr::filter(row.names(LD) %in% dplyr::filter(MGfile, MGs == grev)$ID))[,dplyr::filter(MGfile, MGs == grev)$ID])) %>%
-                              dplyr::rename(ID = "name", meanr2 = "value"))# %>% dplyr::mutate(MG = grev))
+                              dplyr::rename(ID = "name", meanr2 = "value"))
   }
 
   MGfile <- dplyr::left_join(MGfile, r2file, by = "ID")

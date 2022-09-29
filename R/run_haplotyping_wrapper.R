@@ -21,8 +21,8 @@
 run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL) {
     #Reformat VCF
 
-  cli::cli_progress_bar(total = 4*length(epsilon) + 2,
-                   format = "{pb_bar} {pb_percent} | {step}"
+  cli::cli_progress_bar(total = 4*length(epsilon) + 2#,
+                   #format = "{pb_bar} {pb_percent} | {step}"
                    )
   step <- "Formatting VCF"
 

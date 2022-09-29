@@ -45,7 +45,7 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 
 eps <- seq(.2,1,by=.2)
 
-crosshap::run_haplotyping(vcf = prot_vcf,
+run_haplotyping(vcf = prot_vcf,
                 LD = protLD,
                 pheno = prot_phen,
                 metadata = metadata,
