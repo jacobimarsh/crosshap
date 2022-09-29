@@ -7,15 +7,12 @@
 #' populations, grouped by haplotype. Horizontal plots (left/right) visualize
 #' SNP information, grouped by marker group cluster.
 #'
-#' @param plot_left
+#' @param plot_left which plot to have on left
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param hide_labels keep legends
 #'
-#' @return Returns a crosshap visualization
 #' @export
 #'
-#' @example
-#' crosshap_viz(Haplotypes_MP_E2)
 #'
 crosshap_viz <- function(HapObject, plot_left = "allele", hide_labels = T) {
  # base::message(paste0("Building Mid Dot plot"))

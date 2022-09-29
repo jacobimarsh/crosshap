@@ -9,10 +9,9 @@ crosshap_viz(HapObject, plot_left = "allele", hide_labels = T)
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
 
-\item{hide_labels}{}
-}
-\value{
-Returns a crosshap visualization
+\item{plot_left}{which plot to have on left}
+
+\item{hide_labels}{keep legends}
 }
 \description{
 Builds five individual plots using various elements of a HapObject created by

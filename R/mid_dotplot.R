@@ -7,11 +7,8 @@
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' build_mid_dotplot(Haplotypes_MP_E2)
 #'
 
 build_mid_dotplot <- function(HapObject) {

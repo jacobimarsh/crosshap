@@ -10,11 +10,8 @@
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #' @param hide_labels
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' build_left_posplot(Haplotypes_MP_E2)
 #'
 
 build_left_posplot <- function(HapObject, hide_labels) {

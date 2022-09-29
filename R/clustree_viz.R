@@ -9,10 +9,8 @@
 #' @param pheno Input numeric phenotype data for each individual.
 #' @param type Hap or MG clustree
 #'
-#' @return
 #' @export
 #'
-#' @examples
 #'
 run_clustree <- function(epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, pheno, type = "MG") {
 #Extract ID file first epsilon value and change column name to hap_epsXX

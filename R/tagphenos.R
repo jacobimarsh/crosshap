@@ -8,10 +8,8 @@
 #' @param vcf Input VCF for region of interest.
 #' @param pheno Input numeric phenotype data for each individual.
 #'
-#' @return
 #' @export
 #'
-#' @examples
 #'
 tagphenos <- function(MGfile, bin_vcf, pheno) {
 

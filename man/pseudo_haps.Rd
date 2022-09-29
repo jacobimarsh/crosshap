@@ -13,7 +13,7 @@ pseudo_haps(preMGfile, bin_vcf, minHap, LD)
 
 \item{minHap}{Minimum size (nIndividuals) to keep haplotype combinations}
 
-\item{LD}{}
+\item{LD}{LD matrix input}
 }
 \description{
 Internal function that calls the most common allelic states for each SNP

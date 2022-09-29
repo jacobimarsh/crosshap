@@ -9,11 +9,8 @@
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #' @param hide_labels
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' build_right_jitterplot(Haplotypes_MP_E2)
 #'
 
 build_right_jitterplot <- function(HapObject, hide_labels) {

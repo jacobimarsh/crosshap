@@ -13,13 +13,10 @@
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
 #' @param minHap Minimum nIndividuals to keep haplotype combinations.
 #' @param hetmiss_as Treat heterozygous missing './X' as missing or allele.
-#' @param metadata
+#' @param metadata Metadata input
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' run_haplotyping(vcf, LD, phen_early, MGmin, minHap)
 #'
 run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL) {
     #Reformat VCF

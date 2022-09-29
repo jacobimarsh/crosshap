@@ -30,7 +30,7 @@ run_haplotyping(
 
 \item{hetmiss_as}{Treat heterozygous missing './X' as missing or allele.}
 
-\item{metadata}{}
+\item{metadata}{Metadata input}
 }
 \description{
 Performs density-based clustering of SNPs in region of interest to identify

@@ -7,13 +7,10 @@
 #' @param preMGfile SNP clusters from DBscan.
 #' @param bin_vcf Input binary VCF for region of interest.
 #' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
-#' @param LD
+#' @param LD LD matrix input
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' create_pseudoSNP(MGfile, pdh1_100kb_vcf)
 #'
 pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD) {
 

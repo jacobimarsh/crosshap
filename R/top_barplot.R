@@ -7,11 +7,8 @@
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
-#' @return
 #' @export
 #'
-#' @example
-#' build_top_metaplot(Haplotypes_MP_E2)
 #'
 
 build_top_metaplot <- function(HapObject, hide_labels) {
