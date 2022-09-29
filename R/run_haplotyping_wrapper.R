@@ -21,12 +21,12 @@
 run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL) {
     #Reformat VCF
 
-  cli_progress_bar(total = 4*length(epsilon) + 2,
+  cli::cli_progress_bar(total = 4*length(epsilon) + 2,
                    format = "{pb_bar} {pb_percent} | {step}"
                    )
   step <- "Formatting VCF"
 
-  cli_progress_update()
+  cli::cli_progress_update()
 
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
   dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
@@ -35,13 +35,13 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
                                                                        switch(hetmiss_as, "allele" = base::ifelse(x=='1|.'|x=='.|1',1,
                                                                                                                  base::ifelse(x=='0|.'|x=='.|0',0,NA)),
                                                                                          "miss" = NA))))})
-  cli_progress_update()
+  cli::cli_progress_update()
   for (arez in epsilon){
 
     #Run DBscan on LD matrix
     # base::message(paste0("Clustering SNPs into marker groups (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Clustering SNPs into marker groups")
-    cli_progress_update()
+    cli::cli_progress_update()
 
     db40 <- dbscan::dbscan(LD, eps = arez, minPts = MGmin)
     preMGfile <- tibble::tibble(ID=rownames(LD),cluster=db40$cluster) %>%
@@ -51,14 +51,14 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
     ##Identify haplotype frequencies for different marker group combinations
     # base::message(paste0("Determining haplotypes from marker group clusters (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
-    cli_progress_update()
+    cli::cli_progress_update()
 
     phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD)
 
     ##Build summary object with all relevant haplotyping information
     # base::message(paste0("Collating haplotype information (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Collating haplotype information")
-    cli_progress_update()
+    cli::cli_progress_update()
 
     Varfile <- tagphenos(MGfile = phaps_out$MGfile, bin_vcf, pheno)
     clustered_hpS_obj <-  base::list(epsilon = db40$eps,
@@ -73,9 +73,9 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
                                MGfile = phaps_out$MGfile)
                                #ClusterR2)
     base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
-    cli_progress_update()
+    cli::cli_progress_update()
   }
-  cli_alert_success(paste0("Haplotyping complete!"))
+  cli::cli_alert_success(paste0("Haplotyping complete!"))
   base::message(paste0("Info saved in Haplotypes_",MGmin, "_E objects"))
 }
 
