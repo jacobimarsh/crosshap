@@ -100,7 +100,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
                               dplyr::rename(ID = "name", meanr2 = "value"))# %>% dplyr::mutate(MG = grev))
   }
 
-  MGfile <- left_join(MGfile, xxxx, by = "ID")
+  MGfile <- dplyr::left_join(MGfile, r2file, by = "ID")
 
   return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
 }
