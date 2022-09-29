@@ -38,10 +38,6 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
                                                                        switch(hetmiss_as, "allele" = base::ifelse(x=='1|.'|x=='.|1',1,
                                                                                                                  base::ifelse(x=='0|.'|x=='.|0',0,NA)),
                                                                                          "miss" = NA))))})
-  # for (i in 1:10000) {
-  #   Sys.sleep(2/10000)
-  #   cli_progress_update(set = i)
-  # }
   cli_progress_update()
   for (arez in epsilon){
 
@@ -60,7 +56,7 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
     cli_progress_update()
 
-    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap)
+    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD)
 
     ##Build summary object with all relevant haplotyping information
     # base::message(paste0("Collating haplotype information (eps = ",arez,")"))
@@ -78,6 +74,7 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
                                },
                                Varfile = Varfile,
                                MGfile = phaps_out$MGfile)
+                               #ClusterR2)
     base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
     cli_progress_update()
   }

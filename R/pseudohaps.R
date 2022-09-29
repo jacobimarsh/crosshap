@@ -7,6 +7,7 @@
 #' @param preMGfile SNP clusters from DBscan.
 #' @param bin_vcf Input binary VCF for region of interest.
 #' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
+#' @param LD
 #'
 #' @return
 #' @export
@@ -14,7 +15,7 @@
 #' @example
 #' create_pseudoSNP(MGfile, pdh1_100kb_vcf)
 #'
-pseudo_haps <- function(preMGfile, bin_vcf, minHap) {
+pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD) {
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
@@ -93,6 +94,16 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
   MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
 
   MGfile[is.na(MGfile)] <- "0"
+
+  r2file <- tibble(ID = character(), meanr2 = double(), MGs = character())
+
+  for (grev in unique(MGfile$MGs)){
+    r2file <-  r2file %>% rbind(tibble::enframe(colMeans((LD %>%
+                                                        dplyr::filter(row.names(LD) %in% dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID))[,dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID])) %>%
+                              dplyr::rename(ID = "name", meanr2 = "value"))# %>% dplyr::mutate(MG = grev))
+  }
+
+  MGfile <- left_join(MGfile, xxxx, by = "ID")
 
   return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
 }
