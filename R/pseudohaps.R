@@ -96,7 +96,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
 
   for (grev in unique(MGfile$MGs)){
     r2file <-  r2file %>% rbind(tibble::enframe(colMeans((LD %>%
-                                                        dplyr::filter(row.names(LD) %in% dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID))[,dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID])) %>%
+                                                        dplyr::filter(row.names(LD) %in% dplyr::filter(MGfile, MGs == grev)$ID))[,dplyr::filter(MGfile, MGs == grev)$ID])) %>%
                               dplyr::rename(ID = "name", meanr2 = "value"))# %>% dplyr::mutate(MG = grev))
   }
 
