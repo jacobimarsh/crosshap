@@ -45,7 +45,7 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 
 eps <- seq(.2,1,by=.2)
 
-run_haplotyping(vcf = prot_vcf,
+crosshap::run_haplotyping(vcf = prot_vcf,
                 LD = protLD,
                 pheno = prot_phen,
                 metadata = metadata,
@@ -57,7 +57,7 @@ prot_clustree <- crosshap::run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen)
 
-prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F)
+prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "pheno")
 
 posplot_prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos")
 
@@ -72,14 +72,23 @@ posplot_prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels 
 #ggplot(Haplotypes_MGmin40_E2.5$MGfile %>% select(-POS) %>%
 #         left_join(tprot_labeled), aes(X, Y)) +
 #  geom_point(aes(colour = factor(cluster)))
-library(tidyverse)
 
 
-xxxx <- tibble(ID = character(), meanr2 = double(), MG = character())
 
-for (grev in unique(clustered_hpS_obj$MGfile$MGs)){
-xxxx <-  xxxx %>% rbind(tibble::enframe(colMeans((LD %>%
-                              dplyr::filter(row.names(LD) %in% dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID))[,dplyr::filter(clustered_hpS_obj$MGfile, MGs == grev)$ID])) %>%
-            dplyr::rename(ID = "name", meanr2 = "value") %>% dplyr::mutate(MG = grev))
-}
+
+ggplot2::ggplot(data = Haplotypes_MGmin30_E1$MGfile, ggplot2::aes(x = MGs, y = meanr2#, fill = Metadata
+)) +
+  #ggdist::stat_halfeye(adjust = .5, width = .6, .width = 0, justification = -.3, point_colour = NA) +
+  ggplot2::geom_jitter(alpha = 0.3, pch = 21, width = 0.1,
+                       ggplot2::aes()) +
+  ggplot2::scale_fill_brewer(palette = "Dark2") +
+  ggplot2::theme_minimal()
+
+
+
+Haplotypes_MGmin30_E1$MGfile
+
+
+
+
 

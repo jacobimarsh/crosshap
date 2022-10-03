@@ -8,13 +8,14 @@
 #' SNP information, grouped by marker group cluster.
 #'
 #' @param plot_left which plot to have on left
+#' @param plot_right which plot to have on right
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #' @param hide_labels keep legends
 #'
 #' @export
 #'
 #'
-crosshap_viz <- function(HapObject, plot_left = "allele", hide_labels = T) {
+crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster", hide_labels = T) {
  # base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject)
 
@@ -31,7 +32,9 @@ crosshap_viz <- function(HapObject, plot_left = "allele", hide_labels = T) {
                  "pos" = build_left_posplot(HapObject, hide_labels))
 
  # base::message(paste0("Building Right SNP-Pheno plot"))
-  right <- build_right_jitterplot(HapObject, hide_labels)
+  right <- switch(plot_right,
+                  "pheno" = build_right_phenoplot(HapObject, hide_labels),
+                  "cluster" = build_right_clusterplot(HapObject, hide_labels))
 
   layout <- "#B#
   DAE
