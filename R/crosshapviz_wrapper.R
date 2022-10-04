@@ -17,7 +17,7 @@
 #'
 crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster", hide_labels = T) {
  # base::message(paste0("Building Mid Dot plot"))
-  mid <- build_mid_dotplot(HapObject)
+  mid <- build_mid_dotplot(HapObject, hide_labels)
 
  # base::message(paste0("Building Top Metadata-Hap plot"))
   top <- build_top_metaplot(HapObject, hide_labels)
@@ -38,7 +38,7 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster"
 
   layout <- "#B#
   DAE
-  #CF"
+  FC#"
 
   #base::message(paste0("Stitching plots"))
   crosshap_stitched <-

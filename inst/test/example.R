@@ -57,7 +57,7 @@ prot_clustree <- crosshap::run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen)
 
-prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "pheno")
+prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
 
 posplot_prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos")
 
