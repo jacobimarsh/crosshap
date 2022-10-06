@@ -63,7 +63,7 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
     clustered_hpS_obj <-  base::list(epsilon = db40$eps,
                                MGmin = db40$minPts,
                                Hapfile = phaps_out$Hapfile,
-                               Indfile = if (missing(metadata)){
+                               Indfile = if (missing(metadata)|is.null(metadata)){
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::mutate(Metadata = as.character(NA))
                                }else {
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")

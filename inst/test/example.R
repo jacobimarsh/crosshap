@@ -59,7 +59,31 @@ prot_clustree <- crosshap::run_clustree(epsilon = eps,
 
 prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
 
-posplot_prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos")
+posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+
+hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_EX, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+
+run_hdbscan_haplotyping(vcf = prot_vcf,
+                        LD = protLD,
+                        pheno = prot_phen,
+                        metadata = metadata,
+                        MGmin = 29,
+                        minHap =9
+)
+
+hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_HDBSCAN, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+
+
+run_haplotyping(vcf = prot_vcf,
+                LD = protLD,
+                pheno = prot_phen,
+                metadata = metadata,
+                epsilon = eps,
+                MGmin = 29,
+                minHap = 9,
+)
+
+posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
 
 #tprot <- tsne(protLD)
 #
