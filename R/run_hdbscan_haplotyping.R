@@ -13,11 +13,12 @@
 #' @param minHap Minimum nIndividuals to keep haplotype combinations.
 #' @param hetmiss_as Treat heterozygous missing './X' as missing or allele.
 #' @param metadata Metadata input
+#' @param keep_outliers Smoothing
 #'
 #' @export
 #'
 #'
-run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap, hetmiss_as = 'allele', metadata = NULL){
+run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F){
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
     dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
                                                base::ifelse(x=='1|0'|x=='0|1',1,
@@ -38,7 +39,7 @@ run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap, hetmiss_as = 
     ##Identify haplotype frequencies for different marker group combinations
     base::message(paste0("Determining haplotypes from marker group clusters"))
     
-    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD)
+    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, keep_outliers = keep_outliers)
     
     ##Build summary object with all relevant haplotyping information
     base::message(paste0("Collating haplotype information"))

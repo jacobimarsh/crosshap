@@ -104,7 +104,7 @@ posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_E1, hide_labels = F, plot_le
 
 
 
-dbE1_nooutliers <- build_right_clusterplot(Haplotypes_MGmin30_E1, hide_labels = T)
+dbE1 <- build_right_clusterplot(Haplotypes_MGmin30_E1, hide_labels = T)
 
 Haplotypes_MGmin30_E1$MGfile %>% group_by(MGs) %>% summarise(groupvar = var(meanr2),
                                                              count = length(x = POS))
@@ -116,11 +116,16 @@ Haplotypes_MGmin30_HDBSCAN$MGfile %>% group_by(MGs) %>% summarise(groupvar = var
 
 
 
-####OUTLIER REMOVAL
+
 
 Haplotypes_MGmin30_E1$MGfile %>% group_by(MGs) %>%
-  filter(!(abs(meanr2 - median(meanr2)) > 2*sd(meanr2))) %>%
+#  filter(!(abs(meanr2 - median(meanr2)) > 2*sd(meanr2))) %>%
   summarise_each(mean, meanr2)
+
+Haplotypes_MGmin30_E0.4$MGfile %>% group_by(MGs) %>%
+#  filter(!(abs(meanr2 - median(meanr2)) > 2*sd(meanr2))) %>%
+  summarise_each(mean, meanr2)
+
 
 df1 = df %>%
   group_by(element) %>%
