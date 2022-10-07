@@ -9,7 +9,7 @@ run_hdbscan_haplotyping(
   LD,
   pheno,
   MGmin,
-  minHap,
+  minHap = 5,
   hetmiss_as = "allele",
   metadata = NULL,
   keep_outliers = F

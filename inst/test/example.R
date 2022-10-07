@@ -16,13 +16,13 @@ MGmin <- 30
 minHap <- 9
 
 
-crosshap::run_haplotyping(vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap)
+crosshap::run_haplotyping(epsilon = epsilon, vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap)
 ##Visualize differences between clusters based on epsilon value input to DBscan
 labeled_haptree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early, type = "hap")
 labeled_MGtree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early)
 
-Hap2_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E2, plot_left = "pos")
-Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E2, hide_labels = F)
+Hap2_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E1, plot_left = "pos")
+Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E1, hide_labels = F)
 
 #ggplot2::ggsave("botrightlabs.pdf",crosshap_stitched,device = 'pdf',dpi = 300,height = 9,width = 16,units = 'in')
 

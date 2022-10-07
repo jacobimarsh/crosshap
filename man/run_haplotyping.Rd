@@ -10,7 +10,7 @@ run_haplotyping(
   pheno,
   epsilon = c(0.4, 0.8, 1.2, 1.6, 2),
   MGmin,
-  minHap,
+  minHap = 5,
   hetmiss_as = "allele",
   metadata = NULL,
   keep_outliers = F
