@@ -103,7 +103,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
 
   unsmoothed_MGfile <- dplyr::left_join(unsmoothed_MGfile, r2prefile, by = "ID")
 
-  smoothed_MGfile <- unsmoothed_MGfile %>% group_by(MGs) %>%
+  smoothed_MGfile <- unsmoothed_MGfile %>% dplyr::group_by(MGs) %>%
     dplyr::mutate(MGs = ifelse((abs(premeanr2 - median(premeanr2)) > 2*sd(premeanr2)),0, MGs))
 
   r2file <- tibble::tibble(ID = character(), meanr2 = double(), MGs = character())

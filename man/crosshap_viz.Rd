@@ -4,12 +4,19 @@
 \alias{crosshap_viz}
 \title{Build 'crosshap' visualization}
 \usage{
-crosshap_viz(HapObject, plot_left = "allele", hide_labels = T)
+crosshap_viz(
+  HapObject,
+  plot_left = "allele",
+  plot_right = "cluster",
+  hide_labels = T
+)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
 
 \item{plot_left}{which plot to have on left}
+
+\item{plot_right}{which plot to have on right}
 
 \item{hide_labels}{keep legends}
 }

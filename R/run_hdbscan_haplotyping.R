@@ -18,7 +18,7 @@
 #' @export
 #'
 #'
-run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F){
+run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F){
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
     dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
                                                base::ifelse(x=='1|0'|x=='0|1',1,

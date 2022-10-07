@@ -4,10 +4,12 @@
 \alias{build_mid_dotplot}
 \title{Middle MG/Hap dotplot}
 \usage{
-build_mid_dotplot(HapObject)
+build_mid_dotplot(HapObject, hide_labels)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+
+\item{hide_labels}{}
 }
 \description{
 Internal function that creates central dotplot displaying the relationship

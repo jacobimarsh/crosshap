@@ -4,7 +4,7 @@
 \alias{pseudo_haps}
 \title{Identify haplotypes from SNP clusters}
 \usage{
-pseudo_haps(preMGfile, bin_vcf, minHap, LD)
+pseudo_haps(preMGfile, bin_vcf, minHap, LD, keep_outliers)
 }
 \arguments{
 \item{preMGfile}{SNP clusters from DBscan.}
@@ -14,6 +14,8 @@ pseudo_haps(preMGfile, bin_vcf, minHap, LD)
 \item{minHap}{Minimum size (nIndividuals) to keep haplotype combinations}
 
 \item{LD}{LD matrix input}
+
+\item{keep_outliers}{whether to keep outlier SNPs in MGs}
 }
 \description{
 Internal function that calls the most common allelic states for each SNP
