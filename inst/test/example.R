@@ -67,11 +67,11 @@ run_hdbscan_haplotyping(vcf = prot_vcf,
                         LD = protLD,
                         pheno = prot_phen,
                         metadata = metadata,
-                        MGmin = 29,
+                        MGmin = 30,
                         minHap =9
 )
 
-hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_HDBSCAN, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_HDBSCAN, hide_labels = F, plot_left = "allele", plot_right = "cluster")
 
 
 run_haplotyping(vcf = prot_vcf,
@@ -79,11 +79,14 @@ run_haplotyping(vcf = prot_vcf,
                 pheno = prot_phen,
                 metadata = metadata,
                 epsilon = eps,
-                MGmin = 29,
+                MGmin = 30,
                 minHap = 9,
 )
 
-posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+
+
+
+posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_E1, hide_labels = F, plot_left = "allele", plot_right = "cluster")
 
 #tprot <- tsne(protLD)
 #
@@ -100,17 +103,33 @@ posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_le
 
 
 
-ggplot2::ggplot(data = Haplotypes_MGmin30_E1$MGfile, ggplot2::aes(x = MGs, y = meanr2#, fill = Metadata
-)) +
-  #ggdist::stat_halfeye(adjust = .5, width = .6, .width = 0, justification = -.3, point_colour = NA) +
-  ggplot2::geom_jitter(alpha = 0.3, pch = 21, width = 0.1,
-                       ggplot2::aes()) +
-  ggplot2::scale_fill_brewer(palette = "Dark2") +
-  ggplot2::theme_minimal()
+
+dbE1_nooutliers <- build_right_clusterplot(Haplotypes_MGmin30_E1, hide_labels = T)
+
+Haplotypes_MGmin30_E1$MGfile %>% group_by(MGs) %>% summarise(groupvar = var(meanr2),
+                                                             count = length(x = POS))
+
+hdb <- build_right_clusterplot(Haplotypes_MGmin30_HDBSCAN, hide_labels = T)
+
+Haplotypes_MGmin30_HDBSCAN$MGfile %>% group_by(MGs) %>% summarise(groupvar = var(meanr2),
+                                                             count = length(x = POS))
 
 
 
-Haplotypes_MGmin30_E1$MGfile
+####OUTLIER REMOVAL
+
+Haplotypes_MGmin30_E1$MGfile %>% group_by(MGs) %>%
+  filter(!(abs(meanr2 - median(meanr2)) > 2*sd(meanr2))) %>%
+  summarise_each(mean, meanr2)
+
+df1 = df %>%
+  group_by(element) %>%
+  filter(!(abs(value - median(value)) > 2*sd(value))) %>%
+  summarise_each(funs(mean), value)
+
+
+
+
 
 
 

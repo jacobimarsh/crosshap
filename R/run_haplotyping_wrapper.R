@@ -18,7 +18,7 @@
 #' @export
 #'
 #'
-run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL) {
+run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, minHap, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F) {
     #Reformat VCF
 
   cli::cli_progress_bar(total = 4*length(epsilon) + 2
@@ -52,7 +52,7 @@ run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.4,0.8,1.2,1.6,2), MGmi
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
     cli::cli_progress_update()
 
-    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD)
+    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, keep_outliers = keep_outliers)
 
     ##Build summary object with all relevant haplotyping information
     # base::message(paste0("Collating haplotype information (eps = ",arez,")"))

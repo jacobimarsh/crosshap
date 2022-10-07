@@ -8,11 +8,12 @@
 #' @param bin_vcf Input binary VCF for region of interest.
 #' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
 #' @param LD LD matrix input
+#' @param keep_outliers whether to keep outlier SNPs in MGs
 #'
 #' @export
 #'
 #'
-pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD) {
+pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
@@ -88,19 +89,32 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
      tibble::as_tibble() %>%
      dplyr::mutate(cluster = as.numeric(cluster))
 
-  MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
+  unsmoothed_MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
 
-  MGfile[is.na(MGfile)] <- "0"
+  unsmoothed_MGfile[is.na(unsmoothed_MGfile)] <- "0"
+
+  r2prefile <- tibble::tibble(ID = character(), premeanr2 = double(), MGs = character())
+
+  for (grev in unique(unsmoothed_MGfile$MGs)){
+    r2prefile <-  r2prefile %>% rbind(tibble::enframe(colMeans((LD %>%
+                                                        dplyr::filter(row.names(LD) %in% dplyr::filter(unsmoothed_MGfile, MGs == grev)$ID))[,dplyr::filter(unsmoothed_MGfile, MGs == grev)$ID])) %>%
+                              dplyr::rename(ID = "name", premeanr2 = "value"))
+  }
+
+  unsmoothed_MGfile <- dplyr::left_join(unsmoothed_MGfile, r2prefile, by = "ID")
+
+  smoothed_MGfile <- unsmoothed_MGfile %>% group_by(MGs) %>%
+    dplyr::mutate(MGs = ifelse((abs(premeanr2 - median(premeanr2)) > 2*sd(premeanr2)),0, MGs))
 
   r2file <- tibble::tibble(ID = character(), meanr2 = double(), MGs = character())
 
-  for (grev in unique(MGfile$MGs)){
+  for (grev in unique(smoothed_MGfile$MGs)){
     r2file <-  r2file %>% rbind(tibble::enframe(colMeans((LD %>%
-                                                        dplyr::filter(row.names(LD) %in% dplyr::filter(MGfile, MGs == grev)$ID))[,dplyr::filter(MGfile, MGs == grev)$ID])) %>%
-                              dplyr::rename(ID = "name", meanr2 = "value"))
+                                                                  dplyr::filter(row.names(LD) %in% dplyr::filter(smoothed_MGfile, MGs == grev)$ID))[,dplyr::filter(smoothed_MGfile, MGs == grev)$ID])) %>%
+                                        dplyr::rename(ID = "name", meanr2 = "value"))
   }
 
-  MGfile <- dplyr::left_join(MGfile, r2file, by = "ID")
+  MGfile <- dplyr::left_join(smoothed_MGfile, r2file, by = "ID")
 
   return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
 }
