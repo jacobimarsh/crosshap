@@ -116,5 +116,11 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
 
   MGfile <- dplyr::left_join(smoothed_MGfile, r2file, by = "ID")
 
-  return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
+
+  if(keep_outliers == T){
+    return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = unsmoothed_MGfile %>% dplyr::rename(meanr2 = premeanr2)))
+  } else {
+    return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
+  }
 }
+
