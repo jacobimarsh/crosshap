@@ -28,7 +28,7 @@ right_jitterplot <- ggplot2::ggplot() +
                               axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black"),
                               plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
                               legend.title = ggplot2::element_text(size = 7),
-                              legend.text = ggplot2::element_text(size = 5),
+                            legend.text = ggplot2::element_text(size = 5),
                               legend.key.size = ggplot2::unit(5, "mm"),
                               legend.direction = "horizontal",
                               plot.title = ggplot2::element_blank(),
@@ -44,3 +44,4 @@ if(hide_labels == T){
   return(right_jitterplot)
 }
 }
+

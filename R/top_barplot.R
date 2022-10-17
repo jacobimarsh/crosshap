@@ -26,10 +26,10 @@ top_metaplot <- ggplot2::ggplot(topplot_data,
   ggplot2::geom_bar(position="stack", stat = "identity") +
   ggplot2::theme_minimal() +
     ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "grey20") +
-    ggplot2::theme(legend.title = ggplot2::element_text(size = 8),
-                   legend.direction = "horizontal",
-        legend.text = ggplot2::element_text(size = 7),
-        legend.key.size = ggplot2::unit(6, "mm"),
+    ggplot2::theme(legend.direction = "horizontal",
+                   legend.title = ggplot2::element_text(size = 7),
+                   legend.text = ggplot2::element_text(size = 5),
+                   legend.key.size = ggplot2::unit(5, "mm"),
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, colour = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.text.y = ggplot2::element_text(face = "bold",

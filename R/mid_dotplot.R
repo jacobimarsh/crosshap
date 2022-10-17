@@ -40,9 +40,13 @@ mid_dotplot <- ggplot2::ggplot() +
         plot.title = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(size = 10, face = 'bold', color = 'black'),
         axis.text.y = ggplot2::element_text(size = 10, face = 'bold', color = 'black'),
-        axis.title = ggplot2::element_blank()) +
- # ggplot2::ylab("Marker Group") +
- # ggplot2::xlab("Haplotype combination") +
+        legend.title = ggplot2::element_text(size = 7),
+        legend.text = ggplot2::element_text(size = 5),
+        legend.key.size = ggplot2::unit(5, "mm"),
+ #       axis.title = ggplot2::element_blank()
+ ) +
+  ggplot2::ylab("Marker Group") +
+  ggplot2::xlab("Haplotype combination") +
   ggplot2::guides('size' = "none") +
   ggplot2::scale_y_discrete(limits = rev, position = "left",
                    labels = c(paste0("MG",base::as.character(base::max(intersect$MG):1))))

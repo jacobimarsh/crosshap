@@ -29,10 +29,11 @@ leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
                       mean) %>% dplyr::rename(MGs = 'Group.1', het = 'x'), by = "MGs") %>%
   dplyr::left_join(stats::aggregate(pre_leftplotdata$alt,
                       base::list(pre_leftplotdata$MGs),
-                      mean) %>% dplyr::rename(MGs = 'Group.1', alt = 'x'), by = "MGs")
+                      mean) %>% dplyr::rename(MGs = 'Group.1', alt = 'x'), by = "MGs") %>%
+  dplyr::rename("REF" = "ref", "MISS" = "miss", "HET" = "het", "ALT" = "alt")
 
 left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd", 2:5) %>%
-           dplyr::mutate(Type = base::factor(Type, levels = c("ref", "miss", "het", "alt"))),
+           dplyr::mutate(Type = base::factor(Type, levels = c("REF", "MISS", "HET", "ALT"))),
            ggplot2::aes(x = nInd,
              y = base::as.character(MGs),
              fill = Type,

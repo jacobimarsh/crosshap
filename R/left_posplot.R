@@ -31,6 +31,9 @@ left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(M
   ggplot2::labs(x = "Position") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.y = ggplot2::element_blank(),
+                 legend.title = ggplot2::element_text(size = 7),
+                 legend.text = ggplot2::element_text(size = 5),
+                 legend.key.size = ggplot2::unit(5, "mm"),
         axis.text.y = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, color = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
