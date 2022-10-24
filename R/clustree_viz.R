@@ -1,13 +1,16 @@
-#' Visualize clusters
+#' Haplotype clustering tree
 #'
-#' This function reads haplotype objects calculated for a range of epsilon
-#' values. It calculates the mean phenotypic value for each haplotype group
-#' and rearranges the data into a single sheet. Visualization is conducted using
-#' the clustree package, with labeling manually added afterward.
+#' run_clustree() builds a clustering tree displaying changes in haplotype
+#' assignment between individuals or changes in marker group assignment for
+#' SNPs, across different epsilon values provided to run_haplotyping(). Makes
+#' use of $Indfile and $Varfile information from HapObjects created by
+#' run_haplotyping(). This function is a clustree wrapper.
 #'
-#' @param epsilon Epsilon values to search.
+#' @param epsilon Epsilon values passed through run_haplotyping().
+#' @param MGmin MGmin values passed through run_haplotyping().
 #' @param pheno Input numeric phenotype data for each individual.
-#' @param type Hap or MG clustree
+#' @param type When type = "hap", nodes represent haplotype populations, when
+#' type = "MG", nodes represent marker groups.
 #'
 #' @export
 #'

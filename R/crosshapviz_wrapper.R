@@ -1,18 +1,23 @@
-#' Build 'crosshap' visualization
+#' Visualize haplotypes
 #'
-#' Builds five individual plots using various elements of a HapObject created by
-#' crosshap::run_haplotyping. The central dotplot displays relationship between
-#' clusters of linked SNPs (marker groups), and distinct haplotypes present
-#' within the population. Vertical plots (top/bottom) visualize individuals and
-#' populations, grouped by haplotype. Horizontal plots (left/right) visualize
-#' SNP information, grouped by marker group cluster.
+#' crosshap_viz() builds five individual plots using various elements of a
+#' HapObject created by run_haplotyping(). The central dotplot displays
+#' relationship between clusters of linked SNPs (marker groups), and distinct
+#' haplotypes present within the population. Vertical plots (top/bottom)
+#' visualize individuals and populations, grouped by haplotype. Horizontal plots
+#' (left/right) visualize SNP information, grouped by marker group cluster.
 #'
-#' @param plot_left which plot to have on left
-#' @param plot_right which plot to have on right
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels keep legends
+#' @param plot_left When plot_left = "allele", SNP allele frequency information
+#' is displayed, when plot_left = "pos", SNP position information is displayed.
+#' @param plot_right When plot_right = "pheno", phenotype associations for SNPs
+#' are displayed, when plot_right = "cluster", internal marker group linkage is
+#' displayed.
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels When TRUE, legends from plots are hidden.
 #'
 #' @export
+#'
+#' @return A dataframe
 #'
 #'
 crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster", hide_labels = T) {
@@ -23,7 +28,7 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster"
   top <- build_top_metaplot(HapObject, hide_labels)
 
  # base::message(paste0("Building Bottom Hap-Pheno plot"))
-  bot <- build_bot_jitterplot(HapObject, hide_labels)
+  bot <- build_bot_halfeyeplot(HapObject)
 
 #  base::message(paste0("Building Left SNP info plot"))
 

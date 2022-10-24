@@ -1,19 +1,24 @@
 #' Cluster SNPs and identify haplotypes
 #'
-#' Performs density-based clustering of SNPs in region of interest to identify
-#' marker groups. Defines haplotype combinations and classifies individuals
-#' based on characteristic combinations of marker group alleles. Returns a
-#' comprehensive haplotyping object, required to build clustering tree and
-#' visualize haplotypes.
+#' run_haplotyping() performs density-based clustering of SNPs in region of
+#' interest to identify marker groups. Individuals are classified by haplotype
+#' combination based on shared combinations of marker group alleles. Returns a
+#' comprehensive haplotyping object (HapObject), which can be used as input to
+#' build clustering tree for epsilon optimization using run_clustree(), and
+#' can be visualized with reference to phenotype and metadata using
+#' crosshap_viz().
 #'
 #' @param vcf Input VCF for region of interest.
-#' @param LD Pairwise correlation matrix of SNPs in region from PLINK.
+#' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
 #' @param pheno Input numeric phenotype data for each individual.
 #' @param epsilon Epsilon values for clustering SNPs with DBscan.
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
-#' @param minHap Minimum nIndividuals to keep haplotype combinations.
-#' @param hetmiss_as Treat heterozygous missing './X' as missing or allele.
-#' @param metadata Metadata input
+#' @param minHap Minimum nIndividuals in a haplotype combination.
+#' @param hetmiss_as If hetmiss_as = "allele", heterozygous-missing SNPs './N'
+#' are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.
+#' @param metadata Metadata input (optional).
+#' @param keep_outliers When FALSE, marker group smoothing is performed to
+#' remove outliers.
 #'
 #' @export
 #'

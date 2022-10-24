@@ -1,19 +1,21 @@
 #' Right SNP cluster linkage plot
 #'
-#' XXXInternal function that creates a horizontal phenoplot displaying the
-#' difference in phenotype means between alternate and reference alleles for
-#' each SNP loci, grouped by marker group. Makes use of the $Varfile phenotypic
-#' information for each allele, first calculating the difference between alt/ref
-#' before plotting. May be missing some axis to allow for 'crosshap' stitching.
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels XX
+#' build_right_jitterplot() builds a horizontal plot displaying the mean
+#' pairwise R^2 linkage between each SNP and all other SNPs in its marker group,
+#' grouped by marker group, coloured by alternate allele frequency. Makes use of
+#' the $Varfile and $MGfile information from haplotyping object. It is an
+#' internal function called by crosshap_viz(), though can be called separately
+#' to build a stand-alone plot.
+#'
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'
 #'
 
-build_right_clusterplot <- function(HapObject, hide_labels) {
+build_right_clusterplot <- function(HapObject, hide_labels = F) {
   right_clusterplot <-   ggplot2::ggplot() +
     ggplot2::geom_jitter(data = dplyr::left_join(HapObject$MGfile, HapObject$Varfile, by = c("ID", "MGs")) %>% dplyr::filter(MGs != 0),
                          ggplot2::aes(x = meanr2, y = MGs, fill = AltAF),
@@ -35,7 +37,7 @@ build_right_clusterplot <- function(HapObject, hide_labels) {
     ggplot2::xlab("Mean intra-cluster R^2") +
     ggplot2::scale_y_discrete(limits = rev, position = "left",
                               labels = c(paste0("MG", base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))))
-  
+
   if(hide_labels == T){
     return(right_clusterplot + ggplot2::theme(legend.position = "none"))
   } else {
@@ -44,4 +46,3 @@ build_right_clusterplot <- function(HapObject, hide_labels) {
 }
 
   #D right plot
-  

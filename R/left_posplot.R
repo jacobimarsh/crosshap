@@ -1,20 +1,18 @@
-#' Left SNP posplot
+#' Left SNP position plot
 #'
-#' Internal function that plots the position of each SNP in each marker group
-#' horizontally using small vertical lines. Makes use of the $MGfile position
-#' information for each allele. The first snippet of code determines the labels
-#' to use, as genomic position can be exceptionally high numbers that end up
-#' being cut-off when default labeling is used. May be missing some axis to
-#' allow for 'crosshap' stitching.
+#' build_left_alleleplot() builds a horizontal plot displaying the chromosomal
+#' position of each SNP locus, grouped by marker group.Makes use of the $MGfile
+#' position from haplotype object. It is an internal function called by
+#' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'
 #'
 
-build_left_posplot <- function(HapObject, hide_labels) {
+build_left_posplot <- function(HapObject, hide_labels = T) {
 
 IQRs <- base::as.numeric(HapObject$MGfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.5 + base::min(.)),

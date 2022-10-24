@@ -1,13 +1,15 @@
-#' Right SNP-Pheno phenoplot
+#' Right SNP-pheno phenoplot
 #'
-#' Internal function that creates a horizontal phenoplot displaying the
-#' difference in phenotype means between alternate and reference alleles for
-#' each SNP loci, grouped by marker group. Makes use of the $Varfile phenotypic
-#' information for each allele, first calculating the difference between alt/ref
-#' before plotting. May be missing some axis to allow for 'crosshap' stitching.
+#' build_right_phenoplot() builds a horizontal plot displaying the mean
+#' difference in phenotype score between individuals with the alternate vs
+#' reference alleles for each SNP locus, grouped by marker group, coloured by
+#' the alternate allele frequency of each SNP. Makes use of the $Varfile
+#' phenotypic information from haplotyping object. It is an internal function
+#' called by crosshap_viz(), though can be called separately to build a
+#' stand-alone plot.
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'

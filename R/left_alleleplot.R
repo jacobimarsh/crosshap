@@ -1,19 +1,19 @@
-#' Left SNP-info alleleplot
+#' Left SNP-info allele plot
 #'
-#' Internal function that plots the mean frequencies of all alleles for loci
-#' within each marker group. Makes use of $Varfile information. The first
-#' two snippets of code calculates the mean frequencies of each allele type for
-#' each marker group, before plotting. May be missing some axis to allow for
-#' 'crosshap' stitching.
+#' build_left_alleleplot() builds a horizontal plot displaying mean allelic
+#' frequencies (reference/alternate/missing/heterozygous) of all SNP loci,
+#' grouped by marker group. Makes use of $Varfile information from a HapObject
+#' created by run_haplotyping(). This is an internal function called by
+#' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'
 #'
 
-build_left_alleleplot <- function(HapObject, hide_labels) {
+build_left_alleleplot <- function(HapObject, hide_labels = T) {
 pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
 #pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0

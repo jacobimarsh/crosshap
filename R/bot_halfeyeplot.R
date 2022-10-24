@@ -1,18 +1,18 @@
-#' Bot Hap-Pheno jitterplot
+#' Bot hap-pheno halfeye plot
 #'
-#' Internal function that creates a vertical jitterplot displaying the
-#' phenotypic scores for each individual, grouped by haplotype. Makes use of the
-#' $Indfile information. May be missing some axis to allow for 'crosshap'
-#' stitching.
+#' build_bot_halfeyeplot() builds a vertical plot displaying the
+#' phenotypic scores for each individual, grouped by haplotype, coloured by
+#' metadata variable. Makes use of the $Indfile information from haplotype
+#' object. It is an internal function called by crosshap_viz(), though can be
+#' called separately to build a stand-alone plot.
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'
 
-build_bot_jitterplot <- function(HapObject, hide_labels) {
-
+build_bot_halfeyeplot <- function(HapObject, hide_labels = T) {
 no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
 
 bot_halfeyeplot <-
@@ -25,8 +25,7 @@ bot_halfeyeplot <-
   ggplot2::theme_minimal() +
   ggplot2::ylab("Pheno")+
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks()) +
-  ggplot2::theme(legend.position = "none",
-                 axis.title.x = ggplot2::element_blank(),
+  ggplot2::theme(axis.title.x = ggplot2::element_blank(),
                  axis.text.x  = ggplot2::element_blank(),
                  plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
                  axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black"))

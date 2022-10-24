@@ -1,9 +1,10 @@
-#' Top Metadata-hap Plot
+#' Top metadata-hap bar plot
 #'
-#' Internal function that creates a vertical stacked barplot representing the
+#' build_top_metaplot() builds a vertical stacked bar plot displaying the
 #' frequency of each haplotype combination, broken down by each categorical
-#' metadata variable. Makes use of the $Hapfile pseudoSNP count information. May
-#' be missing some axis to allow for 'crosshap' stitching.
+#' metadata variable provided. Makes use of the $Indfile information from a
+#' haplotype object. This is an in internal function called by crosshap_viz(),
+#' though can be called separately to build a stand-alone plot
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #'
