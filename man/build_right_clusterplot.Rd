@@ -4,17 +4,18 @@
 \alias{build_right_clusterplot}
 \title{Right SNP cluster linkage plot}
 \usage{
-build_right_clusterplot(HapObject, hide_labels)
+build_right_clusterplot(HapObject, hide_labels = F)
 }
 \arguments{
-\item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+\item{HapObject}{Haplotype object created by run_haplotyping().}
 
-\item{hide_labels}{XX}
+\item{hide_labels}{If TRUE, legend is hidden.}
 }
 \description{
-XXXInternal function that creates a horizontal phenoplot displaying the
-difference in phenotype means between alternate and reference alleles for
-each SNP loci, grouped by marker group. Makes use of the $Varfile phenotypic
-information for each allele, first calculating the difference between alt/ref
-before plotting. May be missing some axis to allow for 'crosshap' stitching.
+build_right_jitterplot() builds a horizontal plot displaying the mean
+pairwise R^2 linkage between each SNP and all other SNPs in its marker group,
+grouped by marker group, coloured by alternate allele frequency. Makes use of
+the $Varfile and $MGfile information from haplotyping object. It is an
+internal function called by crosshap_viz(), though can be called separately
+to build a stand-alone plot.
 }

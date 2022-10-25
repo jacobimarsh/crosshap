@@ -2,7 +2,7 @@
 % Please edit documentation in R/crosshapviz_wrapper.R
 \name{crosshap_viz}
 \alias{crosshap_viz}
-\title{Build 'crosshap' visualization}
+\title{Visualize haplotypes}
 \usage{
 crosshap_viz(
   HapObject,
@@ -12,19 +12,25 @@ crosshap_viz(
 )
 }
 \arguments{
-\item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+\item{HapObject}{Haplotype object created by run_haplotyping().}
 
-\item{plot_left}{which plot to have on left}
+\item{plot_left}{When plot_left = "allele", SNP allele frequency information
+is displayed, when plot_left = "pos", SNP position information is displayed.}
 
-\item{plot_right}{which plot to have on right}
+\item{plot_right}{When plot_right = "pheno", phenotype associations for SNPs
+are displayed, when plot_right = "cluster", internal marker group linkage is
+displayed.}
 
-\item{hide_labels}{keep legends}
+\item{hide_labels}{When TRUE, legends from plots are hidden.}
+}
+\value{
+A dataframe
 }
 \description{
-Builds five individual plots using various elements of a HapObject created by
-crosshap::run_haplotyping. The central dotplot displays relationship between
-clusters of linked SNPs (marker groups), and distinct haplotypes present
-within the population. Vertical plots (top/bottom) visualize individuals and
-populations, grouped by haplotype. Horizontal plots (left/right) visualize
-SNP information, grouped by marker group cluster.
+crosshap_viz() builds five individual plots using various elements of a
+HapObject created by run_haplotyping(). The central dotplot displays
+relationship between clusters of linked SNPs (marker groups), and distinct
+haplotypes present within the population. Vertical plots (top/bottom)
+visualize individuals and populations, grouped by haplotype. Horizontal plots
+(left/right) visualize SNP information, grouped by marker group cluster.
 }

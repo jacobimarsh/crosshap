@@ -8,7 +8,7 @@ run_haplotyping(
   vcf,
   LD,
   pheno,
-  epsilon = c(0.4, 0.8, 1.2, 1.6, 2),
+  epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
   MGmin,
   minHap = 5,
   hetmiss_as = "allele",
@@ -19,7 +19,7 @@ run_haplotyping(
 \arguments{
 \item{vcf}{Input VCF for region of interest.}
 
-\item{LD}{Pairwise correlation matrix of SNPs in region from PLINK.}
+\item{LD}{Pairwise correlation matrix of SNPs in region (e.g. from PLINK).}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
 
@@ -27,16 +27,22 @@ run_haplotyping(
 
 \item{MGmin}{Minimum SNPs in marker groups, MinPts parameter for DBscan.}
 
-\item{minHap}{Minimum nIndividuals to keep haplotype combinations.}
+\item{minHap}{Minimum nIndividuals in a haplotype combination.}
 
-\item{hetmiss_as}{Treat heterozygous missing './X' as missing or allele.}
+\item{hetmiss_as}{If hetmiss_as = "allele", heterozygous-missing SNPs './N'
+are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
-\item{metadata}{Metadata input}
+\item{metadata}{Metadata input (optional).}
+
+\item{keep_outliers}{When FALSE, marker group smoothing is performed to
+remove outliers.}
 }
 \description{
-Performs density-based clustering of SNPs in region of interest to identify
-marker groups. Defines haplotype combinations and classifies individuals
-based on characteristic combinations of marker group alleles. Returns a
-comprehensive haplotyping object, required to build clustering tree and
-visualize haplotypes.
+run_haplotyping() performs density-based clustering of SNPs in region of
+interest to identify marker groups. Individuals are classified by haplotype
+combination based on shared combinations of marker group alleles. Returns a
+comprehensive haplotyping object (HapObject), which can be used as input to
+build clustering tree for epsilon optimization using run_clustree(), and
+can be visualized with reference to phenotype and metadata using
+crosshap_viz().
 }

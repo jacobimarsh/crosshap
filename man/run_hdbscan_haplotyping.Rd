@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_hdbscan_haplotyping.R
 \name{run_hdbscan_haplotyping}
 \alias{run_hdbscan_haplotyping}
-\title{Cluster SNPs and identify haplotypes with HDBscan}
+\title{Cluster SNPs with HDBSCAN and identify haplotypes}
 \usage{
 run_hdbscan_haplotyping(
   vcf,
@@ -18,24 +18,30 @@ run_hdbscan_haplotyping(
 \arguments{
 \item{vcf}{Input VCF for region of interest.}
 
-\item{LD}{Pairwise correlation matrix of SNPs in region from PLINK.}
+\item{LD}{Pairwise correlation matrix of SNPs in region (e.g. from PLINK).}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
 
-\item{MGmin}{Minimum SNPs in marker groups, MinPts parameter for HDBscan.}
+\item{MGmin}{Minimum SNPs in marker groups, MinPts parameter for DBscan.}
 
-\item{minHap}{Minimum nIndividuals to keep haplotype combinations.}
+\item{minHap}{Minimum nIndividuals in a haplotype combination.}
 
-\item{hetmiss_as}{Treat heterozygous missing './X' as missing or allele.}
+\item{hetmiss_as}{If hetmiss_as = "allele", heterozygous-missing SNPs './N'
+are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
-\item{metadata}{Metadata input}
+\item{metadata}{Metadata input (optional).}
 
-\item{keep_outliers}{Smoothing}
+\item{keep_outliers}{When FALSE, marker group smoothing is performed to
+remove outliers.}
+
+\item{epsilon}{Epsilon values for clustering SNPs with DBscan.}
 }
 \description{
-Performs density-based clustering of SNPs in region of interest to identify
-marker groups. Defines haplotype combinations and classifies individuals
-based on characteristic combinations of marker group alleles. Returns a
-comprehensive haplotyping object, required to build clustering tree and
-visualize haplotypes.
+run_hdbscan_haplotyping() performs HDBSCAN clustering of SNPs in region of
+interest to identify marker groups. Individuals are classified by haplotype
+combination based on shared combinations of marker group alleles. Returns a
+comprehensive haplotyping object (HapObject), which can be used as input to
+build clustering tree for epsilon optimization using run_clustree(), and
+can be visualized with reference to phenotype and metadata using
+crosshap_viz().
 }

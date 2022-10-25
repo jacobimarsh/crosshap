@@ -9,12 +9,16 @@ tagphenos(MGfile, bin_vcf, pheno)
 \arguments{
 \item{MGfile}{SNP marker groups clustered using DBscan.}
 
-\item{pheno}{Input numeric phenotype data for each individual.}
+\item{bin_vcf}{Binary VCF for region of interest reformatted by
+run_haplotyping().}
 
-\item{vcf}{Input VCF for region of interest.}
+\item{pheno}{Input numeric phenotype data for each individual.}
 }
 \description{
-Internal function that splits SNPs by their different allelic states and
-calculates frequencies across the population. In addition, the mean phenotype
-is calculated across all individuals that share a given allele for each loci.
+tagphenos() reports the frequency of allele types for each SNP and calculates
+phenotype associations for the different alleles, before returning this
+information in a $Varfile in a HapObject. This is an internal function that
+is not intended for external use, however a user could pass a
+HapObject$MGfile as input, with varying phenotype information to calculate
+associations with a range of traits.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/top_barplot.R
 \name{build_top_metaplot}
 \alias{build_top_metaplot}
-\title{Top Metadata-hap Plot}
+\title{Top metadata-hap bar plot}
 \usage{
 build_top_metaplot(HapObject, hide_labels)
 }
@@ -10,8 +10,9 @@ build_top_metaplot(HapObject, hide_labels)
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
 }
 \description{
-Internal function that creates a vertical stacked barplot representing the
+build_top_metaplot() builds a vertical stacked bar plot displaying the
 frequency of each haplotype combination, broken down by each categorical
-metadata variable. Makes use of the $Hapfile pseudoSNP count information. May
-be missing some axis to allow for 'crosshap' stitching.
+metadata variable provided. Makes use of the $Indfile information from a
+haplotype object. This is an in internal function called by crosshap_viz(),
+though can be called separately to build a stand-alone plot
 }

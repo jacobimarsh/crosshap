@@ -2,20 +2,24 @@
 % Please edit documentation in R/clustree_viz.R
 \name{run_clustree}
 \alias{run_clustree}
-\title{Visualize clusters}
+\title{Haplotype clustering tree}
 \usage{
 run_clustree(epsilon = c(0.4, 0.8, 1.2, 1.6, 2), MGmin, pheno, type = "MG")
 }
 \arguments{
-\item{epsilon}{Epsilon values to search.}
+\item{epsilon}{Epsilon values passed through run_haplotyping().}
+
+\item{MGmin}{MGmin values passed through run_haplotyping().}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
 
-\item{type}{Hap or MG clustree}
+\item{type}{When type = "hap", nodes represent haplotype populations, when
+type = "MG", nodes represent marker groups.}
 }
 \description{
-This function reads haplotype objects calculated for a range of epsilon
-values. It calculates the mean phenotypic value for each haplotype group
-and rearranges the data into a single sheet. Visualization is conducted using
-the clustree package, with labeling manually added afterward.
+run_clustree() builds a clustering tree displaying changes in haplotype
+assignment between individuals or changes in marker group assignment for
+SNPs, across different epsilon values provided to run_haplotyping(). Makes
+use of $Indfile and $Varfile information from HapObjects created by
+run_haplotyping(). This function is a clustree wrapper.
 }

@@ -2,23 +2,29 @@
 % Please edit documentation in R/pseudohaps.R
 \name{pseudo_haps}
 \alias{pseudo_haps}
-\title{Identify haplotypes from SNP clusters}
+\title{Identify haplotypes from clustered SNPs}
 \usage{
 pseudo_haps(preMGfile, bin_vcf, minHap, LD, keep_outliers)
 }
 \arguments{
 \item{preMGfile}{SNP clusters from DBscan.}
 
-\item{bin_vcf}{Input binary VCF for region of interest.}
+\item{bin_vcf}{Binary VCF for region of interest reformatted by
+run_haplotyping().}
 
 \item{minHap}{Minimum size (nIndividuals) to keep haplotype combinations}
 
-\item{LD}{LD matrix input}
+\item{LD}{LD matrix input.}
 
-\item{keep_outliers}{whether to keep outlier SNPs in MGs}
+\item{keep_outliers}{When FALSE, marker group smoothing is performed to
+remove outliers.}
 }
 \description{
-Internal function that calls the most common allelic states for each SNP
-marker group across individuals, returning dummy SNPs for each marker group
-mimicking the binary vcf format. Options to be added for treatment of heterozygotes.
+pseudo_haps() calls the most common allelic states for each SNP marker group
+across individuals, before building dummy SNPs for each marker group that
+mimic the binary vcf format. This is the step which determines the haplotype
+combinations, and therefore enables several summaries to be returned - as
+contained in the $Hapfile and preliminary $Indfile and finalised $MGfile,
+following marker group smoothing. This is an internal function not intended
+for external use.
 }

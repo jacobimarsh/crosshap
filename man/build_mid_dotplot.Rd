@@ -2,7 +2,7 @@
 % Please edit documentation in R/mid_dotplot.R
 \name{build_mid_dotplot}
 \alias{build_mid_dotplot}
-\title{Middle MG/Hap dotplot}
+\title{Middle MG/hap dot plot}
 \usage{
 build_mid_dotplot(HapObject, hide_labels)
 }
@@ -12,8 +12,10 @@ build_mid_dotplot(HapObject, hide_labels)
 \item{hide_labels}{}
 }
 \description{
-Internal function that creates central dotplot displaying the relationship
-between haplotype combinations and the characteristic marker groups they
-possess. Makes use of the $Hapfile 'pseudoSNP' information. Required as an
-anchor for all peripheral plots in the 'crosshap' visualization.
+build_mid_plot() builds a central dot plot displaying the relationship
+between haplotype combinations and the characteristic marker group alleles
+that define them. Makes use of the $Hapfile information from a haplotype
+object. This is an internal function called by crosshap_viz(), though can
+be called separately to build a stand-alone plot (can be useful when patched
+to a a peripheral plot).
 }
