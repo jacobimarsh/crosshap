@@ -11,6 +11,9 @@ build_left_alleleplot(HapObject, hide_labels = T)
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 build_left_alleleplot() builds a horizontal plot displaying mean allelic
 frequencies (reference/alternate/missing/heterozygous) of all SNP loci,

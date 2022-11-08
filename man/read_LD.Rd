@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{read_LD}
 \alias{read_LD}
-\title{Read correlation matrix between all SNPs in region}
+\title{Read LD correlation matrix to tibble}
 \usage{
 read_LD(LDin)
 }
@@ -10,8 +10,13 @@ read_LD(LDin)
 \item{LDin}{Correlation matrix output from PLINK}
 }
 \value{
-A read in table of blah.
+A tibble.
 }
 \description{
-Read correlation matrix between all SNPs in region
+Read LD correlation matrix to tibble
+}
+\examples{
+$ plink --r2 square --vcf your_region.vcf
+read_LD(plink.out)
+
 }

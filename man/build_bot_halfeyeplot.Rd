@@ -11,6 +11,9 @@ build_bot_halfeyeplot(HapObject, hide_labels = T)
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 build_bot_halfeyeplot() builds a vertical plot displaying the
 phenotypic scores for each individual, grouped by haplotype, coloured by

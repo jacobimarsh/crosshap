@@ -7,7 +7,7 @@
 mode(x)
 }
 \arguments{
-\item{x}{Placeholder for mode and mean functions.}
+\item{x}{Input vector}
 }
 \description{
 Utility functions and example data

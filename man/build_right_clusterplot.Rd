@@ -11,6 +11,9 @@ build_right_clusterplot(HapObject, hide_labels = F)
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 build_right_jitterplot() builds a horizontal plot displaying the mean
 pairwise R^2 linkage between each SNP and all other SNPs in its marker group,

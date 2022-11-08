@@ -8,7 +8,7 @@ crosshap_viz(
   HapObject,
   plot_left = "allele",
   plot_right = "cluster",
-  hide_labels = T
+  hide_labels = F
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ displayed.}
 \item{hide_labels}{When TRUE, legends from plots are hidden.}
 }
 \value{
-A dataframe
+A patchwork object.
 }
 \description{
 crosshap_viz() builds five individual plots using various elements of a

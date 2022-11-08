@@ -2,13 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{read_metadata}
 \alias{read_metadata}
-\title{Read metadat from two column text file without a header (Ind | Metadata)}
+\title{Read metadata to tibble}
 \usage{
 read_metadata(Metain)
 }
 \arguments{
 \item{Metain}{Input phenotype file}
 }
+\value{
+A tibble.
+}
 \description{
-Read metadat from two column text file without a header (Ind | Metadata)
+Requires two column text file without a header (Ind | Metadata)
 }

@@ -27,7 +27,7 @@ mean_na.rm <- function(x){
 #'
 #' @return A tibble.
 #'
-#' @example $ plink --r2 square --vcf your_region.vcf
+#' @examples $ plink --r2 square --vcf your_region.vcf
 #' read_LD(plink.out)
 #'
 
@@ -42,7 +42,7 @@ read_LD <- function(LDin){
 #'
 #' @return A tibble.
 #'
-#' @example $ bgzip your.vcf
+#' @examples $ bgzip your.vcf
 #' $ tabix -p vcf your.vcf
 #' $ tabix your.vcf.gz chr1:15,000,000-15,250,000 > your_region.vcf
 #' read_vcf(your_region.vcf)

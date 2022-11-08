@@ -2,13 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{read_pheno}
 \alias{read_pheno}
-\title{Read phenotype data from two column text file without a header (Ind | Pheno)}
+\title{Read phenotype data to tibble}
 \usage{
 read_pheno(Phenoin)
 }
 \arguments{
 \item{Phenoin}{Input phenotype file}
 }
+\value{
+A tibble.
+}
 \description{
-Read phenotype data from two column text file without a header (Ind | Pheno)
+Requires two column text file without a header (Ind | Pheno)
 }

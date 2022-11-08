@@ -11,6 +11,9 @@ build_right_phenoplot(HapObject, hide_labels)
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 build_right_phenoplot() builds a horizontal plot displaying the mean
 difference in phenotype score between individuals with the alternate vs

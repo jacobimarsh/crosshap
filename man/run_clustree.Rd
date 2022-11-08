@@ -4,7 +4,7 @@
 \alias{run_clustree}
 \title{Haplotype clustering tree}
 \usage{
-run_clustree(epsilon = c(0.4, 0.8, 1.2, 1.6, 2), MGmin, pheno, type = "MG")
+run_clustree(epsilon = c(0.2, 0.4, 0.6, 0.8, 1), MGmin, pheno, type = "MG")
 }
 \arguments{
 \item{epsilon}{Epsilon values passed through run_haplotyping().}
@@ -15,6 +15,9 @@ run_clustree(epsilon = c(0.4, 0.8, 1.2, 1.6, 2), MGmin, pheno, type = "MG")
 
 \item{type}{When type = "hap", nodes represent haplotype populations, when
 type = "MG", nodes represent marker groups.}
+}
+\value{
+A ggplot2 object.
 }
 \description{
 run_clustree() builds a clustering tree displaying changes in haplotype

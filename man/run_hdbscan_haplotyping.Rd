@@ -36,6 +36,10 @@ remove outliers.}
 
 \item{epsilon}{Epsilon values for clustering SNPs with DBscan.}
 }
+\value{
+A comprehensive haplotyping S3 object (HapObject) for each provided
+epsilon value, needed for run_clustree() and crosshap_viz().
+}
 \description{
 run_hdbscan_haplotyping() performs HDBSCAN clustering of SNPs in region of
 interest to identify marker groups. Individuals are classified by haplotype

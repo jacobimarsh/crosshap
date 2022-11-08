@@ -10,7 +10,7 @@ run_haplotyping(
   pheno,
   epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
   MGmin,
-  minHap = 5,
+  minHap = 9,
   hetmiss_as = "allele",
   metadata = NULL,
   keep_outliers = F
@@ -36,6 +36,10 @@ are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}
+}
+\value{
+A comprehensive haplotyping S3 object (HapObject) for each provided
+epsilon value, needed for run_clustree() and crosshap_viz().
 }
 \description{
 run_haplotyping() performs density-based clustering of SNPs in region of

@@ -7,7 +7,12 @@
 build_top_metaplot(HapObject, hide_labels)
 }
 \arguments{
-\item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+\item{HapObject}{Haplotype object created by run_haplotyping()}
+
+\item{hide_labels}{If TRUE, legend is hidden.}
+}
+\value{
+A ggplot2 object.
 }
 \description{
 build_top_metaplot() builds a vertical stacked bar plot displaying the

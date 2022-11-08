@@ -11,8 +11,11 @@ build_mid_dotplot(HapObject, hide_labels)
 
 \item{hide_labels}{}
 }
+\value{
+A ggplot2 object.
+}
 \description{
-build_mid_plot() builds a central dot plot displaying the relationship
+build_mid_dotplot() builds a central dot plot displaying the relationship
 between haplotype combinations and the characteristic marker group alleles
 that define them. Makes use of the $Hapfile information from a haplotype
 object. This is an internal function called by crosshap_viz(), though can

@@ -2,13 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{read_vcf}
 \alias{read_vcf}
-\title{Read VCF}
+\title{Read VCF to tibble}
 \usage{
 read_vcf(VCFin)
 }
 \arguments{
 \item{VCFin}{Input VCF}
 }
+\value{
+A tibble.
+}
 \description{
-Read VCF
+Read VCF to tibble
+}
+\examples{
+$ bgzip your.vcf
+$ tabix -p vcf your.vcf
+$ tabix your.vcf.gz chr1:15,000,000-15,250,000 > your_region.vcf
+read_vcf(your_region.vcf)
+
 }

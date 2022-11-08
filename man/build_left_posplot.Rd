@@ -11,6 +11,9 @@ build_left_posplot(HapObject, hide_labels = T)
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 build_left_alleleplot() builds a horizontal plot displaying the chromosomal
 position of each SNP locus, grouped by marker group.Makes use of the $MGfile
