@@ -22,7 +22,12 @@
 #'
 #' @export
 #'
+#' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
+#' epsilon value, needed for run_clustree() and crosshap_viz().
 #'
+#' @example run_hdbscan_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
+#'
+
 run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F){
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
     dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,

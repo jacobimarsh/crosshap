@@ -22,8 +22,13 @@
 #'
 #' @export
 #'
+#' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
+#' epsilon value, needed for run_clustree() and crosshap_viz().
 #'
-run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin, minHap = 5, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F) {
+#' @example run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
+#'
+
+run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin, minHap = 9, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F) {
     #Reformat VCF
 
   cli::cli_progress_bar(total = 4*length(epsilon) + 2

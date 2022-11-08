@@ -49,15 +49,13 @@ crosshap::run_haplotyping(vcf = prot_vcf,
                 LD = protLD,
                 pheno = prot_phen,
                 metadata = metadata,
-                epsilon = eps,
-                MGmin = 30,
-                minHap = 9)
+                MGmin = 30)
 
 prot_clustree <- crosshap::run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen)
 
-prot_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
+prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
 
 posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
 
@@ -88,23 +86,23 @@ run_haplotyping(vcf = prot_vcf,
 
 posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_E1, hide_labels = F, plot_left = "allele", plot_right = "cluster")
 
-#tprot <- tsne(protLD)
-#
-#pca_protLD <- prcomp(protLD)
-#
-#tprot_labeled <- tprot %>% rename("X" = "V3", "Y" = "V4","ID" = "POS") %>% mutate(Y = as.numeric(Y), X = as.numeric(X))
-#
-#tsne_prot_MG40_E2 <- Haplotypes_MGmin40_E2$MGfile %>% select(-POS) %>% left_join(tprot_labeled)
-#
-#ggplot(Haplotypes_MGmin40_E2.5$MGfile %>% select(-POS) %>%
-#         left_join(tprot_labeled), aes(X, Y)) +
-#  geom_point(aes(colour = factor(cluster)))
+tprot <- tsne(protLD)
+
+pca_protLD <- prcomp(protLD)
+
+tprot_labeled <- tprot %>% rename("X" = "V3", "Y" = "V4","ID" = "POS") %>% mutate(Y = as.numeric(Y), X = as.numeric(X))
+
+tsne_prot_MG40_E2 <- Haplotypes_MGmin30_E0.6$MGfile %>% select(-POS) %>% left_join(tprot_labeled)
+
+ggplot(Haplotypes_MGmin40_E2.5$MGfile %>% select(-POS) %>%
+         left_join(tprot_labeled), aes(X, Y)) +
+  geom_point(aes(colour = factor(cluster)))
 
 
 
 
 
-dbE1 <- build_right_clusterplot(Haplotypes_MGmin30_E1, hide_labels = T)
+dbE1 <- build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = T)
 
 Haplotypes_MGmin30_E1$MGfile %>% group_by(MGs) %>% summarise(groupvar = var(meanr2),
                                                              count = length(x = POS))
@@ -133,10 +131,14 @@ df1 = df %>%
   summarise_each(funs(mean), value)
 
 
+dbE1 <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
 
+smoothed <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
 
+unsmoothed <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
 
+outs_jit
 
-
+noouts_jit
 
 

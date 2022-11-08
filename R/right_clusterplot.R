@@ -13,16 +13,20 @@
 #'
 #' @export
 #'
+#' @return A ggplot2 object.
+#'
+#' @example build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 #'
 
 build_right_clusterplot <- function(HapObject, hide_labels = F) {
   right_clusterplot <-   ggplot2::ggplot() +
-    ggplot2::geom_jitter(data = dplyr::left_join(HapObject$MGfile, HapObject$Varfile, by = c("ID", "MGs")) %>% dplyr::filter(MGs != 0),
+    ggplot2::geom_boxplot(data = dplyr::left_join(HapObject$MGfile, HapObject$Varfile, by = c("ID", "MGs")) %>% dplyr::filter(MGs != 0),
                          ggplot2::aes(x = meanr2, y = MGs, fill = AltAF),
-                         alpha = 0.25, pch = 21, height = 0.25) +
+                         alpha = 0.25, pch = 21, height = 0.25, coef = 2) +
   ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF')  +
-    ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(),
-                                limits = c(0.5,1)) +
+    ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()
+                                ,limits = c(0.5,1)
+                               ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.title.y = ggplot2::element_blank(),
                    axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black"),

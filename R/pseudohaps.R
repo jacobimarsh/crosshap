@@ -18,9 +18,7 @@
 #' @param keep_outliers When FALSE, marker group smoothing is performed to
 #' remove outliers.
 #'
-#' @export
-#'
-#'
+
 pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
 
 ##Call allelic states for each SNP marker group across individuals

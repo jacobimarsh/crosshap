@@ -6,10 +6,14 @@
 #' haplotype object. This is an in internal function called by crosshap_viz(),
 #' though can be called separately to build a stand-alone plot
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
+#' @param HapObject Haplotype object created by run_haplotyping()
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'
+#' @return A ggplot2 object.
+#'
+#' @example build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 #'
 
 build_top_metaplot <- function(HapObject, hide_labels) {

@@ -12,9 +12,7 @@
 #' run_haplotyping().
 #' @param pheno Input numeric phenotype data for each individual.
 #'
-#' @export
-#'
-#'
+
 tagphenos <- function(MGfile, bin_vcf, pheno) {
 
 #Split by allele type

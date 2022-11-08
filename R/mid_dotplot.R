@@ -1,6 +1,6 @@
 #' Middle MG/hap dot plot
 #'
-#' build_mid_plot() builds a central dot plot displaying the relationship
+#' build_mid_dotplot() builds a central dot plot displaying the relationship
 #' between haplotype combinations and the characteristic marker group alleles
 #' that define them. Makes use of the $Hapfile information from a haplotype
 #' object. This is an internal function called by crosshap_viz(), though can
@@ -12,6 +12,9 @@
 #'
 #' @export
 #'
+#' @return A ggplot2 object.
+#'
+#' @example build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 #'
 
 build_mid_dotplot <- function(HapObject, hide_labels) {

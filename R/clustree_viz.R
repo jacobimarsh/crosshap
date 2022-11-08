@@ -14,8 +14,12 @@
 #'
 #' @export
 #'
+#' @return A ggplot2 object.
 #'
-run_clustree <- function(epsilon = c(0.4,0.8,1.2,1.6,2), MGmin, pheno, type = "MG") {
+#' @example run_clustree(MGmin = 30, pheno)
+#'
+
+run_clustree <- function(epsilon = c(0.2,0.4,0.6,0.8,1), MGmin, pheno, type = "MG") {
 #Extract ID file first epsilon value and change column name to hap_epsXX
 pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Indfile"]] %>%
     dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')

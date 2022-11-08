@@ -1,8 +1,6 @@
 #' Utility functions and example data
 #'
-#' @param x Placeholder for mode and mean functions.
-#'
-#' @export
+#' @param x Input vector
 #'
 
 mode <- function(x) {
@@ -12,59 +10,79 @@ mode <- function(x) {
 
 #' Utility functions and example data for mean
 #'
-#' @param x Placeholder for mode and mean functions.
+#' @param x Input vector
 #'
-#' @export
-#'
+
 mean_na.rm <- function(x){
   base::mean(x,na.rm=T)
 }
 
 
 
-#' Read correlation matrix between all SNPs in region
+#' Read LD correlation matrix to tibble
 #'
 #' @param LDin Correlation matrix output from PLINK
-#' @return A read in table of blah.
 #'
 #' @export
+#'
+#' @return A tibble.
+#'
+#' @example $ plink --r2 square --vcf your_region.vcf
+#' read_LD(plink.out)
+#'
+
 read_LD <- function(LDin){
   data.table::fread(LDin, nThread = 10) %>%  tibble::as_tibble() %>%  tibble::column_to_rownames("V1")
 }
 
-#' Read VCF
+#' Read VCF to tibble
 #'
 #' @param VCFin Input VCF
 #' @export
+#'
+#' @return A tibble.
+#'
+#' @example $ bgzip your.vcf
+#' $ tabix -p vcf your.vcf
+#' $ tabix your.vcf.gz chr1:15,000,000-15,250,000 > your_region.vcf
+#' read_vcf(your_region.vcf)
+#'
+
 read_vcf <- function(VCFin){
   data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
     dplyr::mutate(dplyr::across(dplyr::everything(),~ base::gsub(":.*","",base::gsub("/","|",.)))) %>%
-    dplyr::mutate(POS = as.numeric(POS))#%>%
-#    dplyr::select(-c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
-#    dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,base::ifelse(x=='1|0'|x=='0|1',1,base::ifelse(x=='1|1',2,'failsave')))})
+    dplyr::mutate(POS = as.numeric(POS))
 }
 
-#' @param VCFin Input VCF
-#' @describeIn readVCF read_VCF_pos
-#' @export
-position_vcf <- function(VCFin){
-  data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
-    dplyr::select(c(2,3))
-}
-
-#' Read phenotype data from two column text file without a header (Ind | Pheno)
+#' Read phenotype data to tibble
+#'
+#' Requires two column text file without a header (Ind | Pheno)
 #'
 #' @param Phenoin Input phenotype file
 #' @export
+#'
+#' @return A tibble.
+#'
+#' @example read_pheno(yield.txt)
+#'
+
 read_pheno <- function(Phenoin){
   data.table::fread(Phenoin) %>% tibble::as_tibble() %>%
     dplyr::rename('Ind' = V1, 'Pheno' = V2)
 }
 
-#' Read metadat from two column text file without a header (Ind | Metadata)
+#' Read metadata to tibble
+#'
+#' Requires two column text file without a header (Ind | Metadata)
 #'
 #' @param Metain Input phenotype file
 #' @export
+#'
+#' @return A tibble.
+#'
+#' @example read_metadata(country_of_origin.txt)
+#'
+
 read_metadata <- function(Metain){
   data.table::fread(Metain, header = F) %>% tibble::as_tibble() %>%
     dplyr::rename('Ind' = V1, 'Metadata' = V2)
