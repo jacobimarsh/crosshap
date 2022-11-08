@@ -2,6 +2,8 @@
 #'
 #' @param x Input vector
 #'
+#' @export
+#'
 
 mode <- function(x) {
   ux <- base::unique(x)
@@ -11,6 +13,8 @@ mode <- function(x) {
 #' Utility functions and example data for mean
 #'
 #' @param x Input vector
+#'
+#' @export
 #'
 
 mean_na.rm <- function(x){
