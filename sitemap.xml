@@ -10,7 +10,7 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/build_bot_jitterplot.html</loc>
+    <loc>/reference/build_bot_halfeyeplot.html</loc>
   </url>
   <url>
     <loc>/reference/build_left_alleleplot.html</loc>
@@ -23,9 +23,6 @@
   </url>
   <url>
     <loc>/reference/build_right_clusterplot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/build_right_jitterplot.html</loc>
   </url>
   <url>
     <loc>/reference/build_right_phenoplot.html</loc>
