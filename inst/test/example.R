@@ -48,19 +48,19 @@ eps <- seq(.2,1,by=.2)
 
 crosshap::run_haplotyping(vcf = vcf,
                 LD = LD,
-                pheno = pheno,MGmin = 30, minHap = 9
-)
-                #metadata = metadata,
+                metadata = metadata,
+                pheno = pheno,MGmin = 30, minHap = 9)
+                #
 
 
-prot_clustree <- crosshap::run_clustree(epsilon = eps,
+prot_clustree <- run_clustree(epsilon = eps,
                               MGmin = 30,
                               pheno = prot_phen,
                               type = 'hap')
 
 prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
 
-posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin29_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
+posplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_E1, hide_labels = F, plot_left = "pos", plot_right = "cluster")
 
 hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_EX, hide_labels = F, plot_left = "pos", plot_right = "cluster")
 
@@ -146,9 +146,9 @@ outs_jit
 noouts_jit
 
 
-umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+umap_in2 <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
 
-pre_anim_gg <- prepare_umap(umap_in,
+pre_anim_gg <- prepare_hap_umap(umap_in2,
                             HapObject = Haplotypes_MGmin30_E0.6,
                             vcf = vcf,
                             nsamples = 25)
@@ -167,10 +167,10 @@ gganimate::animate(
   width  = 6,
   height = 6,
   units = "in",
-  nframes = 2
+  nframes = 25
 )
 
-
+colnames(vcf) <- gsub('-','.',colnames(vcf))
 
 gganimate::anim_save("hap_anim_cols.gif", hap_anim)
 

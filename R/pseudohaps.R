@@ -21,6 +21,8 @@
 #' @param keep_outliers When FALSE, marker group smoothing is performed to
 #' remove outliers.
 #'
+#' @export
+#'
 
 pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_outliers) {
 

@@ -19,6 +19,7 @@
 #' are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.
 #' @param het_as If het_as = "alt", heterozygous SNPs are treated as 'ALT/ALT'
 #' alleles, if het_as = "ref", if het_as = "ref", they are kept as 'REF/REF'.
+#' (NOT IMPLEMENTED)
 #'
 #' @export
 #'
@@ -75,19 +76,19 @@ for (i in c(ifelse("0" %in% HapObject$Indfile$hap, 0, NULL),HapObject$Hapfile$ha
 }
 framenum_ID <- framenum_ID %>% dplyr::rename(Frame = V1, Ind = V2)
 
-## xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
-##   dplyr::left_join(framenum_ID, by = 'Ind') %>%
-##   dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))) %>%
-##   dplyr::mutate(MG_cols = ifelse(!is.na(allele), MGs, NA)) %>%
-##   dplyr::mutate(MG_cols = ifelse(!is.na(allele) & is.na(MGs),0,MG_cols)) %>%
-##   dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
-
 xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
   dplyr::left_join(framenum_ID, by = 'Ind') %>%
   dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))) %>%
-  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)), MGs, NA)) %>%
-  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)) & is.na(MGs),0,MG_cols)) %>%
+  dplyr::mutate(MG_cols = ifelse(!is.na(allele), MGs, NA)) %>%
+  dplyr::mutate(MG_cols = ifelse(!is.na(allele) & is.na(MGs),0,MG_cols)) %>%
   dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
+
+#xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
+#  dplyr::left_join(framenum_ID, by = 'Ind') %>%
+#  dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))) %>%
+#  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)), MGs, NA)) %>%
+#  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)) & is.na(MGs),0,MG_cols)) %>%
+#  dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
 
 
 pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), dplyr::desc(MG_cols)) , ggplot2::aes(x = UMAP1, y = UMAP2)) +
@@ -95,8 +96,9 @@ pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), 
   ggplot2::geom_text(data = framenum_ID %>% dplyr::mutate(allele = 1:nrow(framenum_ID)) %>%
                        dplyr::left_join(HapObject$Indfile, by = "Ind") %>%
                        dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))),
-                     mapping = ggplot2::aes(x = -Inf, y = Inf, label = Ind), hjust = 0, vjust = 1, size = 3) +
+                     mapping = ggplot2::aes(x = 1.05*min(xyvl_framenum$UMAP2), y = 1.05*max(xyvl_framenum$UMAP1), label = Ind), hjust = 0, vjust = 1, size = 2.5) +
   ggplot2::theme_void() +
+  ggplot2::theme(panel.border = ggplot2::element_rect(colour = 'grey90', size = 1, fill = NA)) +
     ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Alt allele"))
 return(pre_anim_gg)
