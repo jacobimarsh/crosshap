@@ -80,6 +80,7 @@ read_pheno <- function(Phenoin){
 #' Requires two column text file without a header (Ind | Metadata)
 #'
 #' @param Metain Input phenotype file
+#'
 #' @export
 #'
 #' @return A tibble.

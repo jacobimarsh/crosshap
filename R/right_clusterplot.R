@@ -1,4 +1,4 @@
-#' Right SNP cluster linkage plot
+#' Right intra-cluster linkage plot
 #'
 #'
 #' build_right_jitterplot() builds a horizontal plot displaying the mean

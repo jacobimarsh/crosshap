@@ -12,6 +12,7 @@ run_haplotyping(
   MGmin,
   minHap = 9,
   hetmiss_as = "allele",
+  het_as = "alt",
   metadata = NULL,
   keep_outliers = F
 )
@@ -31,6 +32,10 @@ run_haplotyping(
 
 \item{hetmiss_as}{If hetmiss_as = "allele", heterozygous-missing SNPs './N'
 are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
+
+\item{het_as}{If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
+recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
+"het", they are kept as 'REF/ALT'.}
 
 \item{metadata}{Metadata input (optional).}
 

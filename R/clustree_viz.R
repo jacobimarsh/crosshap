@@ -47,7 +47,7 @@ haptree <- base::suppressMessages(
 #Extract x and ay coordinates from clustree object and build labels
 haplbls <-
   tibble::tibble(xval = base::max(haptree[["data"]][["x"]])*1.1,
-         yval=0:(base::length(epsilon)-1),
+         yval=(base::length(epsilon)-1):0,
          labelval = base::paste0("\u03b5"," = ",epsilon))
 
 #Re-plot with epsilon label data added
@@ -77,7 +77,7 @@ clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'percdiff',node
 #Extract x and ay coordinates from clustree object and build labels
 MGlbls <-
   tibble::tibble(xval = base::max(MGtree[["data"]][["x"]])*1.1,
-                 yval=0:(base::length(epsilon)-1),
+                 yval=(base::length(epsilon)-1):0,
                  labelval = base::paste0("\u03b5"," = ",epsilon))
 
 #Re-plot with epsilon label data added

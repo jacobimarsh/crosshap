@@ -2,7 +2,7 @@
 % Please edit documentation in R/left_posplot.R
 \name{build_left_posplot}
 \alias{build_left_posplot}
-\title{Left SNP position plot}
+\title{Left SNP-position plot}
 \usage{
 build_left_posplot(HapObject, hide_labels = T)
 }

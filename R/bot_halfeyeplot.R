@@ -1,4 +1,4 @@
-#' Bot hap-pheno halfeye plot
+#' Bot hap-pheno raincloud plot
 #'
 #' build_bot_halfeyeplot() builds a vertical plot displaying the
 #' phenotypic scores for each individual, grouped by haplotype, coloured by

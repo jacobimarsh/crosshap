@@ -4,7 +4,7 @@
 \alias{pseudo_haps}
 \title{Identify haplotypes from clustered SNPs}
 \usage{
-pseudo_haps(preMGfile, bin_vcf, minHap, LD, keep_outliers)
+pseudo_haps(preMGfile, bin_vcf, minHap, LD, het_as = "het", keep_outliers)
 }
 \arguments{
 \item{preMGfile}{SNP clusters from DBscan.}
@@ -15,6 +15,10 @@ run_haplotyping().}
 \item{minHap}{Minimum size (nIndividuals) to keep haplotype combinations}
 
 \item{LD}{LD matrix input.}
+
+\item{het_as}{If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
+recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
+"het", they are kept as 'REF/ALT'.}
 
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}

@@ -16,7 +16,8 @@ MGmin <- 30
 minHap <- 9
 
 
-crosshap::run_haplotyping(epsilon = epsilon, vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap)
+
+crosshap::run_haplotyping(epsilon = epsilon, vcf = vcf, LD = LD, pheno = phen_early, MGmin = MGmin, minHap = minHap, )
 ##Visualize differences between clusters based on epsilon value input to DBscan
 labeled_haptree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early, type = "hap")
 labeled_MGtree <- crosshap::run_clustree(MGmin = MGmin, pheno = phen_early)
@@ -49,11 +50,13 @@ crosshap::run_haplotyping(vcf = prot_vcf,
                 LD = protLD,
                 pheno = prot_phen,
                 metadata = metadata,
-                MGmin = 30)
+                MGmin = 30, minHap = 9
+                )
 
 prot_clustree <- crosshap::run_clustree(epsilon = eps,
                               MGmin = 30,
-                              pheno = prot_phen)
+                              pheno = prot_phen,
+                              type = 'hap')
 
 prot_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_right = "cluster")
 
@@ -66,7 +69,8 @@ run_hdbscan_haplotyping(vcf = prot_vcf,
                         pheno = prot_phen,
                         metadata = metadata,
                         MGmin = 30,
-                        minHap =9
+                        minHap =9,
+                        keep_outliers = F
 )
 
 hdbposplot_prot_viz <- crosshap_viz(Haplotypes_MGmin30_HDBSCAN, hide_labels = F, plot_left = "allele", plot_right = "cluster")
@@ -135,10 +139,59 @@ dbE1 <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
 
 smoothed <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
 
-unsmoothed <- build_right_clusterplot(Haplotypes_MGmin30_E0.4, hide_labels = T)
+smoothed <- build_right_clusterplot(Haplotypes_MGmin30_HDBSCAN, hide_labels = T)
 
 outs_jit
 
 noouts_jit
+
+
+umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+
+pre_anim_gg <- prepare_umap(umap_in,
+                            HapObject = Haplotypes_MGmin30_E0.6,
+                            vcf = vcf,
+                            nsamples = 25)
+
+hap_gganim <- pre_anim_gg +
+  ggplot2::facet_wrap(~hap)+
+  gganimate::transition_states(Frame,
+                    transition_length = 0,
+                    state_length = 1)
+
+gganimate::animate(
+  hap_gganim,
+  renderer = gganimate::gifski_renderer(),
+  fps = 3,
+  res = 300,
+  width  = 6,
+  height = 6,
+  units = "in",
+  nframes = 2
+)
+
+
+
+gganimate::anim_save("hap_anim_cols.gif", hap_anim)
+
+
+
+
+
+
+
+
+
+
+
+
+layout <- "DAE
+FFF"
+
+#base::message(paste0("Stitching plots"))
+crosshap_stitched <-
+  patchwork::wrap_plots(mid, left, right) +
+  patchwork::guide_area() +
+  patchwork::plot_layout(design = layout, guides = "collect")
 
 

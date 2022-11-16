@@ -1,4 +1,4 @@
-#' Left SNP position plot
+#' Left SNP-position plot
 #'
 #' build_left_alleleplot() builds a horizontal plot displaying the chromosomal
 #' position of each SNP locus, grouped by marker group.Makes use of the $MGfile

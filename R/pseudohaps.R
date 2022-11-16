@@ -15,11 +15,14 @@
 #' run_haplotyping().
 #' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
 #' @param LD LD matrix input.
+#' @param het_as If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
+#' recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
+#' "het", they are kept as 'REF/ALT'.
 #' @param keep_outliers When FALSE, marker group smoothing is performed to
 #' remove outliers.
 #'
 
-pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
+pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_outliers) {
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
@@ -49,28 +52,33 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
   }
 
 #Convert heterozygous marker groups to homozygous alternate (optional)
-  het_pseudoSNP <- pseudoSNP %>%
+  if(het_as == "alt"){
+  pseudoSNP <- pseudoSNP %>%
     dplyr::mutate_if(is.numeric,function(x) {base::gsub(1, 2, x,fixed = T, )})
+  }else{
+    pseudoSNP <- pseudoSNP %>%
+      dplyr::mutate_all((as.character))
+  }
 
 ##Identify haplotype frequencies from different marker group combinations
 
-  cnames <- base::colnames(dplyr::select(het_pseudoSNP, -Ind))
+  cnames <- base::colnames(dplyr::select(pseudoSNP, -Ind))
 
-  het_hapCounts <- het_pseudoSNP %>%
+  hapCounts <- pseudoSNP %>%
     tidyr::gather(mgs,value,2:base::ncol(.)) %>%
     dplyr::group_by(Ind) %>%
     dplyr::mutate(mgs_new=base::paste(value, collapse = '_')) %>%
     dplyr::group_by(mgs_new) %>%
-    dplyr::tally() %>% dplyr::mutate(n=n/(base::ncol(het_pseudoSNP)-1)) %>%
+    dplyr::tally() %>% dplyr::mutate(n=n/(base::ncol(pseudoSNP)-1)) %>%
     tidyr::separate(col = mgs_new, into = cnames, sep = "_") %>%
     tibble::as_tibble() %>%
     dplyr::arrange(by_group = -n)
 
-  over20_hhCounts <- dplyr::filter(het_hapCounts, n > minHap) %>%
+  over20_hhCounts <- dplyr::filter(hapCounts, n > minHap) %>%
     dplyr::mutate(hap=LETTERS[1:base::nrow(.)])
 
   base::suppressMessages(
-    clustered_hpS <- dplyr::left_join(het_pseudoSNP, over20_hhCounts, by = c(as.character(1:max(db40_cvel$cluster)))) %>%
+    clustered_hpS <- dplyr::left_join(pseudoSNP, over20_hhCounts, by = c(as.character(1:max(db40_cvel$cluster)))) %>%
                            dplyr::mutate_if(is.character,function(x){tidyr::replace_na(x, '0')}) %>%
                            dplyr::select(1,base::ncol(.))
     )

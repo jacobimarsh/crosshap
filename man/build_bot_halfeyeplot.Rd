@@ -2,7 +2,7 @@
 % Please edit documentation in R/bot_halfeyeplot.R
 \name{build_bot_halfeyeplot}
 \alias{build_bot_halfeyeplot}
-\title{Bot hap-pheno halfeye plot}
+\title{Bot hap-pheno raincloud plot}
 \usage{
 build_bot_halfeyeplot(HapObject, hide_labels = T)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/left_alleleplot.R
 \name{build_left_alleleplot}
 \alias{build_left_alleleplot}
-\title{Left SNP-info allele plot}
+\title{Left SNP-allele plot}
 \usage{
 build_left_alleleplot(HapObject, hide_labels = T)
 }

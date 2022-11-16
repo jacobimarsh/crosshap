@@ -1,4 +1,4 @@
-#' Left SNP-info allele plot
+#' Left SNP-allele plot
 #'
 #' build_left_alleleplot() builds a horizontal plot displaying mean allelic
 #' frequencies (reference/alternate/missing/heterozygous) of all SNP loci,

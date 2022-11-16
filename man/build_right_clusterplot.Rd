@@ -2,7 +2,7 @@
 % Please edit documentation in R/right_clusterplot.R
 \name{build_right_clusterplot}
 \alias{build_right_clusterplot}
-\title{Right SNP cluster linkage plot}
+\title{Right intra-cluster linkage plot}
 \usage{
 build_right_clusterplot(HapObject, hide_labels = F)
 }
