@@ -1,0 +1,60 @@
+---
+title: "crosshap alpha testing"
+format: html
+editor: visual
+---
+
+## Ready
+
+```{r}
+library(crosshap)
+library(umap)
+library(gganimate)
+
+
+LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/LD_173kb.mtx")
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/prot_phen.txt")
+vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/fin_b51_173kb_only.vcf")
+metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_data/data/labmeeting/namepopfile.txt')
+```
+
+```{r}
+crosshap::run_haplotyping(vcf = vcf,
+                LD = LD,
+                metadata = metadata,
+                pheno = pheno,
+                MGmin = 30, 
+                minHap = 9)
+
+hap_clustree <- crosshap::run_clustree(epsilon = eps,
+                              MGmin = 30,
+                              pheno = pheno,
+                              type = 'hap')
+
+MG_clustree <- crosshap::run_clustree(epsilon = eps, MGmin = 30, pheno = pheno, type = 'MG')
+```
+
+```{r}
+umap_in2 <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+
+pre_anim_gg <- crosshap::prepare_hap_umap(umap_in2, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
+
+hap_gganim <- pre_anim_gg +
+  ggplot2::facet_wrap(~hap)+
+  gganimate::transition_states(Frame,
+                    transition_length = 0,
+                    state_length = 1)
+
+gganimate::animate(
+  hap_gganim,
+  renderer = gganimate::gifski_renderer(),
+  fps = 3,
+  res = 300,
+  width  = 6,
+  height = 6,
+  units = "in",
+  nframes = 25
+)
+
+gganimate::anim_save("hap_anim_cols.gif", hap_anim)
+```
