@@ -25,7 +25,10 @@ mean_na.rm <- function(x){
 
 #' Read LD correlation matrix to tibble
 #'
-#' @param LDin Correlation matrix output from PLINK
+#' If your correlation matrix does not have rownames and column names, a VCF
+#' will need to be provided so it can be added with read_LD().
+#'
+#' @param LDin Square correlation matrix
 #'
 #' @export
 #'
@@ -35,11 +38,23 @@ mean_na.rm <- function(x){
 #' read_LD(plink.out)
 #'
 
-read_LD <- function(LDin){
-  data.table::fread(LDin, nThread = 10) %>%  tibble::as_tibble() %>%  tibble::column_to_rownames("V1")
-}
+read_LD <- function(LDin, vcf = NULL){
+  if(is.null(vcf)){
+    LD <- data.table::fread(LDin, nThread = 10) %>%  tibble::as_tibble() %>%  tibble::column_to_rownames("V1")
+  } else{
+    LD <- data.table::fread(LDin, nThread = 10, header = F) %>%
+      tibble::as_tibble() %>%
+      dplyr::mutate(tempID = vcf$ID) %>%
+      tibble::column_to_rownames("tempID")
+    colnames(LD) <- vcf$ID
+  }
+  return(LD)
+  }
 
 #' Read VCF to tibble
+#'
+#' Dashes,'-', in individual names are recoded to '.' for downstream
+#' compatability.
 #'
 #' @param VCFin Input VCF
 #' @export
@@ -53,9 +68,12 @@ read_LD <- function(LDin){
 #'
 
 read_vcf <- function(VCFin){
-  data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
+  vcf <- data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
     dplyr::mutate(dplyr::across(dplyr::everything(),~ base::gsub(":.*","",base::gsub("/","|",.)))) %>%
     dplyr::mutate(POS = as.numeric(POS))
+
+  colnames(vcf) <- gsub('-','.',colnames(vcf))
+  return(vcf)
 }
 
 #' Read phenotype data to tibble

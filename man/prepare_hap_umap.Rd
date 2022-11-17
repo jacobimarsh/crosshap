@@ -20,7 +20,8 @@ prepare_hap_umap(
 are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
 \item{het_as}{If het_as = "alt", heterozygous SNPs are treated as 'ALT/ALT'
-alleles, if het_as = "ref", if het_as = "ref", they are kept as 'REF/REF'.}
+alleles, if het_as = "ref", if het_as = "ref", they are kept as 'REF/REF'.
+(NOT IMPLEMENTED)}
 
 \item{HapObject}{Haplotype object created by run_haplotyping().}
 
