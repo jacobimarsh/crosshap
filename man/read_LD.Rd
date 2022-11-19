@@ -4,16 +4,17 @@
 \alias{read_LD}
 \title{Read LD correlation matrix to tibble}
 \usage{
-read_LD(LDin)
+read_LD(LDin, vcf = NULL)
 }
 \arguments{
-\item{LDin}{Correlation matrix output from PLINK}
+\item{LDin}{Square correlation matrix}
 }
 \value{
 A tibble.
 }
 \description{
-Read LD correlation matrix to tibble
+If your correlation matrix does not have rownames and column names, a VCF
+will need to be provided so it can be added with read_LD().
 }
 \examples{
 $ plink --r2 square --vcf your_region.vcf

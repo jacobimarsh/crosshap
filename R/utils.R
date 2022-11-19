@@ -1,16 +1,16 @@
-#' Utility functions and example data
+#' Mode utility function
 #'
 #' @param x Input vector
 #'
 #' @export
 #'
 
-mode <- function(x) {
+arith_mode <- function(x) {
   ux <- base::unique(x)
   ux[base::which.max(base::tabulate(base::match(x, ux)))]
 }
 
-#' Utility functions and example data for mean
+#' Mean utility function
 #'
 #' @param x Input vector
 #'
@@ -89,8 +89,10 @@ read_vcf <- function(VCFin){
 #'
 
 read_pheno <- function(Phenoin){
-  data.table::fread(Phenoin) %>% tibble::as_tibble() %>%
-    dplyr::rename('Ind' = V1, 'Pheno' = V2)
+  data.table::fread(Phenoin, header = F) %>% tibble::as_tibble() %>%
+    dplyr::filter(V1 !='Ind' & V2 != 'Pheno') %>%
+    dplyr::rename('Ind' = V1, 'Pheno' = V2) %>%
+    dplyr::mutate(Ind = gsub('-','.',Ind), Pheno = as.double(Pheno))
 }
 
 #' Read metadata to tibble
@@ -108,7 +110,9 @@ read_pheno <- function(Phenoin){
 
 read_metadata <- function(Metain){
   data.table::fread(Metain, header = F) %>% tibble::as_tibble() %>%
-    dplyr::rename('Ind' = V1, 'Metadata' = V2)
+    dplyr::filter(V1 !='Ind' & V2 != 'Metadata') %>%
+    dplyr::rename('Ind' = V1, 'Metadata' = V2) %>%
+    dplyr::mutate(Ind = gsub('-','.',Ind), Metadata = gsub('-','.',Metadata))
 }
 
 

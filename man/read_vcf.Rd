@@ -13,7 +13,8 @@ read_vcf(VCFin)
 A tibble.
 }
 \description{
-Read VCF to tibble
+Dashes,'-', in individual names are recoded to '.' for downstream
+compatability.
 }
 \examples{
 $ bgzip your.vcf

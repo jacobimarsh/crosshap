@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{mean_na.rm}
 \alias{mean_na.rm}
-\title{Utility functions and example data for mean}
+\title{Mean utility function}
 \usage{
 mean_na.rm(x)
 }
@@ -10,5 +10,5 @@ mean_na.rm(x)
 \item{x}{Input vector}
 }
 \description{
-Utility functions and example data for mean
+Mean utility function
 }

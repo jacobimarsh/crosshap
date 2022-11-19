@@ -21,7 +21,7 @@
 build_right_clusterplot <- function(HapObject, hide_labels = F) {
   right_clusterplot <-   ggplot2::ggplot() +
     ggplot2::geom_boxplot(data = dplyr::left_join(HapObject$MGfile, HapObject$Varfile, by = c("ID", "MGs")) %>% dplyr::filter(MGs != 0),
-                         ggplot2::aes(x = meanr2, y = MGs, fill = AltAF),
+                         ggplot2::aes(x = meanr2, y = MGs),
                          alpha = 0.25, pch = 21, #height = 0.25,
                          coef = 2) +
   ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF')  +

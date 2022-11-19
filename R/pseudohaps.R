@@ -34,7 +34,7 @@ pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_out
     tibble::rownames_to_column() %>% dplyr::filter(rowname %in% db40_c1$ID) %>% tibble::column_to_rownames()
 
 #Calculate most common (alternate or ref) allele for MG1 across all individuals
-  i_modes_1 <- base::apply(c1_vcf %>% base::sapply(as.double), 2, crosshap::mode) %>% tibble::as_tibble() %>%
+  i_modes_1 <- base::apply(c1_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble() %>%
     dplyr::pull(value)
 
 #Build a dummy VCF with one pseudoSNP position (MG1)
@@ -48,7 +48,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
     cvel_vcf <- bin_vcf %>%
       tibble::rownames_to_column() %>% dplyr::filter(rowname %in% db40_cvel$ID) %>% tibble::column_to_rownames()
     i_modes_vel <-
-      base::apply(cvel_vcf %>% base::sapply(as.double), 2, mode) %>% tibble::as_tibble()
+      base::apply(cvel_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble()
     pseudoSNP <- dplyr::bind_cols(pseudoSNP, i_modes_vel)
     base::colnames(pseudoSNP)[vel + 1] <- base::paste0(vel)
   }

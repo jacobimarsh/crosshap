@@ -25,19 +25,28 @@ crosshap::run_haplotyping(vcf = vcf,
                 pheno = pheno,
                 MGmin = 30, 
                 minHap = 9)
-
-hap_clustree <- crosshap::run_clustree(epsilon = eps,
-                              MGmin = 30,
-                              pheno = pheno,
-                              type = 'hap')
-
-MG_clustree <- crosshap::run_clustree(epsilon = eps, MGmin = 30, pheno = pheno, type = 'MG')
 ```
 
 ```{r}
-umap_in2 <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+hap_clustree <- crosshap::run_clustree(MGmin = 30,
+                              pheno = pheno,
+                              type = 'hap')
 
-pre_anim_gg <- crosshap::prepare_hap_umap(umap_in2, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
+MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG')
+```
+
+```{r}
+Hap2_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6)
+
+
+Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos", plot_right = "pheno")
+
+```
+
+```{r}
+umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+
+pre_anim_gg <- crosshap::prepare_hap_umap(umap_in, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
 
 hap_gganim <- pre_anim_gg +
   ggplot2::facet_wrap(~hap)+
@@ -56,5 +65,5 @@ gganimate::animate(
   nframes = 25
 )
 
-gganimate::anim_save("hap_anim_cols.gif", hap_anim)
+gganimate::anim_save("hap_anim_cols.gif", hap_gganim)
 ```
