@@ -8,12 +8,12 @@ run_haplotyping(
   vcf,
   LD,
   pheno,
+  metadata = NULL,
   epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
   MGmin,
   minHap = 9,
   hetmiss_as = "allele",
   het_as = "alt",
-  metadata = NULL,
   keep_outliers = F
 )
 }
@@ -23,6 +23,8 @@ run_haplotyping(
 \item{LD}{Pairwise correlation matrix of SNPs in region (e.g. from PLINK).}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
+
+\item{metadata}{Metadata input (optional).}
 
 \item{epsilon}{Epsilon values for clustering SNPs with DBscan.}
 
@@ -36,8 +38,6 @@ are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 \item{het_as}{If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
 recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
 "het", they are kept as 'REF/ALT'.}
-
-\item{metadata}{Metadata input (optional).}
 
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}

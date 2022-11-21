@@ -10,6 +10,7 @@
 #'
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
+#' @param metadata Metadata input (optional).
 #' @param pheno Input numeric phenotype data for each individual.
 #' @param epsilon Epsilon values for clustering SNPs with DBscan.
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
@@ -19,7 +20,6 @@
 #' @param het_as If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
 #' recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
 #' "het", they are kept as 'REF/ALT'.
-#' @param metadata Metadata input (optional).
 #' @param keep_outliers When FALSE, marker group smoothing is performed to
 #' remove outliers.
 #'
@@ -31,9 +31,10 @@
 #' @example run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
 #'
 
-run_haplotyping <- function(vcf, LD, pheno, epsilon = c(0.2,0.4,0.6,0.8,1),
+run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
+                            epsilon = c(0.2,0.4,0.6,0.8,1),
                             MGmin, minHap = 9, hetmiss_as = 'allele',
-                            het_as = 'alt', metadata = NULL, keep_outliers = F){
+                            het_as = 'alt', keep_outliers = F){
     #Reformat VCF
 
   cli::cli_progress_bar(total = 4*length(epsilon) + 2
