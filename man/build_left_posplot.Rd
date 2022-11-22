@@ -16,7 +16,7 @@ A ggplot2 object.
 }
 \description{
 build_left_alleleplot() builds a horizontal plot displaying the chromosomal
-position of each SNP locus, grouped by marker group.Makes use of the $MGfile
+position of each SNP locus, grouped by marker group.Makes use of the $Varfile
 position from haplotype object. It is an internal function called by
 crosshap_viz(), though can be called separately to build a stand-alone plot.
 }

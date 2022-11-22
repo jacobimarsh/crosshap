@@ -4,9 +4,9 @@
 #' build_right_jitterplot() builds a horizontal plot displaying the mean
 #' pairwise R^2 linkage between each SNP and all other SNPs in its marker group,
 #' grouped by marker group, coloured by alternate allele frequency. Makes use of
-#' the $Varfile and $MGfile information from haplotyping object. It is an
-#' internal function called by crosshap_viz(), though can be called separately
-#' to build a stand-alone plot.
+#' the $Varfile information from haplotyping object. It is an internal function
+#' called by crosshap_viz(), though can be called separately to build a
+#' stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels If TRUE, legend is hidden.
@@ -20,7 +20,7 @@
 
 build_right_clusterplot <- function(HapObject, hide_labels = F) {
   right_clusterplot <-   ggplot2::ggplot() +
-    ggplot2::geom_boxplot(data = dplyr::left_join(HapObject$MGfile, HapObject$Varfile, by = c("ID", "MGs")) %>% dplyr::filter(MGs != 0),
+    ggplot2::geom_boxplot(data = HapObject$Varfile %>% dplyr::filter(MGs != 0),
                          ggplot2::aes(x = meanr2, y = MGs),
                          alpha = 0.25, pch = 21, #height = 0.25,
                          coef = 2) +

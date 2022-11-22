@@ -52,15 +52,15 @@ ID_bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID
                                                                               "miss" = NA))))}) %>%
   tibble::rownames_to_column('ID')
 
-x_y_MGfile <-
+x_y_Varfile <-
   umap_in$layout %>% dplyr::as_tibble() %>%
-  cbind(rownames(umap_in$data)) %>% dplyr::as_tibble() %>%
+  cbind(rownames(umap_in$data)) %>% dplyr::as_tibble(.name_repair = 'unique') %>%
   dplyr::rename(UMAP1 = V1, UMAP2 = V2, ID = 'rownames(umap_in$data)') %>%
-  dplyr::left_join(HapObject$MGfile %>%
+  dplyr::left_join(HapObject$Varfile %>%
                      dplyr::select(ID, MGs, cluster), by = "ID") %>%
   dplyr::mutate(cluster = as.character(cluster))
 
-x_y_vcf <- dplyr::left_join(x_y_MGfile, ID_bin_vcf, by = "ID")
+x_y_vcf <- dplyr::left_join(x_y_Varfile, ID_bin_vcf, by = "ID")
 
 x_y_vcf[x_y_vcf == "0"] <- NA
 
@@ -83,14 +83,6 @@ xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
   dplyr::mutate(MG_cols = ifelse(!is.na(allele) & is.na(MGs),0,MG_cols)) %>%
   dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
 
-#xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
-#  dplyr::left_join(framenum_ID, by = 'Ind') %>%
-#  dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))) %>%
-#  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)), MGs, NA)) %>%
-#  dplyr::mutate(MG_cols = ifelse(allele == ifelse(het_as == "ref",2,c(1,2)) & is.na(MGs),0,MG_cols)) %>%
-#  dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
-
-
 pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), dplyr::desc(MG_cols)) , ggplot2::aes(x = UMAP1, y = UMAP2)) +
   ggplot2::geom_point(alpha = 0.4, ggplot2::aes(colour = MG_cols), size = 0.25)  +
   ggplot2::geom_text(data = framenum_ID %>% dplyr::mutate(allele = 1:nrow(framenum_ID)) %>%
@@ -98,7 +90,7 @@ pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), 
                        dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))),
                      mapping = ggplot2::aes(x = 1.05*min(xyvl_framenum$UMAP2), y = 1.05*max(xyvl_framenum$UMAP1), label = Ind), hjust = 0, vjust = 1, size = 2.5) +
   ggplot2::theme_void() +
-  ggplot2::theme(panel.border = ggplot2::element_rect(colour = 'grey90', size = 1, fill = NA)) +
+  ggplot2::theme(panel.border = ggplot2::element_rect(colour = 'grey90', linewidth = 1, fill = NA)) +
     ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Alt allele"))
 return(pre_anim_gg)

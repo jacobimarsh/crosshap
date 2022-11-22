@@ -47,7 +47,7 @@ if(!("het" %in% colnames(noNA_preVarfile))){
 noNA_preVarfile$MGs[is.na(noNA_preVarfile$MGs)] <- "0"
 noNA_preVarfile[is.na(noNA_preVarfile)] <- 0
 
-Varfile <- preVarfile %>% dplyr::select(-nInd) %>%
+Varfile <-  preVarfile %>% dplyr::select(-nInd) %>%
             tidyr::spread(key, avPheno) %>%
             dplyr::rename(dplyr::any_of(types)) %>%
             dplyr::mutate(percdiff = alt - ref) %>%
@@ -55,7 +55,10 @@ Varfile <- preVarfile %>% dplyr::select(-nInd) %>%
             dplyr::select(ID, percdiff) %>%
             dplyr::left_join(noNA_preVarfile %>%
                               dplyr::mutate(AltAF = (2*alt+het)/(2*(ref + het + alt))),
-                             by = c("ID"))
+                             by = c("ID")) %>%
+  dplyr::left_join(MGfile, by = c("ID", "MGs")) %>%
+  dplyr::relocate(ID, POS, cluster, MGs, ref, alt, het, miss)
+
 return(Varfile)
 }
 

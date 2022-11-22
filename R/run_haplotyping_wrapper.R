@@ -84,9 +84,7 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                                }else {
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")
                                },
-                               Varfile = Varfile,
-                               MGfile = phaps_out$MGfile)
-                               #ClusterR2)
+                               Varfile = Varfile)
     base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
     cli::cli_progress_update()
   }

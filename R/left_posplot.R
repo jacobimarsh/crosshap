@@ -1,7 +1,7 @@
 #' Left SNP-position plot
 #'
 #' build_left_alleleplot() builds a horizontal plot displaying the chromosomal
-#' position of each SNP locus, grouped by marker group.Makes use of the $MGfile
+#' position of each SNP locus, grouped by marker group.Makes use of the $Varfile
 #' position from haplotype object. It is an internal function called by
 #' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
@@ -17,11 +17,11 @@
 
 build_left_posplot <- function(HapObject, hide_labels = T) {
 
-IQRs <- base::as.numeric(HapObject$MGfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
+IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.5 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.9 + base::min(.)))}
 
-left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
+left_posplot <- HapObject$Varfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
   ggplot2::ggplot() +
   ggplot2::geom_segment(size = 0.2,
                         ggplot2::aes(x = POS, xend = POS, y = MGs-0.2, yend = MGs+0.2)) +
@@ -39,8 +39,6 @@ left_posplot <- HapObject$MGfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(M
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, color = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.title.x = ggplot2::element_text(face = "bold", size = 10, color = "black"))
-
-
 
 if(hide_labels == T){
   return(left_posplot + ggplot2::theme(legend.position = "none"))
