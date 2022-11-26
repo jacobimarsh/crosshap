@@ -38,13 +38,14 @@ intersect_lines <- intersect %>%
   dplyr::mutate(min = base::as.character(min), max = base::as.character(max))
 
 mid_dotplot <- ggplot2::ggplot() +
-  ggplot2::geom_segment(data = intersect_lines, col = "grey", size = 1.5,
+  ggplot2::geom_segment(data = intersect_lines, col = "grey", linewidth = 1.5,
                ggplot2::aes(x = hap, xend = hap, y = min, yend = max)) +
   ggplot2::geom_point(data = intersect, col = 'black', pch = 21,
              ggplot2::aes(hap, base::as.character(MG), fill = Allele, size= 2)) +
   ggplot2::scale_fill_manual(values = c('white','black','grey')) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.direction = 'horizontal',
+                 legend.justification = "left",
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         plot.title = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(size = 10, face = 'bold', color = 'black'),

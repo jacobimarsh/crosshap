@@ -49,7 +49,7 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
   ggplot2::geom_bar(ggplot2::aes(), position = 'stack', stat = "identity", width = 0.8, color = "black") +
   ggplot2::scale_x_reverse(breaks = scales::pretty_breaks(),
                   expand = c(0,0)) +
-  ggplot2::theme_void() +
+  ggplot2::theme_minimal() +
   ggplot2::theme(axis.text.y = ggplot2::element_blank(),
         axis.title.x = ggplot2::element_text(),
         axis.title.y = ggplot2::element_blank(),
@@ -58,11 +58,13 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
         legend.key.size = ggplot2::unit(7,
                                "mm"),
         legend.direction = "horizontal",
+        legend.justification = "left",
         axis.text.x = ggplot2::element_text(face = "bold",
                                    size = 10),
-        plot.margin = ggplot2::unit(c(0,0,0,0.1),
+        plot.margin = ggplot2::unit(c(0,0,0,0),
                            "cm"),
-        plot.title = ggplot2::element_blank()) +
+        plot.title = ggplot2::element_blank(),
+        panel.grid = element_blank()) +
   ggplot2::scale_fill_manual(values = c("#FFFFFF", '#FDE725FF', "#73D055FF", '#440154FF')) +
   ggplot2::xlab("Allele count") +
   ggplot2::scale_y_discrete(position = "right", limits = rev,
