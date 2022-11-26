@@ -85,7 +85,11 @@ read_vcf <- function(VCFin){
 #'
 #' @return A tibble.
 #'
-#' @example read_pheno(yield.txt)
+#' @examples
+#'
+#' if (FALSE) {
+#'      read_pheno(yield.txt)
+#'}
 #'
 
 read_pheno <- function(Phenoin){
@@ -105,7 +109,11 @@ read_pheno <- function(Phenoin){
 #'
 #' @return A tibble.
 #'
-#' @example read_metadata(country_of_origin.txt)
+#' @examples
+#'
+#' if (FALSE) {
+#'      read_metadata(country_of_origin.txt)
+#'}
 #'
 
 read_metadata <- function(Metain){

@@ -15,3 +15,10 @@ A tibble.
 \description{
 Requires two column text file without a header (Ind | Metadata)
 }
+\examples{
+
+if (FALSE) {
+     read_metadata(country_of_origin.txt)
+}
+
+}

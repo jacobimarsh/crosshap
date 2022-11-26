@@ -25,7 +25,10 @@
 #'
 #' @return A large ggplot2 object.
 #'
-#' @examples hap_umap <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = MGmin)
+#' @examples
+#'
+#' if (FALSE) {
+#'      hap_umap <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = MGmin)
 #'
 #' hap_gg <- prepare_hap_umap(hap_umap, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
 #'
@@ -36,6 +39,7 @@
 #' hap_anim <- gganimate::animate(hap_gganim, renderer = gganimate::gifski_renderer(), nframes = 25)
 #'
 #' gganimate::anim_save("hap_anim.gif", hap_anim)
+#'}
 #'
 
 

@@ -21,3 +21,10 @@ metadata variable provided. Makes use of the $Indfile information from a
 haplotype object. This is an in internal function called by crosshap_viz(),
 though can be called separately to build a stand-alone plot
 }
+\examples{
+
+if (FALSE) {
+     build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+}
+
+}

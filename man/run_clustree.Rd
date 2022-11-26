@@ -26,3 +26,10 @@ SNPs, across different epsilon values provided to run_haplotyping(). Makes
 use of $Indfile and $Varfile information from HapObjects created by
 run_haplotyping(). This function is a clustree wrapper.
 }
+\examples{
+
+if (FALSE) {
+     run_clustree(MGmin = 30, pheno)
+}
+
+}

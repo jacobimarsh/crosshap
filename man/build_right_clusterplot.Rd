@@ -22,3 +22,6 @@ the $Varfile information from haplotyping object. It is an internal function
 called by crosshap_viz(), though can be called separately to build a
 stand-alone plot.
 }
+\examples{
+
+}

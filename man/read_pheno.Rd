@@ -15,3 +15,10 @@ A tibble.
 \description{
 Requires two column text file without a header (Ind | Pheno)
 }
+\examples{
+
+if (FALSE) {
+     read_pheno(yield.txt)
+}
+
+}

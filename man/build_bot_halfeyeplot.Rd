@@ -21,3 +21,10 @@ metadata variable. Makes use of the $Indfile information from haplotype
 object. It is an internal function called by crosshap_viz(), though can be
 called separately to build a stand-alone plot.
 }
+\examples{
+
+if (FALSE) {
+     build_bot_halfeyeplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+}
+
+}

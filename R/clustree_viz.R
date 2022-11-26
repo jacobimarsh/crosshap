@@ -16,7 +16,11 @@
 #'
 #' @return A ggplot2 object.
 #'
-#' @example run_clustree(MGmin = 30, pheno)
+#' @examples
+#'
+#' if (FALSE) {
+#'      run_clustree(MGmin = 30, pheno)
+#'}
 #'
 
 run_clustree <- function(epsilon = c(0.2,0.4,0.6,0.8,1), MGmin, pheno, type = "MG") {

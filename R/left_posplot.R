@@ -12,7 +12,11 @@
 #'
 #' @return A ggplot2 object.
 #'
-#' @example build_left_posplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#' @examples
+#'
+#' if (FALSE) {
+#'      build_left_posplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#'}
 #'
 
 build_left_posplot <- function(HapObject, hide_labels = T) {

@@ -19,8 +19,11 @@
 #'
 #' @return A patchwork object.
 #'
-#' @example crosshap_viz(Haplotypes_MGmin30_E0.6)
+#' @examples
 #'
+#' if (FALSE) {
+#'      crosshap_viz(Haplotypes_MGmin30_E0.6)
+#'}
 #'
 crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "cluster", hide_labels = F) {
  # base::message(paste0("Building Mid Dot plot"))

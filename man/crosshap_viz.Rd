@@ -34,3 +34,10 @@ haplotypes present within the population. Vertical plots (top/bottom)
 visualize individuals and populations, grouped by haplotype. Horizontal plots
 (left/right) visualize SNP information, grouped by marker group cluster.
 }
+\examples{
+
+if (FALSE) {
+     crosshap_viz(Haplotypes_MGmin30_E0.6)
+}
+
+}

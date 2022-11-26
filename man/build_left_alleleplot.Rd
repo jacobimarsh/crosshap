@@ -21,3 +21,10 @@ grouped by marker group. Makes use of $Varfile information from a HapObject
 created by run_haplotyping(). This is an internal function called by
 crosshap_viz(), though can be called separately to build a stand-alone plot.
 }
+\examples{
+
+if (FALSE) {
+     build_left_alleleplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+}
+
+}
