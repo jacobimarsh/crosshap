@@ -35,8 +35,13 @@ bot_halfeyeplot <-
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks()) +
   ggplot2::theme(axis.title.x = ggplot2::element_blank(),
                  axis.text.x  = ggplot2::element_blank(),
+                 legend.key.size = ggplot2::unit(7,
+                                                 "mm"),
+                 legend.title = ggplot2::element_text(size = 10),
+                 legend.text = ggplot2::element_text(size = 7),
                  plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
-                 axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black"))
+                 axis.text.y = ggplot2::element_text(face = "bold", size = 10, color = "black")) +
+  ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.6), title = "Metadata"))
 
 if(hide_labels == T){
   return(bot_halfeyeplot + ggplot2::theme(legend.position = "none"))
