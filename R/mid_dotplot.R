@@ -51,7 +51,7 @@ mid_dotplot <- ggplot2::ggplot() +
         axis.text.y = ggplot2::element_text(size = 10, face = 'bold', color = 'black'),
         legend.title = ggplot2::element_text(size = 10),
         legend.text = ggplot2::element_text(size = 7),
-        legend.key.size = ggplot2::unit(5, "mm"),
+        legend.key.size = ggplot2::unit(7, "mm"),
  #       axis.title = ggplot2::element_blank()
  ) +
   ggplot2::ylab("Marker Group") +

@@ -36,14 +36,15 @@ top_metaplot <- ggplot2::ggplot(topplot_data,
   ggplot2::theme_minimal() +
     ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "grey20") +
     ggplot2::theme(legend.direction = "horizontal",
-                   legend.title = ggplot2::element_text(size = 7),
-                   legend.text = ggplot2::element_text(size = 5),
-                   legend.key.size = ggplot2::unit(5, "mm"),
+                   legend.title = ggplot2::element_text(size = 10),
+                   legend.text = ggplot2::element_text(size = 7),
+                   legend.key.size = ggplot2::unit(7, "mm"),
         axis.text.x = ggplot2::element_text(face = "bold", size = 10, colour = "black"),
         plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
         axis.text.y = ggplot2::element_text(face = "bold",
                                    size = 10, colour = "black"),
         axis.title.x = ggplot2::element_blank()) +
+  ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = 5), title = "Metadata")) +
   ggplot2::scale_y_continuous(expand = c(0,0)) +
   ggplot2::ylab("Population size") +
   ggplot2::xlab("Haplotype combination")
