@@ -15,7 +15,10 @@
 #'
 #' @return A ggplot2 object.
 #'
-#' @example build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#' @examples
+#' if (FALSE) {
+#'      build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#'}
 #'
 
 build_right_clusterplot <- function(HapObject, hide_labels = F) {
