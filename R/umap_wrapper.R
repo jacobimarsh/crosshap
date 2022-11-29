@@ -96,6 +96,7 @@ pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), 
   ggplot2::theme_void() +
   ggplot2::theme(panel.border = ggplot2::element_rect(colour = 'grey90', linewidth = 1, fill = NA)) +
     ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Alt allele"))
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Alt allele")) +
+  ggplot2::scale_color_manual(values = c(c("#1F78B4","#33A02C","#E31A1C","#FF7F00","#6A3D9A","#B15928","#A6CEE3","#B2DF8A","#FB9A99","#FDBF6F","#CAB2D6","#FFFF99")[1:(length(unique(xyvl_framenum$MG_cols))-2)], '#696969'), na.value = "grey80")
 return(pre_anim_gg)
 }
