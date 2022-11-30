@@ -7,7 +7,7 @@
 crosshap_viz(
   HapObject,
   plot_left = "allele",
-  plot_right = "cluster",
+  plot_right = "pheno",
   hide_labels = F
 )
 }
