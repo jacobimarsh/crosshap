@@ -87,7 +87,13 @@ xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
   dplyr::mutate(MG_cols = ifelse(!is.na(allele) & is.na(MGs),0,MG_cols)) %>%
   dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
 
-pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), dplyr::desc(MG_cols)) , ggplot2::aes(x = UMAP1, y = UMAP2)) +
+MGrows <- xyvl_framenum %>%
+  dplyr::filter(hap == "Hap A") %>%
+  dplyr::mutate(hap = "All MGs", Ind = "N/A", MG_cols = MGs)
+
+xyvlf_MG <- xyvl_framenum %>% rbind(MGrows)
+
+pre_anim_gg <- ggplot2::ggplot(xyvlf_MG %>% dplyr::arrange(is.na(MG_cols), dplyr::desc(MG_cols)) , ggplot2::aes(x = UMAP1, y = UMAP2)) +
   ggplot2::geom_point(alpha = 0.4, ggplot2::aes(colour = MG_cols), size = 0.25)  +
   ggplot2::geom_text(data = framenum_ID %>% dplyr::mutate(allele = 1:nrow(framenum_ID)) %>%
                        dplyr::left_join(HapObject$Indfile, by = "Ind") %>%
@@ -97,6 +103,6 @@ pre_anim_gg <- ggplot2::ggplot(xyvl_framenum %>% dplyr::arrange(is.na(MG_cols), 
   ggplot2::theme(panel.border = ggplot2::element_rect(colour = 'grey90', linewidth = 1, fill = NA)) +
     ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Alt allele")) +
-  ggplot2::scale_color_manual(values = c(c("#1F78B4","#33A02C","#E31A1C","#FF7F00","#6A3D9A","#B15928","#A6CEE3","#B2DF8A","#FB9A99","#FDBF6F","#CAB2D6","#FFFF99")[1:(length(unique(xyvl_framenum$MG_cols))-2)], '#696969'), na.value = "grey80")
+  ggplot2::scale_color_manual(values = c(c("#F763E0","#7997FF","#00C0B8","#39B600","#BB9D00","#F37B59","#FF6C90","#BF80FF","#00B4EF","#00BF7D","#85AD00","#E08B00")[1:(length(unique(xyvl_framenum$MG_cols))-2)], '#696969'), na.value = "grey80")
 return(pre_anim_gg)
 }
