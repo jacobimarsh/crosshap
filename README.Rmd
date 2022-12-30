@@ -18,7 +18,31 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of crosshap is to ...
+LD-based local haplotype analysis and visualization tool
+
+## What does it do?
+
+Given a genomic variant data for a region of interest, crosshap performs
+LD-based local haplotyping before providing a range of visualization options 
+to thoroughly examine the core patterns of co-inheritance present in light of 
+optional phenotype/metadata.
+
+## Crosshap VIZ
+
+## Why would I use it?
+
+crosshap was originally designed to explore local haplotype patterns that
+may underlie phenotypic variability in quantitative trait locus (QTL) regions.
+It is ideally suited to complement and follow-up GWAS results (takes same 
+inputs). crosshap equips users with the tools to explain why a region reported a 
+GWAS hit, what variants are causal candidates, what populations are they 
+present/absent in, and what the features are of those populations.
+
+Alternatively, crosshap can simply be a tool to identify patterns of linkage
+among local variants, and to classify individuals based on shared haplotypes.
+
+Note: crosshap is designed for in-depth, user-driven analysis of inheritance 
+patterns in specific regions of interest, not genome-wide scans.
 
 ## Installation
 
@@ -29,14 +53,16 @@ You can install the development version of crosshap from [GitHub](https://github
 devtools::install_github("JacobIMarsh/crosshap")
 ```
 
-## Example
+## Usage
 
-This is a basic example which shows you how to solve a common problem:
+Workflow is >>> 
 
-```{r example}
-library(crosshap)
-## basic example code
-```
+
+
+
+
+
+
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 

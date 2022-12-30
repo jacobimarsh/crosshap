@@ -1,0 +1,36 @@
+---
+title: "Getting_started.Rmd"
+output: html_document
+date: "2022-12-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### What is LD-based local haplotyping
+
+Local haplotyping involves classifying individuals by shared haplotypes 
+(combinations of alleles) across loci within a region of interest. 
+
+LD-based local haplotyping approaches seek to capture variation patterns in a 
+wider region by only considering representatives of tightly linked groups of 
+SNPs that are defined either through 'tagging' or as in the case of crosshap, 
+clustering variants. In crosshap, these representative clusters are termed 
+'Marker Groups' ('MGs').
+
+In this UMAP which captures some of the pairwise linkage relationships between 
+SNPs, distinct Marker Groups of clustered SNPs are coloured. 
+
+<<FIG HERE>>
+
+The goal of crosshap is not to cluster all, or even a majority of SNPs across
+the region, but rather to identify major tightly linked Marker groups with 
+typically co-inherited alleles that can be used to define the local haplotypes.
+
+<<Explain haplotype groups
+
+
+
+When effectively used, crosshap intuitively shows the relationships between 
+phenotypic variation, genomic variation, and population structure in the region.

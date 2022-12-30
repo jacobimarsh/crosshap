@@ -46,13 +46,17 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno", 
                   "pheno" = build_right_phenoplot(HapObject, hide_labels),
                   "cluster" = build_right_clusterplot(HapObject, hide_labels))
 
-  layout <- "#B#
+  tables <- build_summary_tables(HapObject)
+  MGtable <- tables[[1]]
+  haptable <- tables[[2]]
+
+  layout <- "#BF
   DAE
-  FC#"
+  HCG"
 
   #base::message(paste0("Stitching plots"))
   crosshap_stitched <-
-    patchwork::wrap_plots(mid, top, bot , left, right) +
+    patchwork::wrap_plots(mid, top, bot , left, right, MGtable, haptable) +
     patchwork::guide_area() +
     patchwork::plot_layout(design = layout, guides = "collect")
 
