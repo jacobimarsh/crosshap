@@ -37,7 +37,7 @@
 
 run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                             epsilon = c(0.2,0.4,0.6,0.8,1),
-                            MGmin, minHap = 9, hetmiss_as = 'allele',
+                            MGmin = 30, minHap = 9, hetmiss_as = 'allele',
                             het_as = 'alt', keep_outliers = F){
     #Reformat VCF
 

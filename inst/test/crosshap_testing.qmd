@@ -19,12 +19,10 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 ```
 
 ```{r}
-crosshap::run_haplotyping(vcf = vcf,
-                LD = LD,
-                metadata = metadata,
-                pheno = pheno,
-                MGmin = 30, 
-                minHap = 9)
+run_haplotyping(vcf,
+                LD,
+                metadata,
+                pheno)
 ```
 
 ```{r}
@@ -46,10 +44,10 @@ Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F
 ```{r}
 umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
 
-pre_anim_gg <- crosshap::prepare_hap_umap(umap_in, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
+pre_anim_gg <- prepare_hap_umap(umap_in, HapObject = HapObject, vcf = vcf, nsamples = 25)
 
 hap_gganim <- pre_anim_gg +
-  ggplot2::facet_wrap(~hap, ncol = 2) +
+  ggplot2::facet_wrap(~hap, ncol = 4) +
   gganimate::transition_states(Frame,
                     transition_length = 0,
                     state_length = 1)
@@ -59,13 +57,13 @@ gganimate::animate(
   renderer = gganimate::gifski_renderer(),
   fps = 3,
   res = 300,
-  width  = 6,
-  height = 6,
+  width  = 12,
+  height = 3,
   units = "in",
   nframes = 25
 )
 
-gganimate::anim_save("hap_anim_cols.gif", hap_gganim)
+gganimate::anim_save("hap_slides.gif", hap_gganim)
 ```
 
 ## Sandbox
@@ -74,4 +72,6 @@ gganimate::anim_save("hap_anim_cols.gif", hap_gganim)
 
 ggsave("Posterviz.pdf", Hap2_viz, device = "pdf", dpi = 3600, height = 300,
        width = 300, units = "mm")
+
+ HapObject$Hapfile <- HapObject$Hapfile %>% as.tibble() %>% filter(hap != c("A","B","C")) %>% filter(hap != "E")
 ```

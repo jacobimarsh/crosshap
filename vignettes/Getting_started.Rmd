@@ -34,3 +34,15 @@ typically co-inherited alleles that can be used to define the local haplotypes.
 
 When effectively used, crosshap intuitively shows the relationships between 
 phenotypic variation, genomic variation, and population structure in the region.
+
+
+
+
+
+
+
+You will need to pick a MGmin, which is the minimum number of linked SNPs in 
+each Marker Group cluster. To give an approximate scale, a 100kb region with 
+1000 SNPs may be appropriately captured with a MGmin in the range of 10-30, 
+depending on the desired granularity.
+

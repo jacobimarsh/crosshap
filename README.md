@@ -6,7 +6,36 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of crosshap is to …
+LD-based local haplotype analysis and visualization tool
+
+## What does it do?
+
+Given a genomic variant data for a region of interest, crosshap performs
+LD-based local haplotyping. Tightly linked variants are clustered into
+Marker Groups (MGs), and individuals are grouped into local haplotypes
+by shared allelic combinations of MGs. Following this, crosshap provides
+a range of visualization options to examine relevant characteristics of
+the linked Marker Groups and local haplotypes.
+
+## Crosshap VIZ
+
+## Why would I use it?
+
+crosshap was originally designed to explore local haplotype patterns
+that may underlie phenotypic variability in quantitative trait locus
+(QTL) regions. It is ideally suited to complement and follow-up GWAS
+results (takes same inputs). crosshap equips users with the tools to
+explain why a region reported a GWAS hit, what variants are causal
+candidates, what populations are they present/absent in, and what the
+features are of those populations.
+
+Alternatively, crosshap can simply be a tool to identify patterns of
+linkage among local variants, and to classify individuals based on
+shared haplotypes.
+
+Note: crosshap is designed for in-depth, user-driven analysis of
+inheritance patterns in specific regions of interest, not genome-wide
+scans.
 
 ## Installation
 
@@ -18,43 +47,51 @@ You can install the development version of crosshap from
 devtools::install_github("JacobIMarsh/crosshap")
 ```
 
-## Example
+## Usage
 
-This is a basic example which shows you how to solve a common problem:
+In short, a typical crosshap analysis workflow involves the following
+steps. For a detailed explanation and walk through, see
+`Getting_started.Rmd`.
 
-``` r
-library(crosshap)
-#> 
-#> Attaching package: 'crosshap'
-#> The following object is masked from 'package:base':
-#> 
-#>     mode
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+0.  Read in raw inputs
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+read_vcf(region.vcf)
+read_LD(plink.ld)
+read_metadata(metadata.txt)
+read_pheno(pheno.txt)
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+1.  Run local haplotyping at a range of epsilon values
 
-You can also embed plots, for example:
+``` r
+run_haplotyping(vcf, LD, metadata, pheno)
+```
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+2.  Build clustering tree to optimize epsilon value
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+run_clustree(pheno)
+```
+
+3.  Visualize local haplotypes and Marker Groups
+
+``` r
+crosshap_viz(HapObject)
+```
+
+From here you can examine haplotype and Marker Group features from the
+visualization, and export relevant information from the haplotype
+object.
+
+``` r
+HapObject$Indfile
+HapObject$Varfile
+HapObject$Hapfile
+```
+
+## Contact
+
+For technical queries feel free to contact me:
+<jacob.marsh@research.uwa.edu.au>. Please contact Prof. David Edwards at
+<dave.edwards@uwa.edu.au> for all other queries.

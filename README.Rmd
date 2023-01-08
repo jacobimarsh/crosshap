@@ -23,11 +23,13 @@ LD-based local haplotype analysis and visualization tool
 ## What does it do?
 
 Given a genomic variant data for a region of interest, crosshap performs
-LD-based local haplotyping before providing a range of visualization options 
-to thoroughly examine the core patterns of co-inheritance present in light of 
-optional phenotype/metadata.
+LD-based local haplotyping. Tightly linked variants are clustered into 
+Marker Groups (MGs), and individuals are grouped into local haplotypes by shared 
+allelic combinations of MGs. Following this, crosshap provides a range of 
+visualization options to examine relevant characteristics of the linked Marker 
+Groups and local haplotypes.
 
-## Crosshap VIZ
+## crosshap VIZ
 
 ## Why would I use it?
 
@@ -55,27 +57,40 @@ devtools::install_github("JacobIMarsh/crosshap")
 
 ## Usage
 
-Workflow is >>> 
+In short, a typical crosshap analysis workflow involves the following steps.
+For a detailed explanation and walk through, see `Getting_started.Rmd`.
 
-
-
-
-
-
-
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
+  0. Read in raw inputs
+``` r
+read_vcf(region.vcf)
+read_LD(plink.ld)
+read_metadata(metadata.txt)
+read_pheno(pheno.txt)
 ```
+  1. Run local haplotyping at a range of epsilon values
+``` r
+run_haplotyping(vcf, LD, metadata, pheno)
+```  
+  2. Build clustering tree to optimize epsilon value
+``` r
+run_clustree(pheno)
+```  
+  3. Visualize local haplotypes and Marker Groups
+``` r
+crosshap_viz(HapObject)
+```  
+  
+From here you can examine haplotype and Marker Group features from the 
+visualization, and export relevant information from the haplotype object.
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+``` r
+HapObject$Indfile
+HapObject$Varfile
+HapObject$Hapfile
+```  
 
-You can also embed plots, for example:
+## Contact
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+For technical queries feel free to contact me: jacob.marsh@research.uwa.edu.au.
+Please contact Prof. David Edwards at dave.edwards@uwa.edu.au for all other 
+queries.
