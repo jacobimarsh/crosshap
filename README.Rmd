@@ -37,6 +37,8 @@ Groups and local haplotypes.
 
 ![alt text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example_screenshot.jpg?raw=true)
 
+
+
 ## Why would I use it?
 
 crosshap was originally designed to explore local haplotype patterns that
