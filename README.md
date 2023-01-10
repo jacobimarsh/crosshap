@@ -20,15 +20,15 @@ the linked Marker Groups and local haplotypes.
 ## crosshap VIZ
 
 ![alt
-text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example.jpg?raw=true)
+text](https://github.com/JacobIMarsh/crosshap/blob/main/images/example_crosshap.jpg?raw=true)
 
 ## PDF
 
 ![alt
-text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example.pdf?raw=true)
+text](https://github.com/JacobIMarsh/crosshap/blob/main/images/example_crosshap.pdf?raw=true)
 
 ![alt
-text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example_screenshot.jpg?raw=true)
+text](https://github.com/JacobIMarsh/crosshap/blob/main/images/example_crosshap_screenshot.jpg?raw=true)
 
 ## Why would I use it?
 
