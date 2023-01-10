@@ -30,6 +30,10 @@ visualization options to examine relevant characteristics of the linked Marker
 Groups and local haplotypes.
 
 ## crosshap VIZ
+![alt text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example.jpg?raw=true)
+
+## PDF
+![alt text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_example.pdf?raw=true)
 
 ## Why would I use it?
 
@@ -58,7 +62,8 @@ devtools::install_github("JacobIMarsh/crosshap")
 ## Usage
 
 In short, a typical crosshap analysis workflow involves the following steps.
-For a detailed explanation and walk through, see `Getting_started.Rmd`.
+For a detailed explanation and walk through, see `Getting_started.Rmd` (coming
+soon!).
 
   0. Read in raw inputs
 ``` r
@@ -92,5 +97,5 @@ HapObject$Hapfile
 ## Contact
 
 For technical queries feel free to contact me: jacob.marsh@research.uwa.edu.au.
-Please contact Prof. David Edwards at dave.edwards@uwa.edu.au for all other 
-queries.
+Please contact Prof. David Edwards for all other 
+queries: dave.edwards@uwa.edu.au .
