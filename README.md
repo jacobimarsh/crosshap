@@ -17,11 +17,6 @@ by shared allelic combinations of MGs. Following this, crosshap provides
 a range of visualization options to examine relevant characteristics of
 the linked Marker Groups and local haplotypes.
 
-## crosshap VIZ
-
-![alt
-text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
-
 ## Why would I use it?
 
 crosshap was originally designed to explore local haplotype patterns
@@ -39,6 +34,9 @@ shared haplotypes.
 Note: crosshap is designed for in-depth, user-driven analysis of
 inheritance patterns in specific regions of interest, not genome-wide
 scans.
+
+![alt
+text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
 
 ## Installation
 
