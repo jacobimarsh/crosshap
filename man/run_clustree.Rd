@@ -4,14 +4,19 @@
 \alias{run_clustree}
 \title{Haplotype clustering tree}
 \usage{
-run_clustree(epsilon = c(0.2, 0.4, 0.6, 0.8, 1), MGmin, pheno, type = "MG")
+run_clustree(
+  pheno,
+  epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
+  MGmin = 30,
+  type = "MG"
+)
 }
 \arguments{
+\item{pheno}{Input numeric phenotype data for each individual.}
+
 \item{epsilon}{Epsilon values passed through run_haplotyping().}
 
 \item{MGmin}{MGmin values passed through run_haplotyping().}
-
-\item{pheno}{Input numeric phenotype data for each individual.}
 
 \item{type}{When type = "hap", nodes represent haplotype populations, when
 type = "MG", nodes represent marker groups.}

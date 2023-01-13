@@ -10,7 +10,7 @@ run_haplotyping(
   pheno,
   metadata = NULL,
   epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
-  MGmin,
+  MGmin = 30,
   minHap = 9,
   hetmiss_as = "allele",
   het_as = "alt",

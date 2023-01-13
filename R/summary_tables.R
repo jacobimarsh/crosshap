@@ -56,7 +56,7 @@ zbot <- gtable::gtable_add_grob(x,
                                y0 = grid::unit(0,"npc"),
                                x1 = grid::unit(1,"npc"),
                                y1 = grid::unit(0,"npc"),
-                               gp = gpar(lwd = 1)),
+                               gp = grid::gpar(lwd = 1)),
                              t = 5, b = nrow(x), l = 2, r = ncol(x))
 
 ztop <- gtable::gtable_add_grob(zbot,
@@ -126,7 +126,7 @@ ybot <- gtable::gtable_add_grob(y,
                                   y0 = grid::unit(0,"npc"),
                                   x1 = grid::unit(1,"npc"),
                                   y1 = grid::unit(0,"npc"),
-                                  gp = gpar(lwd = 1)),
+                                  gp = grid::gpar(lwd = 1)),
                                 t = 5, b = nrow(y), l = 2, r = ncol(y))
 
 ytop <- gtable::gtable_add_grob(ybot,
