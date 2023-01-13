@@ -22,20 +22,20 @@ no0Varfile <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 q <- dplyr::left_join(
 no0Varfile %>% dplyr::count(MGs) %>% dplyr::rename(nSNP = 'n'),
 stats::aggregate(no0Varfile$percdiff,
-                 base::list(pre_leftplotdata$MGs),
+                 base::list(no0Varfile$MGs),
                  mean) %>% dplyr::rename(MGs = 'Group.1', percdiff = 'x') %>%
   tibble::as_tibble(),
 by = "MGs") %>%
   dplyr::left_join(
 
 stats::aggregate(no0Varfile$meanr2,
-                 base::list(pre_leftplotdata$MGs),
+                 base::list(no0Varfile$MGs),
                  mean) %>% dplyr::rename(MGs = 'Group.1', meanR2 = 'x') %>%
   tibble::as_tibble(),
 by = "MGs") %>%
   dplyr::left_join(
     stats::aggregate(no0Varfile$AltAF,
-                       base::list(pre_leftplotdata$MGs),
+                       base::list(no0Varfile$MGs),
                        mean) %>% dplyr::rename(MGs = 'Group.1', AltAF = 'x') %>%
       tibble::as_tibble(),
     by = "MGs") %>%
