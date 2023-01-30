@@ -77,7 +77,7 @@ zall <- gtable::gtable_add_grob(ztop,
                           gp = grid::gpar(lwd = 1)),
                         t = 1, b = 1, l = 2, r = ncol(ztop))
 
-MGtable <- ggplot2::ggplot() + zall + ggplot2::theme_minimal()
+#MGtable <- ggplot2::ggplot() + zall + ggplot2::theme_minimal()
 
 #########DONE 1
 
@@ -147,7 +147,7 @@ yall <- gtable::gtable_add_grob(ytop,
                                   gp = grid::gpar(lwd = 1)),
                                 t = 1, b = 1, l = 2, r = ncol(ytop))
 
-haptable <- ggplot2::ggplot() + yall + ggplot2::theme_minimal()
+#haptable <- ggplot2::ggplot() + yall + ggplot2::theme_minimal()
 
 return(list(zall, yall))
 }
