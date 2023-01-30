@@ -57,7 +57,7 @@ zbot <- gtable::gtable_add_grob(x,
                                x1 = grid::unit(1,"npc"),
                                y1 = grid::unit(0,"npc"),
                                gp = grid::gpar(lwd = 1)),
-                             t = 5, b = nrow(x), l = 2, r = ncol(x))
+                             t = nrow(x), b = nrow(x), l = 2, r = ncol(x))
 
 ztop <- gtable::gtable_add_grob(zbot,
                         grobs = grid::segmentsGrob( # line across the bottom

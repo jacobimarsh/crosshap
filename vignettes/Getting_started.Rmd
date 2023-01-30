@@ -8,6 +8,20 @@ date: "2022-12-18"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Intro
+
+crosshap (R package) is an LD-based local haplotyping tool designed to visualize 
+patterns of variation across loci and individuals in a genomic region of interest. 
+
+In this tutorial we'll walk through an example analysis that will help to 
+introduce and describe the main functions of crosshap so you'll be ready to jump
+into exploring your own data.
+
+## Preparing your inputs
+
+
+
 ### What is LD-based local haplotyping
 
 Local haplotyping involves classifying individuals by shared haplotypes 

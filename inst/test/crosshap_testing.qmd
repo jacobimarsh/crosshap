@@ -19,7 +19,7 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 ```
 
 ```{r}
-run_haplotyping(vcf,
+crosshap::run_haplotyping(vcf,
                 LD,
                 pheno,
                 metadata)
@@ -37,14 +37,14 @@ MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG')
 Hap2_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6)
 
 
-Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos", plot_right = "pheno")
+Hap2_labs_viz <- crosshap::crosshap_viz(Haplotypes_MGmin30_E0.6, hide_labels = F, plot_left = "pos", plot_right = "cluster")
 
 ```
 
 ```{r}
 umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
 
-pre_anim_gg <- prepare_hap_umap(umap_in, HapObject = HapObject, vcf = vcf, nsamples = 25)
+pre_anim_gg <- crosshap::prepare_hap_umap(umap_in, HapObject = HapObject, vcf = vcf, nsamples = 25)
 
 hap_gganim <- pre_anim_gg +
   ggplot2::facet_wrap(~hap) +
@@ -66,12 +66,72 @@ gganimate::animate(
 gganimate::anim_save("hap_slides.gif", hap_gganim)
 ```
 
-## Sandbox
+## Quinoa
 
 ```{r}
 
-#ggsave("Posterviz.pdf", Hap2_viz, device = "pdf", dpi = 3600, height = 300,
-       width = 300, units = "mm")
+library(crosshap)
+library(umap)
+library(gganimate)
 
- #HapObject$Hapfile <- HapObject$Hapfile %>% as.tibble() %>% filter(hap != c("A","B","C")) %>% filter(hap != "E")
+
+LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/plink.ld", vcf = vcf)
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/DTF.txt")
+vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa_glx22.vcf")
+metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa_meta.txt')
+
+
+crosshap::run_haplotyping(vcf,
+                LD,
+                pheno,
+                metadata,
+                epsilon = c(0.5,1,1.5,2,2.5,3),
+                MGmin = 20)
+
+hap_clustree <- crosshap::run_clustree(MGmin = 20,
+                              pheno = pheno,
+                              type = 'hap',
+                              epsilon = c(0.5,1,1.5,2,2.5,3))
+
+MG_clustree <- crosshap::run_clustree(MGmin = 20, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
+
+Hap_viz <- crosshap_viz(Haplotypes_MGmin20_E1)
+
+Haplotypes_MGmin30_E1$Indfile %>% dplyr::filter(Metadata == 'lowland') %>% dplyr::group_by(hap) %>% dplyr::summarise(avg = mean_na.rm(Pheno))
+
+
+
+
+dat <- data.table::fread("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa2/tkw.txt") %>% tibble::as.tibble() %>% dplyr::group_by(ID) %>% dplyr::summarise(avg = mean_na.rm(TKW))
+
+write.table(dat, "abc")
+```
+
+## Walnut
+
+```{r}
+library(crosshap)
+
+vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/sandbox/walnut/walnut5.recode.vcf")
+LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/sandbox/walnut/plink.ld", vcf = vcf)
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/sandbox/walnut/nut_thick.txt")
+metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/sandbox/walnut/nut_meta.txt')
+
+crosshap::run_haplotyping(vcf,
+                LD,
+                pheno,
+                metadata,
+                epsilon = c(0.5,1,1.5,2,2.5,3),
+                MGmin = 30)
+
+hap_clustree <- crosshap::run_clustree(MGmin = 30,
+                              pheno = pheno,
+                              type = 'hap',
+                              epsilon = c(0.5,1,1.5,2,2.5,3))
+
+MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(1,1.5,2,2.5,3))
+
+Hap_viz <- crosshap_viz(Haplotypes_MGmin30_E1, plot_left = "pos")
+
+Haplotypes_MGmin30_E1$Varfile %>% dplyr::filter(POS == 11555451)
 ```

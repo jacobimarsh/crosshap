@@ -57,12 +57,12 @@ ID_bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID
   tibble::rownames_to_column('ID')
 
 x_y_Varfile <-
-  umap_in$layout %>% dplyr::as_tibble() %>%
+  suppressWarnings(umap_in$layout %>% dplyr::as_tibble() %>%
   cbind(rownames(umap_in$data)) %>% dplyr::as_tibble(.name_repair = 'unique') %>%
-  dplyr::rename(UMAP1 = V1, UMAP2 = V2, ID = 'rownames(umap_in$data)') %>%
+  dplyr::rename(UMAP1 = 'V1', UMAP2 = 'V2', ID = 'rownames(umap_in$data)') %>%
   dplyr::left_join(HapObject$Varfile %>%
                      dplyr::select(ID, MGs, cluster), by = "ID") %>%
-  dplyr::mutate(cluster = as.character(cluster))
+  dplyr::mutate(cluster = as.character(cluster)))
 
 x_y_vcf <- dplyr::left_join(x_y_Varfile, ID_bin_vcf, by = "ID")
 
