@@ -20,6 +20,10 @@ into exploring your own data.
 
 ## Preparing your inputs
 
+testvcf <- system.file('extdata','100kb_pdh1.vcf', package = 'crosshap')
+alternatively can call as a function e.g. example_data_path(vcf)
+
+
 
 
 ### What is LD-based local haplotyping

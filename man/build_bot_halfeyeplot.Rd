@@ -4,12 +4,14 @@
 \alias{build_bot_halfeyeplot}
 \title{Bot hap-pheno raincloud plot}
 \usage{
-build_bot_halfeyeplot(HapObject, hide_labels = T)
+build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_groups = NULL)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
+
+\item{isolate_groups}{Only show specific metadata groups on bot plot.}
 }
 \value{
 A ggplot2 object.

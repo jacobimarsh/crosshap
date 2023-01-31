@@ -8,7 +8,8 @@ crosshap_viz(
   HapObject,
   plot_left = "allele",
   plot_right = "pheno",
-  hide_labels = F
+  hide_labels = F,
+  isolate_groups = NULL
 )
 }
 \arguments{
@@ -35,9 +36,7 @@ visualize individuals and populations, grouped by haplotype. Horizontal plots
 (left/right) visualize SNP information, grouped by marker group cluster.
 }
 \examples{
-
-if (FALSE) {
-     crosshap_viz(Haplotypes_MGmin30_E0.6)
-}
+run_haplotyping(vcf, LD, pheno, metadata)
+crosshap_viz(Haplotypes_MGmin30_E0.6)
 
 }

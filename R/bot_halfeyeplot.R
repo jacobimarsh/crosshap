@@ -7,6 +7,7 @@
 #' called separately to build a stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param isolate_groups Only show specific metadata groups on bot plot.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
@@ -20,8 +21,13 @@
 #'}
 #'
 
-build_bot_halfeyeplot <- function(HapObject, hide_labels = T) {
-no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
+build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_groups = NULL) {
+
+no0data <- tidyr::drop_na(if(is.null(isolate_groups)){
+  HapObject$Indfile
+} else {
+  HapObject$Indfile %>% dplyr::filter(Metadata %in% isolate_groups)
+}, Pheno) %>% dplyr::filter(hap !=0 )
 
 bot_halfeyeplot <-
   ggplot2::ggplot(data = no0data, ggplot2::aes(x = hap, y = Pheno#, fill = Metadata

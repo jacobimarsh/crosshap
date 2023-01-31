@@ -71,7 +71,7 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
     # base::message(paste0("Determining haplotypes from marker group clusters (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
     cli::cli_progress_update()
-
+if(length(unique(preMGfile$cluster)) != 1){
     phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, het_as = het_as, keep_outliers = keep_outliers)
 
     ##Build summary object with all relevant haplotyping information
@@ -89,7 +89,10 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")
                                },
                                Varfile = Varfile)
-    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
+    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)} else {
+      cli::cli_progress_update()
+      base::message(paste0("No Marker Groups identified for Epsilon = ",arez, ""))
+    }
     cli::cli_progress_update()
   }
   cli::cli_alert_success(paste0("Haplotyping complete!"))

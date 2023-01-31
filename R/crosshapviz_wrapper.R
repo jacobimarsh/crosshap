@@ -20,12 +20,11 @@
 #' @return A patchwork object.
 #'
 #' @examples
+#' run_haplotyping(vcf, LD, pheno, metadata)
+#' crosshap_viz(Haplotypes_MGmin30_E0.6)
 #'
-#' if (FALSE) {
-#'      crosshap_viz(Haplotypes_MGmin30_E0.6)
-#'}
-#'
-crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno", hide_labels = F) {
+crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
+                         hide_labels = F, isolate_groups = NULL) {
  # base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject, hide_labels)
 
@@ -33,7 +32,7 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno", 
   top <- build_top_metaplot(HapObject, hide_labels)
 
  # base::message(paste0("Building Bottom Hap-Pheno plot"))
-  bot <- build_bot_halfeyeplot(HapObject)
+  bot <- build_bot_halfeyeplot(HapObject, hide_labels, isolate_groups)
 
 #  base::message(paste0("Building Left SNP info plot"))
 
