@@ -1,18 +1,21 @@
-#' XXSummary TablesXX
+#' Hap/MG summary tables
 #'
-#' XXNeeds updating.XX
+#' build_summary_tables() builds summary tables for each haplotype and Marker
+#' Group with some of the information shown in the peripheral crosshap plots.
+#' It is an internal function called by crosshap_viz(), though can be called
+#' separately to build stand-along grob tables.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
 #'
 #' @export
 #'
-#' @return A list containing two ggplot objects.
+#' @return A list containing two TableGrob objects.
 #'
 #' @examples
 #'
 #' if (FALSE) {
-#'     XX
-#' }
+#'      build_summary_tables(Haplotypes_MGmin30_E0.6)
+#'}
 #'
 
 build_summary_tables <- function(HapObject){
