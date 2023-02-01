@@ -95,14 +95,7 @@ hap_clustree <- crosshap::run_clustree(MGmin = 20,
 
 MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
 
-Hap_viz <- crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_group = "lowland")
-
-Haplotypes_MGmin30_E1$Indfile %>% dplyr::filter(Metadata == 'lowland') %>% dplyr::group_by(hap) %>% dplyr::summarise(avg = mean_na.rm(Pheno))
-
-
-
-
-
+Hap_viz <- crosshap::crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_group = "lowland")
 
 dat <- data.table::fread("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa2/tkw.txt") %>% tibble::as.tibble() %>% dplyr::group_by(ID) %>% dplyr::summarise(avg = mean_na.rm(TKW))
 

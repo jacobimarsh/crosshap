@@ -61,7 +61,7 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
         plot.margin = ggplot2::unit(c(0,0,0,0),
                            "cm"),
         plot.title = ggplot2::element_blank(),
-        panel.grid = element_blank()) +
+        panel.grid = ggplot2::element_blank()) +
   ggplot2::scale_fill_manual(values = c("#FFFFFF", '#FDE725FF', "#73D055FF", '#440154FF')) +
   ggplot2::xlab("Allele count") +
   ggplot2::scale_y_discrete(position = "right", limits = rev,
