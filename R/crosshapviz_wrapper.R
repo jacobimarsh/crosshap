@@ -14,6 +14,9 @@
 #' displayed.
 #' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels When TRUE, legends from plots are hidden.
+#' @param isolate_group If one or more Metadata groups are provided, all other
+#' Metadata groups will be masked from the plot. NOTE: it does change the
+#' summary tables or marker group phenotype scores.
 #'
 #' @export
 #'
@@ -24,7 +27,12 @@
 #' crosshap_viz(Haplotypes_MGmin30_E0.6)
 #'
 crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
-                         hide_labels = F, isolate_groups = NULL) {
+                         hide_labels = F, isolate_group = NA) {
+
+  if(sum(is.na(HapObject$Indfile$Pheno)) > 0){
+    base::message(paste0(sum(is.na(HapObject$Indfile$Pheno)), " individuals without phenotype information"))
+  }
+
  # base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject, hide_labels)
 
@@ -32,7 +40,7 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
   top <- build_top_metaplot(HapObject, hide_labels)
 
  # base::message(paste0("Building Bottom Hap-Pheno plot"))
-  bot <- build_bot_halfeyeplot(HapObject, hide_labels, isolate_groups)
+  bot <- build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = isolate_group)
 
 #  base::message(paste0("Building Left SNP info plot"))
 
@@ -59,9 +67,6 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
     patchwork::guide_area() +
     patchwork::plot_layout(design = layout, guides = "collect")
 
-  if(sum(is.na(HapObject$Indfile$Pheno)) > 0){
-  base::message(paste0(sum(is.na(HapObject$Indfile$Pheno)), " individuals without phenotypes omitted from botplot"))
-}
   return(crosshap_stitched)
 }
 

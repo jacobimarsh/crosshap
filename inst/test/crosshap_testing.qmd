@@ -75,17 +75,18 @@ library(crosshap)
 library(umap)
 library(gganimate)
 
-
-LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/plink.ld", vcf = vcf)
-pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/DTF.txt")
 vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa_glx22.vcf")
+LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/plink.ld", vcf = vcf)
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/lowland_only/DTF2.txt")
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/DTF.txt")
 metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa_meta.txt')
 
 
 crosshap::run_haplotyping(vcf,
                 LD,
                 pheno,
-                metadata)
+                metadata,
+                MGmin = 20)
 
 hap_clustree <- crosshap::run_clustree(MGmin = 20,
                               pheno = pheno,
@@ -94,9 +95,11 @@ hap_clustree <- crosshap::run_clustree(MGmin = 20,
 
 MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
 
-Hap_viz <- crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_groups = 'lowland')
+Hap_viz <- crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_group = "lowland")
 
 Haplotypes_MGmin30_E1$Indfile %>% dplyr::filter(Metadata == 'lowland') %>% dplyr::group_by(hap) %>% dplyr::summarise(avg = mean_na.rm(Pheno))
+
+
 
 
 
