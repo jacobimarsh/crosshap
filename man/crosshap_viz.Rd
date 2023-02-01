@@ -9,7 +9,7 @@ crosshap_viz(
   plot_left = "allele",
   plot_right = "pheno",
   hide_labels = F,
-  isolate_groups = NULL
+  isolate_group = NA
 )
 }
 \arguments{
@@ -23,6 +23,10 @@ are displayed, when plot_right = "cluster", internal marker group linkage is
 displayed.}
 
 \item{hide_labels}{When TRUE, legends from plots are hidden.}
+
+\item{isolate_group}{If one or more Metadata groups are provided, all other
+Metadata groups will be masked from the plot. NOTE: it does change the
+summary tables or marker group phenotype scores.}
 }
 \value{
 A patchwork object.
