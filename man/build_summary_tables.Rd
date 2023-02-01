@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary_tables.R
 \name{build_summary_tables}
 \alias{build_summary_tables}
-\title{XXSummary TablesXX}
+\title{Hap/MG summary tables}
 \usage{
 build_summary_tables(HapObject)
 }
@@ -10,15 +10,18 @@ build_summary_tables(HapObject)
 \item{HapObject}{Haplotype object created by run_haplotyping().}
 }
 \value{
-A list containing two ggplot objects.
+A list containing two TableGrob objects.
 }
 \description{
-XXNeeds updating.XX
+build_summary_tables() builds summary tables for each haplotype and Marker
+Group with some of the information shown in the peripheral crosshap plots.
+It is an internal function called by crosshap_viz(), though can be called
+separately to build stand-along grob tables.
 }
 \examples{
 
 if (FALSE) {
-    XX
+     build_summary_tables(Haplotypes_MGmin30_E0.6)
 }
 
 }
