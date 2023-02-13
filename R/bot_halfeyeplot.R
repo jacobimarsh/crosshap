@@ -23,7 +23,7 @@
 #'}
 #'
 
-build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_group = "none") {
+build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_group = NA) {
 
 no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
 
@@ -92,3 +92,4 @@ if(hide_labels == T){
   return(bot_halfeyeplot)
 }
 }
+
