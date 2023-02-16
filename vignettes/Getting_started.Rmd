@@ -1,7 +1,7 @@
 ---
 title: "Getting_started.Rmd"
 output: html_document
-date: "2022-12-18"
+date: "2023-02-15"
 ---
 
 ```{r setup, include=FALSE}
@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-## Intro
+## Introduction
 
 crosshap (R package) is an LD-based local haplotyping tool designed to visualize 
 patterns of variation across loci and individuals in a genomic region of interest. 
@@ -18,12 +18,11 @@ introduce and describe the main functions of crosshap so you'll be ready to jump
 into exploring your own data.
 
 The data we'll be analyzing is soybean data from the USDA core collection 
-(published in Bayer et al. 2021, doi: 10.1002/tpg2.20109). This tutorial will
-re-perform local haplotype analysis of the seed protein QTL, cqProt-003, with 
-crosshap (see Marsh et al. 2022, doi: 10.1007/s00122-022-04045-8). 
+(Bayer et al. 2021). This tutorial will re-perform local haplotype analysis of the 
+seed protein QTL, cqProt-003, with crosshap (Marsh et al. 2022). 
 
 ``` {r installation, eval = FALSE}
-#install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("JacobIMarsh/crosshap")
 ```
 
@@ -31,92 +30,108 @@ devtools::install_github("JacobIMarsh/crosshap")
 library(crosshap)
 ```
 
-## Preparing your inputs
+## Preparing inputs
 
 For all inputs a wrapper is provided in crosshap to help read them in consistently. 
 You can just provide the path to the files for your data, but for this tutorial 
 we need to find the example data within the local cloned directory.
 
 ``` {r findpaths, eval = TRUE, include = T}
-#Find path to example data
+#Save the paths to cqprot-003 example data
 path_to_vcf <- system.file('extdata','imputed_173kb.vcf', package = 'crosshap')
 path_to_LD <- system.file('extdata','plink.ld', package = 'crosshap')
 path_to_pheno <- system.file('extdata','protein_phenotypes.txt', package = 'crosshap')
 path_to_metadata <- system.file('extdata','domestication.txt', package = 'crosshap')
 ```
 
-The VCF contains genomic variation (SNP) information of 985 accessions. Only 
+**VCF** contains genomic variation (SNP) information of 985 accessions. Only 
 sites within the 173kb trait associated region of interest are present in the 
-VCF, along with header information labeling each individual. 
+VCF, along with header information labeling each individual.
 
+<details>
+  <summary>**How do I prepare my own VCF?**</summary>
 The data has been filtered and imputed; currently only biallelic variant sites
 are supported by crosshap. We suggest you filter your data prior to analysis, 
 though imputation is optional and often it will be preferable to keep it unimputed.
-#Read into R using read_vcf()
+To extract the region of interest from your VCF, you can use something like tabix on 
+the command line, just make sure you keep the final header line that starts with '#CHR': 
 
+`$ grep -m 1 '#CHR' in.vcf > in.region.vcf`
+
+`$ bgzip in.vcf`
+
+`$ tabix in.vcf.gz Chr1:100000-200000 >> in.region.vcf`
+
+</details>
 
 ```{r read_vcf, eval = T, include = T}
+#Read vcf into R and standardize using read_vcf()
 test_vcf <- read_vcf(path_to_vcf)
+head(test_vcf, c(4,11))
 ```
 
-```{r print_vcf, eval = T, include = T}
-head(test_vcf)
-```
+**LD matrix** provides pairwise linkage information between all SNP loci 
+within the region of interest (173kb). Any LD metric that captures pairwise correlation 
+on a scale from 0 (unlinked) to 1 (fully linked) may be used, including D', R^2, or R^2 
+corrected for kinship or population structure. For this example, we are using R^2 values.
 
-
-Next, the LD matrix provides pairwise linkage information between all SNP loci 
-within the region of interest (173kb). For this example input a simple R^2 
-matrix was calculated using PLINK (Purcell et al 2007): plink --r2 square --vcf
-imputed_173kb.vcf.
-
+<details>
+  <summary>**How do I prepare my own LD matrix?**</summary>
 The LD file must be a square correlation matrix using the same loci present in 
-test_vcf, ordered by position, with or without position labels (vcf object must 
-be provided if position labels are missing). Any LD metric that captures pairwise 
-correlation on a scale from 0 (unlinked) to 1 (fully linked) may be used, including 
-D', R^2, or R^2 corrected for kinship or population structure. 
+test_vcf, ordered by position, with or without position labels (vcf object must be 
+provided if position labels are missing). A simple R^2 matrix can be calculated using 
+PLINK (Purcell et al 2007) from which the output can be directly used as input: 
 
-```{r read_LD, eval = F}
-#Read into R using read_LD()
+`$ plink --r2 square --vcf imputed_173kb.vcf`
+</details>
+
+```{r read_LD}
+#Read into R using read_LD
+#VCF is provided as additional argument to help assign column and row names
 test_LD <- read_LD(path_to_LD, vcf = test_vcf)
-head(test_LD)
+head(test_LD, c(4,4))
 ```
 
-Providing phenotype scores for all, or at least some individuals in the VCF is 
-useful for uncovering trait-associated genomic variation and haplotypes. Given 
-this tutorial analyzes a seed protein QTL, seed protein % is the phenotype 
-provided for this example. 
+**Phenotype** scores for all, or at least some individuals in the VCF is useful for 
+uncovering trait-associated genomic variation and haplotypes. Given this tutorial 
+analyzes a seed protein QTL, seed protein % is the phenotype provided for this example.
 
+<details>
+  <summary>**How do I prepare my own phenotype file?**</summary>
 The phenotype file should be a comma or tab-delimited plain text file with 
 individual names (same as VCF IDs) in the first column, and numerical phenotype 
-scores in the second column. Note: this can be the same phenotype file provided 
-for a GWAS.
-
-```{r read_pheno, eval = F}
+scores in the second column, either with columns untitled or labeled 'Ind' and 'Pheno'. 
+This can be the same phenotype file provided for a GWAS.
+</details>
+```{r read_pheno}
 #Read into R using read_pheno()
-test_pheno <- crosshap::read_pheno(path_to_pheno)
-head(test_pheno)
+test_pheno <- read_pheno(path_to_pheno)
+head(test_pheno, n = 4)
 ```
 
-Providing a metadata grouping label for distinct subpopulations in your 
-dataset can aid in interpreting the haplotyping results. This example provides 
-level of domestication for each individual, including undomesticated wild-type soy 
-(wt), to domesticated landraces (lr), domesticated cultivars improved by advanced 
-breeding (ocult) and further improved modern cultivars (mcult). 
+**Metadata** grouping labels for distinct subpopulations in your dataset can aid in 
+interpreting the haplotyping results. This example provides level of domestication for 
+each individual, including undomesticated wild-type soy (wt), to domesticated landraces 
+(lr), domesticated cultivars improved by advanced breeding (ocult) and further improved 
+modern cultivars (mcult). 
 
-The metadata file should be formatted the same as the phenotype file, though with
+<details>
+  <summary>**How do I prepare my own metadata file?**</summary>
+The metadata file should be formatted the exact same as the phenotype file, though with
 a categorical metadata grouping variable in the second column instead of numerical
 phenotype score. This variable can be anything you want to check the spread of
 across the haplotypes (e.g. geographic region), or that could be associated with 
 phenotypic variation (e.g. year of collection).
+</details>
 
-``` r
-#Read into R using read_read_metadata()
+```{r read_metadata}
+#Read into R using read_metadata()
 test_metadata <- read_metadata(path_to_metadata)
+head(test_metadata, n = 4)
 ```
 
-## Running local haplotyping
+## Local haplotyping
 
-!! INTRO
 Local haplotyping involves classifying individuals by shared haplotypes 
 (combinations of alleles) across loci within a region of interest. In crosshap, 
 haplotypes are not defined by individual loci but rather by allelic combinations 
@@ -125,34 +140,28 @@ typically inherited as a unit throughout the population. The clustering algorith
 used to capture Marker Groups is DBSCAN (Ester et al. 1996) which has two main 
 parameters in crosshap: MGmin and epsilon.
 
-You will need to pick a MGmin (minPts), which is the minimum number of linked SNPs 
-in a cluster for it to be classified as a Marker Group instead of background noise. 
-To give an approximate scale, a 300kb region with 3000 SNPs may be appropriately 
-captured with a MGmin in the range of 20-40, depending on the desired granularity. 
-In contrast, a 50kb region with 100 SNPs may work better with an MGmin of 5-15. In 
-this example (2041 SNPs in 173kb region), a MGmin of 30 was chosen, though feel 
-free to experiment to learn the effects of this parameter.
+**MGmin** (minPts) is the minimum number of linked SNPs in a cluster for it to be 
+classified as a Marker Group instead of background noise. In this example (2041 SNPs in 
+173kb region), a MGmin of 30 was chosen.
 
-``` r
+```{r set_MG}
 #Add minimum Marker Group SNP count
 test_MGmin <- 30
 ```
 
-Epsilon roughly translates to cluster density, when epsilon increases, more SNPs
+**Epsilon** roughly translates to cluster density, when epsilon increases, more SNPs
 will typically be included in more Marker Groups. At this stage it's worth providing a 
 range of epsilons so you can pick the best one later. This dataset has a lot of SNPs 
-(2041 loci), so the range of epsilons we will test will be quite low 
-(0.2,0.4,0.6,0.8,1). Your dataset may require increasing these values 
-(e.g. 1,1.5,2,2.5,3) if you want to capture more Marker Groups. Note: Epsilon values 
-that are very high will begin decreasing the number of Marker Groups identified.
+(2041 loci), so the range of epsilons we will test will be quite low (0.2 - 1). 
 
-``` r
-#Add list of epsilon values to test
+```{r set_epsilon}
+#Add list of epsilon values to run haplotyping on
 test_epsilon <- c(0.2,0.4,0.6,0.8,1)
 ```
+
 Now you've got all your inputs and parameters ready, it's time to run the haplotyping!
 
-``` r
+```{r run_haplotyping, message = F, results = 'hide', cache = T}
 #Run the haplotyping at all provided epsilon values
 run_haplotyping(vcf = test_vcf,
                 LD = test_LD,
@@ -166,7 +175,20 @@ If everything went to plan, 5 Haplotype S3 objects should have been saved to you
 environment - one for each provided epsilon value. These files will be needed to build 
 the crosshap visualizations. 
 
-## Picking the optimal clustering resolution
+<details>
+  <summary>**How should I tune MGmin and epsilon for my dataset?**</summary>
+The MGmin value should be set based on the size, density and linkage decay of your 
+dataset. To give some scale: A 300kb region with 3000 SNPs may be appropriately 
+captured with a MGmin in the range of 20-40, depending on the desired granularity. 
+In contrast, a 50kb region with 100 SNPs may work better with an MGmin of 5-15.
+
+Your dataset may require increasing the epsilon range (e.g. to 1 - 3), as especially 
+for populations with lower linkage, too few Marker Groups may be identified at the 
+default range (0.2 - 1). If the Epsilon values are raised very high, clusters will begin 
+merging and the number of distinct Marker Groups will decrease.
+</details>
+
+## Optimizing the clustering resolution
 
 Epsilon is a notoriously difficult parameter to optimize for DBSCAN, the tool used
 to cluster SNPs into Marker Groups for haplotyping with crosshap. Thankfully, crosshap
@@ -176,7 +198,7 @@ haplotype objects created at the different epsilon values to help you pick the b
 The first clustering tree option provides a summary of changes in haplotype groups 
 resolved at different epsilon values. 
 
-``` r
+```{r clustree, fig.width = 12, fig.height = 6, cache = T}
 #Provide phenotype data and parameters used to create haplotype objects
 #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
 hap_clustree <- run_clustree(MGmin = test_MGmin,
@@ -187,21 +209,22 @@ hap_clustree
 ```
 
 <details>
-  <summary>**What are the circles and arrows on this plot?**</summary>
+  <summary>**What are the nodes and arrows on this plot?**</summary>
   
 Each row of nodes represents the different haplotypes (A-Z) idenfied at a specific epsilon resolution (reported on right). The size of each node indicates the frequency of individuals that possess a given haplotype and the colour reflects the mean phenotype score for that population of individuals. The '0' node on the left represents the 
 population of individuals that are not placed in a haplotype. The arrows between each row indicates that individuals in the upper haplotype node are present in the lower haplotype node, with the opacity reflecting the proportion of individuals. 
 
 </details>
 
+
 What you may notice is that the number of haplotypes identified changes from three 
 populations at epsilon = 0.2 to six populations at epsilon = 0.6, though remains constant
 with six haplotype populations as epsilon increases to 1. This is a good sign that the 
-haplotypes identified at this epsilon range (0.6-1) are robust and effectively capture
+haplotypes identified at this epsilon range (0.6 - 1) are robust and effectively capture
 a distinct genetic structure across the population in our region of interest. 
 
 In addition, a range of colours are present for the rows of nodes corresponding to 
-epsilons 0.6-1 which indicates there's phenotypic diversity between a large haplotype 
+epsilons 0.6 - 1 which indicates there's phenotypic diversity between a large haplotype 
 A which on average has a low phenotype score (seed protein %), and smaller haplotypes 
 such as E and F which on average have higher phenotype scores.
 
@@ -215,12 +238,12 @@ phenotypic trait variation, or may be markers for causal variants. In this case,
 picking a clustering resolution (epsilon) that is optimal for capturing informative
 Marker Groups is the goal. The clustree wrapper provided by crosshap has a MG option 
 for capturing changes between Marker Groups, rather than haplotypes, between results 
-using different epsilon values. When "type = 'MG'", the nodes will instead represent 
+using different epsilon values. When `type = 'MG'`, the nodes will instead represent 
 Marker Groups, with size indicating number of SNPs, and colour reflecting the phenotypic 
 association of a given Marker Groups. The '0' group represents background SNPs that 
 aren't assigned to a Marker Group.
 
-``` r
+```{r MG_clustree, fig.width = 12, fig.height = 6}
 #Provide phenotype data and parameters used to create haplotype objects
 #Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
 MG_clustree <- run_clustree(MGmin = test_MGmin,
@@ -231,12 +254,21 @@ MG_clustree
 ```
 </details>
 
-### Visualizing local haplotypes with crosshap
+## Visualizing local haplotypes
 
 Now that we have our ready as a haplotype object, and have picked the optimal epsilon 
 resolution for our dataset, it's time to visualize our results in full so we can start 
-uncovering the patterns of variation present in our region of interest!
+uncovering patterns of variation!
 
+On the crosshap visualization, the central matrix displays the combinations of Marker 
+Group alleles that define each haplotype, it provides a grid around which features of 
+each Marker Group and haplotype combination is characterized. Features of haplotypes and 
+the individuals assigned to them are visualized vertically, with features in the top and 
+bottom plots. Features of Marker Groups and the SNPs assigned to them are visualized 
+horizontally, with features on the left and right plots. 
+
+<details>
+  <summary>**Why visualize Marker Groups alongside haplotypes?**</summary>
 The idea of the eponymous crosshap visualization is to integrate Marker Group results 
 (cluster of SNPs) with features of haplotype populations (groups of genetically similar 
 individuals), allowing you to intuitively connect genetic variants with the individuals 
@@ -244,97 +276,122 @@ that possess them. One of the reasons it's important to capture both in the same
 is because often trends of genetic variation captured by Marker Groups can be explained 
 by population structure across the haplotypes - and vice versa. 
 
-On the crosshap visualization, the central matrix displays the combinations of Marker 
-Group alleles that define each haplotype, it provides a grid around which features of 
-each Marker Group and haplotype combination is characterized Features of haplotypes and 
-the individuals assigned to them are visualized vertically, with features in the top and 
-bottom plots. Features of Marker Groups and the SNPs assigned to them are visualized 
-horizontally, with features on the left and right plots. 
+\
 
-``` r
+</details>
+
+<details>
+  <summary>**What exactly is shown in each section of the visualization?**</summary>
+* Above the central matrix is the frequency of individuals with each haplotype 
+combination, with a breakdown by our provided metadata variable (level of domestication).
+
+* Below the central matrix is plotted the phenotype scores (seed protein %) 
+for each individual (each dot is an individual), grouped by haplotype and coloured by 
+metadata variable, like the top bar plot.
+
+* Left of the central matrix is a summary of allele frequency information for each 
+of the Marker Groups (**MG**). This indicates the frequency of minor allele, 
+missing alleles, heterozygotes, and reference alleles averaged across all the SNPs 
+within each Marker Group.
+
+* Right of the central matrix is plotted the phenotypic association for each SNP 
+(each dot is a SNP), grouped by Marker Group. The 'pheno association' is effectively the 
+difference in phenotype scores between individuals with the alternate compared to 
+reference alleles for a given SNP.
+
+* The table in the bottom right summarizes the haplotype information and the table in the 
+top right summarizes the Marker Group information. All guides are shown in the bottom 
+left.
+</details>
+
+```{r crosshap_viz, fig.height = 11, fig.width = 11}
 #Visualize haplotype object created by run_haplotyping() at the chosen epsilon (0.6)
 Hap_viz <- crosshap_viz(Haplotypes_MGmin30_E0.6)
 Hap_viz
 #If it doesn't scale well in your plot viewer, try exporting it as an image with ggsave()
 ```
 
-## What's shown in the crosshap visualization
-
-Having a look at the haplotype visualization, there's a lot going on at first glance, 
-so let's break it down piece by piece. In the central matrix we can see there are 9 
-Marker Groups (MG1-MG9) defining 6 haplotypes (A-F). 
-
-At the top, above the central matrix is the frequency of individuals with each haplotype 
-combination, with a breakdown by our provided metadata variable (level of domestication).
-
-At the bottom, below the central matrix is plotted the phenotype scores (seed protein %) 
-for each individual (each dot is an individual), grouped by haplotype and coloured by 
-metadata variable, like the top bar plot.
-
-To the left of the central matrix is a summary of allele frequency information for each 
-of the Marker Groups (MG1-MG9). This indicates the frequency of minor allele, missing 
-alleles, heterozygotes, and reference alleles averaged across all the SNPs within each 
-Marker Group.
-
-To the right of the central matrix is plotted the phenotypic association for each SNP 
-(each dot is a SNP), grouped by Marker Group. The 'pheno association' is effectively the 
-difference in phenotype scores between individuals with the alternate compared to 
-reference alleles for a given SNP.
-
-The table in the bottom right summarizes the haplotype information and the table in the 
-top right summarizes the Marker Group information. All guides are shown in the bottom 
-left.
-
->>Are there other options for these plots?
+<details>
+  <summary>**Are there other options for these plots?**</summary>
 The left plot providing allele frequency information can be swapped out by providing the 
-argument "plot_left = 'pos'" to instead report the chromosomal position of each SNP in 
+argument `plot_left = 'pos'` to instead report the chromosomal position of each SNP in 
 the region of interest. Similarly. the right plot providing phenotypic association 
-results for SNPs can be swapped using "plot_right = 'cluster'" to instead build a 
+results for SNPs can be swapped using `plot_right = 'cluster'` to instead build a 
 boxplot which indicates the level of internal linkage within each Marker Group.
+</details>
 
 ## Interpreting the crosshap visualization
 
-Alright, now that we know how to read the crosshap visualization, lets actually use it 
-to uncover some biological findings to put in that paper/report/grant application. Give 
-it a crack yourself, and if you get stuck, have a look at the example findings below.
+Alright, lets use the integrated visualization to uncover some biological findings to 
+put in that paper/report/grant application. Give it a crack yourself, and if you get 
+stuck, have a look at the example findings below.
 
->>Level of domestication across haplotypes
-Looking at the top bar plot and the summary table in the bottom right, haplotype A 
+<details>
+  <summary>**Level of domestication across haplotypes**</summary>
+Looking at the top bar plot and the summary table in the bottom right, haplotype **A** 
 almost exclusively contains domesticated individuals including the vast majority of 
-old and modern improved cultivars. Haplotypes B, D and E primarily contain wild-type 
-individuals and haplotypes C and F appear landrace-specific.
+old and modern improved cultivars. Haplotypes **B**, **D** and **E** primarily contain 
+wild-type individuals and haplotypes **C** and **F** appear landrace-specific.
 
->>Phenotypic variability across haplotypes
-Looking at the bottom phenotype plot, individuals in haplotypes B-F (which share the 
-alternate allele for MG1) typically have higher seed protein scores than individuals in 
-haplotype A. This trend is not only found in the wild-type specific haplotypes (B,D,E) 
-but also the landrace-specific haplotypes C and F indicating there are some domesticated 
-subpopulations that may share a causal high-protein mutation in the region.
+\
 
->>Linkage patterns between Marker Groups
+</details>
+
+
+<details>
+  <summary>**Phenotypic variability across haplotypes**</summary>
+Looking at the bottom phenotype plot, individuals in haplotypes **B**-**F** (which share 
+the alternate allele for **MG1**) typically have higher seed protein scores than 
+individuals in haplotype **A**. This trend is not only found in the wild-type specific 
+haplotypes (**B**,**D**,**E**) but also the landrace-specific haplotypes **C** and **F** 
+indicating there are some domesticated subpopulations that may share a causal 
+high-protein mutation in the region.
+
+\
+
+</details>
+
+<details>
+  <summary>**Linkage patterns between Marker Groups**</summary>
 By looking at the central MG/hap matrix, we can see that all other Marker Groups have 
-'nested' linkage to MG1, meaning the alternatealleles for MG2-MG9 SNPs tend to only be 
-present when the alternate allele for MG1 is present. This may indicate a bottleneck, in 
-this case due to artificial selection for a variant tightly linked to MG1, leading to 
-dramatically reduced genetic variation in the major domesticated haplotype A.
+'nested' linkage to **MG1**, meaning the alternate alleles for **MG2**-**MG9** SNPs 
+tend to only be present when the alternate allele for **MG1** is present. This may 
+indicate a bottleneck, in this case due to artificial selection for a variant tightly 
+linked to **MG1**, leading to dramatically reduced genetic variation in the major 
+domesticated haplotype **A**.
 
->>Phenotypic association of Marker Groups
+\
+
+</details>
+
+<details>
+  <summary>**Phenotypic association of Marker Groups**</summary>
 Looking at the pheno association plot on the right, several Marker Groups appear to be 
-trait-associated, particularly MG1 and MG8. While MG8 is associated with the highest 
-phenotypic effect (4.39), it has a low minor allele frequency (0.03; see left allele 
-count plot). In contrast, MG1 has a substantially higher minor allele frequency (0.21), 
-which means the phenotypic association for MG1 has more statistical power. 
+trait-associated, particularly **MG1** and **MG8**. While **MG8** is associated with the 
+highest phenotypic effect (4.39), it has a low minor allele frequency (0.03; see left 
+allele count plot). In contrast, **MG1** has a substantially higher minor allele 
+frequency (0.21), which means the phenotypic association for **MG1** has more 
+statistical power. 
 
->>Candidates for further analysis and validation
-MG1 is the strongest candidate Marker Groups for further analysis, it may be worth 
+\
+
+</details>
+
+<details>
+  <summary>**Candidates for further analysis and validation**</summary>
+**MG1** is the strongest candidate Marker Groups for further analysis, it may be worth 
 investigating the functional annotations of these markers to identify a candidate causal 
-variant, or testing whether indels/structural variation is linked to MG1. MG8 is also a 
-candidate for futher analysis, though the alternate allele for MG8 is only found in 
-18 landrace individuals with very high seed protein scores. As a result, it may be  
-fruitful to investigate the subpopulation of individuals in haplotype F: are they from 
-the same geographic region? do they share any other unique biological features? These 
-rare landrace individuals in haplotype F may be interesting germplasm for introgression 
-studies.
+variant, or testing whether indels/structural variation is linked to **MG1**. **MG8** 
+is also a candidate for further analysis, though the alternate allele for **MG8** is only 
+found in 18 landrace individuals with very high seed protein scores. As a result, it 
+may be  fruitful to investigate the subpopulation of individuals in haplotype **F**: are 
+they from the same geographic region? do they share any other unique biological 
+features? These rare landrace individuals in haplotype **F** may be interesting germplasm 
+for introgression studies.
+
+\
+
+</details>
 
 Congratulations, you did your first crosshap analysis! Now you're ready and equipped to 
 give it a go with your data :)
@@ -345,15 +402,14 @@ You can have a closer look at the saved results by looking at the elements withi
 haplotype object. This is ideal for exporting information about the individuals that 
 possess each haplotype, and the SNPs within each Marker Group for further analysis.
 
-``` r
+* The Indfile reports the haplotype assigned to each individual
+* The Hapfile reports the identified haplotypes, and their Marker Group combinations
+* The Varfile reports information for each SNP, including Marker Group assignments
+
+```{r export_hapobject, eval = F}
 #Print first lines of haplotype object buckets
-#The Indfile reports the haplotype assigned to each individual
 Haplotypes_MGmin30_E0.6$Indfile
-
-#The Hapfile reports the identified haplotypes, and their Marker Group combinations
 Haplotypes_MGmin30_E0.6$Hapfile
-
-#The Varfile reports information for each SNP, including Marker Group assignments
 Haplotypes_MGmin30_E0.6$Varfile
 ```
 
@@ -364,7 +420,7 @@ together as you like using the patchwork package in R (Pederson 2022).
 Below we'll only include the top and bottom plots that are relevant that characterize 
 our haplotype populations.
 
-``` r
+```{r export_subplots}
 #Install patchwork if you don't have it using install.packages("patchwork")
 library(patchwork)
 
@@ -376,4 +432,34 @@ bot <- build_bot_halfeyeplot(Haplotypes_MGmin30_E0.6, hide_labels = T)
 
 #Now we can stitch them together with patchwork!
 hap_plots <- patchwork::wrap_plots(top, bot) + patchwork::plot_layout(ncol = 1)
+hap_plots
 ```
+
+## References
+
+BAYER, P. E., VALLIYODAN, B., HU, H., MARSH, J. I., YUAN, Y., VUONG, T. D., PATIL, G., 
+SONG, Q., BATLEY, J., VARSHNEY, R. K., LAM, H. M., EDWARDS, D. & NGUYEN, H. T. 2021. 
+Sequencing the USDA core soybean collection reveals gene loss during domestication and  
+breeding. *Plant Genome*, e20109.
+
+MARSH, J. I., HU, H., PETEREIT, J., BAYER, P. E., VALLIYODAN, B., BATLEY, J., 
+NGUYEN, H. T. & EDWARDS, D. 2022. Haplotype mapping uncovers unexplored variation in 
+wild and domesticated soybean at the major protein locus *cqProt-003*. 
+*Theor Appl Genet*, 135, 1443-1455.
+
+PURCELL, S., NEALE, B., TODD-BROWN, K., THOMAS, L., FERREIRA, M. A. R., BENDER, D., 
+MALLER, J., SKLAR, P., DE BAKKER, P. I. W., DALY, M. J. & SHAM, P. C. 2007. PLINK: A 
+tool set for whole-genome association and population-based linkage analyses. 
+*Am J Hum Genet*, 81, 559-575.
+
+ESTER, M., KRIEGEL, H.-P., SANDER, J. & XU, X. A density-based algorithm for discovering 
+clusters in large spatial databases with noise. Proceedings of the 2nd ACM International 
+Conference on Knowledge Discovery and Data Mining (KDD), 1996. 226-231.
+
+PEDERSON, T. 2022. Patchwork: The composer of plots.  
+https://patchwork.data-imaginist.com, https://github.com/thomasp85/patchwork.
+
+ZAPPIA, L. & OSHLACK, A. 2018. Clustering trees: A visualization for evaluating 
+clusterings at multiple resolutions. *Gigascience*, 7.
+
+

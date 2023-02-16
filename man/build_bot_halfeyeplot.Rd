@@ -4,7 +4,7 @@
 \alias{build_bot_halfeyeplot}
 \title{Bot hap-pheno raincloud plot}
 \usage{
-build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = "none")
+build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = NA)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
