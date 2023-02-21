@@ -50,9 +50,9 @@ noNA_preVarfile[is.na(noNA_preVarfile)] <- 0
 Varfile <-  preVarfile %>% dplyr::select(-nInd) %>%
             tidyr::spread(key, avPheno) %>%
             dplyr::rename(dplyr::any_of(types)) %>%
-            dplyr::mutate(percdiff = alt - ref) %>%
+            dplyr::mutate(phenodiff = alt - ref) %>%
             dplyr::ungroup() %>%
-            dplyr::select(ID, percdiff) %>%
+            dplyr::select(ID, phenodiff) %>%
             dplyr::left_join(noNA_preVarfile %>%
                               dplyr::mutate(AltAF = (2*alt+het)/(2*(ref + het + alt))),
                              by = c("ID")) %>%

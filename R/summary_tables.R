@@ -24,9 +24,9 @@ no0Varfile <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
 q <- dplyr::left_join(
 no0Varfile %>% dplyr::count(MGs) %>% dplyr::rename(nSNP = 'n'),
-stats::aggregate(no0Varfile$percdiff,
+stats::aggregate(no0Varfile$phenodiff,
                  base::list(no0Varfile$MGs),
-                 mean) %>% dplyr::rename(MGs = 'Group.1', percdiff = 'x') %>%
+                 mean) %>% dplyr::rename(MGs = 'Group.1', phenodiff = 'x') %>%
   tibble::as_tibble(),
 by = "MGs") %>%
   dplyr::left_join(

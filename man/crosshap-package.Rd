@@ -8,6 +8,13 @@
 \description{
 More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jacobimarsh.github.io/crosshap/}
+}
+
+}
 \author{
 \strong{Maintainer}: Jacob Marsh \email{jacob.marsh@research.uwa.edu.au}
 

@@ -69,10 +69,10 @@ for (drez in epsilon[2:base::length(epsilon)]){
 }
 
 MGtree <- base::suppressMessages(
-clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'percdiff',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1) +
-  ggplot2::scale_colour_gradient(limits=c(base::max(pre_MGtree$percdiff),
-                                          base::min(pre_MGtree$percdiff)),
-                                 high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'percdiff') +
+clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'phenodiff',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1) +
+  ggplot2::scale_colour_gradient(limits=c(base::max(pre_MGtree$phenodiff),
+                                          base::min(pre_MGtree$phenodiff)),
+                                 high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'phenodiff') +
   ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
   ggplot2::labs(size = 'nSNPs', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
