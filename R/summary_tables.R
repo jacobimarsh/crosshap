@@ -114,13 +114,14 @@ n <- HapObject$Hapfile %>%
 
 hapdat <- rbind(phen, meta, n)
 
-y <- gridExtra::tableGrob(hapdat,
+nometa_dat <- rbind(phen, n)
+
+y <- gridExtra::tableGrob(if(nrow(meta) == 1){nometa_dat}else{hapdat},
                           theme = ggpp::ttheme_gtstripes(
                             colhead = list(bg_params = list(fill = "white"),
                                            fg_params = list(fontface = 2L)),
                             rowhead = list(bg_params = list(fill = "white"),
-                                           fg_params = list(fontface = 2L))
-                          ))
+                                           fg_params = list(fontface = 2L))))
 
 
 ybot <- gtable::gtable_add_grob(y,
@@ -130,7 +131,7 @@ ybot <- gtable::gtable_add_grob(y,
                                   x1 = grid::unit(1,"npc"),
                                   y1 = grid::unit(0,"npc"),
                                   gp = grid::gpar(lwd = 1)),
-                                t = 5, b = nrow(y), l = 2, r = ncol(y))
+                                t = nrow(y), b = nrow(y), l = 2, r = ncol(y))
 
 ytop <- gtable::gtable_add_grob(ybot,
                                 grobs = grid::segmentsGrob( # line across the bottom

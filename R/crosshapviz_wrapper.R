@@ -42,7 +42,7 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
  # base::message(paste0("Building Bottom Hap-Pheno plot"))
   bot <- build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = isolate_group)
 
-#  base::message(paste0("Building Left SNP info plot"))
+ # base::message(paste0("Building Left SNP info plot"))
 
   left <- switch(plot_left,
                  "allele" = build_left_alleleplot(HapObject, hide_labels),
