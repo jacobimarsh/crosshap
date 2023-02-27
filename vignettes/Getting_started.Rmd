@@ -199,7 +199,7 @@ The first clustering tree option provides a summary of changes in haplotype grou
 resolved at different epsilon values. 
 
 ```{r clustree, fig.width = 12, fig.height = 6}
-#Provide phenotype data and parameters used to create haplotype objects
+#Phenotype data and parameters used to create haplotype objects
 #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
 hap_clustree <- run_clustree(MGmin = test_MGmin,
                               pheno = test_pheno,
