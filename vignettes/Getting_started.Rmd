@@ -2,6 +2,10 @@
 title: "Getting_started.Rmd"
 output: html_document
 date: "2023-02-15"
+vignette: >
+  %\VignetteIndexEntry{Getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, incude=FALSE}
