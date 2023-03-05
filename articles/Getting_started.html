@@ -64,7 +64,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Getting_started.Rmd</h1>
             
-            <h4 data-toc-skip class="date">2023-02-15</h4>
+            <h4 data-toc-skip class="date">2023-03-05</h4>
       
       
       <div class="d-none name"><code>Getting_started.Rmd</code></div>
@@ -89,7 +89,7 @@ haplotype analysis of the seed protein QTL, cqProt-003, with crosshap
 (Marsh et al. 2022).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"JacobIMarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jacobimarsh.github.io/crosshap/">crosshap</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -156,9 +156,10 @@ from which the output can be directly used as input:</p>
 <span><span class="co">## 20_31604498  0.23783600  0.29226700    1.000000  0.23367800</span></span>
 <span><span class="co">## 20_31604889  0.96147300  0.00158741    0.233678  1.00000000</span></span></code></pre>
 <p><strong>Phenotype</strong> scores for all, or at least some
-individuals in the VCF is useful for uncovering trait-associated genomic
-variation and haplotypes. Given this tutorial analyzes a seed protein
-QTL, seed protein % is the phenotype provided for this example.</p>
+individuals in the VCF is necessary for uncovering trait-associated
+genomic variation and haplotypes. Given this tutorial analyzes a seed
+protein QTL, seed protein % is the phenotype provided for this
+example.</p>
 <details><summary><strong>How do I prepare my own phenotype file?</strong>
 </summary>
 The phenotype file should be a comma or tab-delimited plain text file
@@ -190,7 +191,8 @@ file, though with a categorical metadata grouping variable in the second
 column instead of numerical phenotype score. This variable can be
 anything you want to check the spread of across the haplotypes
 (e.g. geographic region), or that could be associated with phenotypic
-variation (e.g. year of collection).
+variation (e.g. year of collection). Metadata is an optional variable,
+though is highly recommended to include.
 </details><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Read into R using read_metadata()</span></span>
 <span><span class="va">test_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_metadata.html">read_metadata</a></span><span class="op">(</span><span class="va">path_to_metadata</span><span class="op">)</span></span>
@@ -269,7 +271,7 @@ haplotype groups resolved at different epsilon values.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Phenotype data and parameters used to create haplotype objects</span></span>
 <span><span class="co">#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups</span></span>
-<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_clustree.html">run_clustree</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
+<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
 <span>                              pheno <span class="op">=</span> <span class="va">test_pheno</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'hap'</span>,</span>
 <span>                              epsilon <span class="op">=</span> <span class="va">test_epsilon</span><span class="op">)</span></span>
@@ -315,7 +317,7 @@ a Marker Group.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
 <span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
-<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_clustree.html">run_clustree</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
+<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
 <span>                              pheno <span class="op">=</span> <span class="va">test_pheno</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'MG'</span>,</span>
 <span>                              epsilon <span class="op">=</span> <span class="va">test_epsilon</span><span class="op">)</span></span>

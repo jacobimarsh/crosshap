@@ -46,6 +46,9 @@
     <loc>https://jacobimarsh.github.io/crosshap/reference/build_top_metaplot.html</loc>
   </url>
   <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/clustree_viz.html</loc>
+  </url>
+  <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/crosshap-package.html</loc>
   </url>
   <url>
@@ -80,9 +83,6 @@
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/read_vcf.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/run_clustree.html</loc>
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/run_haplotyping.html</loc>
