@@ -2,7 +2,7 @@
 #'
 #' clustree_viz() builds a clustering tree displaying changes in haplotype
 #' assignment between individuals or changes in marker group assignment for
-#' SNPs, across different epsilon values. It's essential the epsilon and MGmin
+#' SNPs, across different epsilon values. Its essential the epsilon and MGmin
 #' values match the haplotype objects created by run_haplotyping(). This function
 #' is a clustree wrapper.
 #'
@@ -15,13 +15,7 @@
 #' @export
 #'
 #' @return A ggplot2 object.
-#'
-#' @examples
-#'
-#' if (FALSE) {
-#'      clustree_viz(MGmin = 30, pheno)
-#'}
-#'
+
 
 clustree_viz <- function(pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin = 30, type = "MG") {
 #Extract ID file first epsilon value and change column name to hap_epsXX

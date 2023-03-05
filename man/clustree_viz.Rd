@@ -27,14 +27,7 @@ A ggplot2 object.
 \description{
 clustree_viz() builds a clustering tree displaying changes in haplotype
 assignment between individuals or changes in marker group assignment for
-SNPs, across different epsilon values. It's essential the epsilon and MGmin
+SNPs, across different epsilon values. Its essential the epsilon and MGmin
 values match the haplotype objects created by run_haplotyping(). This function
 is a clustree wrapper.
-}
-\examples{
-
-if (FALSE) {
-     clustree_viz(MGmin = 30, pheno)
-}
-
 }
