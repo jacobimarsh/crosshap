@@ -4,7 +4,7 @@
 #' interest to identify marker groups. Individuals are classified by haplotype
 #' combination based on shared combinations of marker group alleles. Returns a
 #' comprehensive haplotyping object (HapObject), which can be used as input to
-#' build clustering tree for epsilon optimization using run_clustree(), and
+#' build clustering tree for epsilon optimization using clustree_viz(), and
 #' can be visualized with reference to phenotype and metadata using
 #' crosshap_viz().
 #'
@@ -23,7 +23,7 @@
 #' @export
 #'
 #' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
-#' epsilon value, needed for run_clustree() and crosshap_viz().
+#' epsilon value, needed for clustree_viz() and crosshap_viz().
 #'
 #' @examples
 #'

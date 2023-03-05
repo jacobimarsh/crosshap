@@ -72,7 +72,7 @@ run_haplotyping(vcf, LD, metadata, pheno)
 2.  Build clustering tree to optimize epsilon value
 
 ``` r
-run_clustree(pheno)
+clustree_viz(pheno)
 ```
 
 3.  Visualize local haplotypes and Marker Groups

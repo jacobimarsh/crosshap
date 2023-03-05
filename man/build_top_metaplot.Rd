@@ -23,8 +23,6 @@ though can be called separately to build a stand-alone plot
 }
 \examples{
 
-if (FALSE) {
-     build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
-}
+build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 
 }

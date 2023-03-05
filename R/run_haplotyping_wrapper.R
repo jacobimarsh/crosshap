@@ -1,12 +1,11 @@
 #' Cluster SNPs and identify haplotypes
 #'
 #' run_haplotyping() performs density-based clustering of SNPs in region of
-#' interest to identify marker groups. Individuals are classified by haplotype
+#' interest to identify Marker Groups. Individuals are classified by haplotype
 #' combination based on shared combinations of marker group alleles. Returns a
-#' comprehensive haplotyping object (HapObject), which can be used as input to
-#' build clustering tree for epsilon optimization using run_clustree(), and
-#' can be visualized with reference to phenotype and metadata using
-#' crosshap_viz().
+#' haplotyping object (HapObject), which can be used as input to build clustering
+#' tree for epsilon optimization using clustree_viz(), and can be visualized with
+#' reference to phenotype and metadata using crosshap_viz().
 #'
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
@@ -26,7 +25,7 @@
 #' @export
 #'
 #' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
-#' epsilon value, needed for run_clustree() and crosshap_viz().
+#' epsilon value, needed for clustree_viz() and crosshap_viz().
 #'
 #' @examples
 #'
@@ -58,30 +57,27 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
   for (arez in epsilon){
 
     #Run DBscan on LD matrix
-    # base::message(paste0("Clustering SNPs into marker groups (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Clustering SNPs into marker groups")
     cli::cli_progress_update()
 
-    db40 <- dbscan::dbscan(LD, eps = arez, minPts = MGmin)
-    preMGfile <- tibble::tibble(ID=rownames(LD),cluster=db40$cluster) %>%
+    db_out <- dbscan::dbscan(LD, eps = arez, minPts = MGmin)
+    preMGfile <- tibble::tibble(ID=rownames(LD),cluster=db_out$cluster) %>%
       dplyr::left_join(dplyr::select(vcf, 2:3), by = "ID")
 
 
     ##Identify haplotype frequencies for different marker group combinations
-    # base::message(paste0("Determining haplotypes from marker group clusters (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
     cli::cli_progress_update()
 if(length(unique(preMGfile$cluster)) != 1){
     phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, het_as = het_as, keep_outliers = keep_outliers)
 
     ##Build summary object with all relevant haplotyping information
-    # base::message(paste0("Collating haplotype information (eps = ",arez,")"))
     step <- paste0("eps(",arez,") Collating haplotype information")
     cli::cli_progress_update()
 
     Varfile <- tagphenos(MGfile = phaps_out$MGfile, bin_vcf, pheno)
-    clustered_hpS_obj <-  base::list(epsilon = db40$eps,
-                               MGmin = db40$minPts,
+    clustered_hap_obj <-  base::list(epsilon = db_out$eps,
+                               MGmin = db_out$minPts,
                                Hapfile = phaps_out$Hapfile,
                                Indfile = if (missing(metadata)|is.null(metadata)){
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::mutate(Metadata = as.character(NA))
@@ -89,7 +85,7 @@ if(length(unique(preMGfile$cluster)) != 1){
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")
                                },
                                Varfile = Varfile)
-    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hpS_obj, envir = .GlobalEnv)} else {
+    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hap_obj, envir = .GlobalEnv)} else {
       cli::cli_progress_update()
       base::message(paste0("No Marker Groups identified for Epsilon = ",arez, ""))
     }

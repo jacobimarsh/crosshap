@@ -2,7 +2,8 @@
 #'
 #' build_bot_halfeyeplot() builds a vertical plot displaying the
 #' phenotypic scores for each individual, grouped by haplotype, coloured by
-#' metadata variable. Makes use of the $Indfile information from haplotype
+#' metadata variable. Metadata groups can be isolated using the isolate_groups
+#' argument. Makes use of the $Indfile information from haplotype
 #' object. It is an internal function called by crosshap_viz(), though can be
 #' called separately to build a stand-alone plot.
 #'
@@ -25,20 +26,26 @@
 
 build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_group = NA) {
 
+#Drop individuals where pheno is missing and haplotype is unassigned
 no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
 
+#Filter no0data by isolate_group if specified for input into halfeye plot
 halfeyedat <-  if(is.na(isolate_group)) {
   no0data } else {
   tidyr::drop_na(HapObject$Indfile %>% dplyr::mutate(Pheno = ifelse(Metadata != isolate_group, NA, Pheno)),
                                  Pheno) %>% dplyr::filter(hap !=0 )
 }
 
+#Add a 'keep' variable with excluded groups as NA
 jitterdat <- if(is.na(isolate_group)) {
   no0data %>% dplyr::mutate(keep = "A")
 } else {
   no0data %>% dplyr::mutate(keep = ifelse(Metadata != isolate_group, NA, "A"))
 }
 
+#If a haplotype is missing from halfeyedat either because it has no individuals
+#with a phenotype score or no individuals of the isolated group, an invisible
+#dummy individual is added so that it retains ncol = nhap to align with midplot.
 if(length(setdiff(HapObject$Indfile$hap,c(unique(halfeyedat$hap),0))) > 0){
 jitterdat <- jitterdat %>% tibble::add_row(Ind = "Dummy",
                 hap = setdiff(HapObject$Indfile$hap,c(unique(halfeyedat$hap),0)),
@@ -70,9 +77,9 @@ bot_halfeyeplot <-
                   alpha = "none") +
   ggplot2::scale_alpha_manual(values = 0.3, na.value = 0)
 
-
+#Prints summary table for isolated group's phenotype averages across haplotypes
 if(!is.na(isolate_group)) {
-phen <- halfeyedat %>%
+print_pheno <- halfeyedat %>%
   dplyr::filter(hap != 0) %>%
   dplyr::group_by(hap) %>%
   dplyr::summarise(phenav = mean_na.rm(Pheno)) %>%
@@ -83,7 +90,7 @@ phen <- halfeyedat %>%
   dplyr::mutate(rname = "Pheno") %>%
   tibble::column_to_rownames("rname")
 message(paste("Haplotype phenotype averages of", isolate_group ,"individuals only:"))
-message(paste(capture.output({phen}), collapse = "\n"))
+message(paste(capture.output({print_pheno}), collapse = "\n"))
 }
 
 if(hide_labels == T){

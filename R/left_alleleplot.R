@@ -18,10 +18,11 @@
 #'
 
 build_left_alleleplot <- function(HapObject, hide_labels = T) {
+
+#Filter out individuals unassigned to a haplotype
 pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
-#pre_leftplotdata[base::is.na(pre_leftplotdata)] <- 0
-
+#Count allele averages across SNPs in each Marker Group
 leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
           base::list(pre_leftplotdata$MGs),
           mean) %>% dplyr::rename(MGs = 'Group.1', ref = 'x') %>%

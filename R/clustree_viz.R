@@ -1,10 +1,10 @@
-#' Haplotype clustering tree
+#' Clustering tree
 #'
-#' run_clustree() builds a clustering tree displaying changes in haplotype
+#' clustree_viz() builds a clustering tree displaying changes in haplotype
 #' assignment between individuals or changes in marker group assignment for
-#' SNPs, across different epsilon values provided to run_haplotyping(). Makes
-#' use of $Indfile and $Varfile information from HapObjects created by
-#' run_haplotyping(). This function is a clustree wrapper.
+#' SNPs, across different epsilon values. It's essential the epsilon and MGmin
+#' values match the haplotype objects created by run_haplotyping(). This function
+#' is a clustree wrapper.
 #'
 #' @param epsilon Epsilon values passed through run_haplotyping().
 #' @param MGmin MGmin values passed through run_haplotyping().
@@ -19,11 +19,11 @@
 #' @examples
 #'
 #' if (FALSE) {
-#'      run_clustree(MGmin = 30, pheno)
+#'      clustree_viz(MGmin = 30, pheno)
 #'}
 #'
 
-run_clustree <- function(pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin = 30, type = "MG") {
+clustree_viz <- function(pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin = 30, type = "MG") {
 #Extract ID file first epsilon value and change column name to hap_epsXX
 pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Indfile"]] %>%
     dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')
@@ -48,7 +48,7 @@ haptree <- base::suppressMessages(
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
 )
 #Create epsilon label data
-#Extract x and ay coordinates from clustree object and build labels
+#Extract x and y coordinates from clustree object and build labels
 haplbls <-
   tibble::tibble(xval = base::max(haptree[["data"]][["x"]])*1.1,
          yval=(base::length(epsilon)-1):0,
@@ -58,6 +58,7 @@ haplbls <-
 labeled_haptree <- haptree +
   ggplot2::geom_text(data = haplbls, ggplot2::aes(x=xval, y=yval, label=labelval), hjust = 0)
 
+#Repeat with MGs rather than haplotype groups
 pre_MGtree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Varfile"]] %>%
   dplyr::rename(!!base::paste0("MGs_eps",epsilon[1]) := 'MGs')
 

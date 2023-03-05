@@ -4,24 +4,13 @@
 \alias{prepare_hap_umap}
 \title{UMAP haplotype visualization helper}
 \usage{
-prepare_hap_umap(
-  umap_in,
-  hetmiss_as = "allele",
-  het_as = "alt",
-  HapObject,
-  vcf,
-  nsamples = 25
-)
+prepare_hap_umap(umap_in, hetmiss_as = "allele", HapObject, vcf, nsamples = 25)
 }
 \arguments{
 \item{umap_in}{Epsilon values passed through run_haplotyping().}
 
 \item{hetmiss_as}{If hetmiss_as = "allele", heterozygous-missing SNPs './N'
 are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
-
-\item{het_as}{If het_as = "alt", heterozygous SNPs are treated as 'ALT/ALT'
-alleles, if het_as = "ref", if het_as = "ref", they are kept as 'REF/REF'.
-(NOT IMPLEMENTED)}
 
 \item{HapObject}{Haplotype object created by run_haplotyping().}
 
@@ -43,21 +32,4 @@ matrix generated for run_haplotyping() as input. When fully rendered and
 faceted, the resultant GIF intuitively visualizes the consistent alleles for
 marker groups SNPs for each haplotype combination, despite variation across
 non-marker group SNP alleles.
-}
-\examples{
-
-if (FALSE) {
-     hap_umap <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = MGmin)
-
-hap_gg <- prepare_hap_umap(hap_umap, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
-
-hap_gganim <- hap_gg +
-  ggplot2::facet_wrap(~hap) +
-  gganimate::transition_states(Frame, transition_length = 0, state_length = 1)
-
-hap_anim <- gganimate::animate(hap_gganim, renderer = gganimate::gifski_renderer(), nframes = 25)
-
-gganimate::anim_save("hap_anim.gif", hap_anim)
-}
-
 }

@@ -18,7 +18,5 @@ run_haplotyping().}
 tagphenos() reports the frequency of allele types for each SNP and calculates
 phenotype associations for the different alleles, before returning this
 information in a $Varfile in a HapObject. This is an internal function that
-is not intended for external use, however a user could pass a
-HapObject$MGfile as input, with varying phenotype information to calculate
-associations with a range of traits.
+is not intended for external use.
 }

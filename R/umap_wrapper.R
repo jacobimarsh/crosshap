@@ -17,35 +17,12 @@
 #' nframes passed to gganimate::animate().
 #' @param hetmiss_as If hetmiss_as = "allele", heterozygous-missing SNPs './N'
 #' are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.
-#' @param het_as If het_as = "alt", heterozygous SNPs are treated as 'ALT/ALT'
-#' alleles, if het_as = "ref", if het_as = "ref", they are kept as 'REF/REF'.
-#' (NOT IMPLEMENTED)
 #'
 #' @export
 #'
 #' @return A large ggplot2 object.
-#'
-#' @examples
-#'
-#' if (FALSE) {
-#'      hap_umap <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = MGmin)
-#'
-#' hap_gg <- prepare_hap_umap(hap_umap, HapObject = Haplotypes_MGmin30_E0.6, vcf = vcf, nsamples = 25)
-#'
-#' hap_gganim <- hap_gg +
-#'   ggplot2::facet_wrap(~hap) +
-#'   gganimate::transition_states(Frame, transition_length = 0, state_length = 1)
-#'
-#' hap_anim <- gganimate::animate(hap_gganim, renderer = gganimate::gifski_renderer(), nframes = 25)
-#'
-#' gganimate::anim_save("hap_anim.gif", hap_anim)
-#'}
-#'
 
-
-#umap_in <- umap(protLD, min_dist = 2, spread = 2.5, n_neighbors = MGmin)
-
-prepare_hap_umap <- function(umap_in, hetmiss_as = 'allele', het_as = "alt", HapObject, vcf, nsamples = 25){
+prepare_hap_umap <- function(umap_in, hetmiss_as = 'allele', HapObject, vcf, nsamples = 25){
 
 ID_bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
   dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
@@ -56,6 +33,7 @@ ID_bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID
                                                                               "miss" = NA))))}) %>%
   tibble::rownames_to_column('ID')
 
+#Attach UMAP X and Y coordinates to Varfile (Marker Group assignments)
 x_y_Varfile <-
   suppressWarnings(umap_in$layout %>% dplyr::as_tibble() %>%
   cbind(rownames(umap_in$data)) %>% dplyr::as_tibble(.name_repair = 'unique') %>%
@@ -64,35 +42,46 @@ x_y_Varfile <-
                      dplyr::select(ID, MGs, cluster), by = "ID") %>%
   dplyr::mutate(cluster = as.character(cluster)))
 
+#Attach to VCF with allele states for each individual
 x_y_vcf <- dplyr::left_join(x_y_Varfile, ID_bin_vcf, by = "ID")
 
 x_y_vcf[x_y_vcf == "0"] <- NA
 
+#Convert to long format (warning: can be an extremely large tibble)
 x_y_vcf_long <-
   x_y_vcf %>% dplyr::select(UMAP1, UMAP2, MGs, cluster, HapObject$Indfile$Ind) %>%
   tidyr::gather(HapObject$Indfile$Ind, key = "Ind", value = "allele") %>%
   dplyr::left_join(HapObject$Indfile, hap, by = "Ind")
 
+#
 framenum_ID <- NULL
+#For each haplotype, randomly sample individuals, and assign them each a frame number
 for (i in c(ifelse("0" %in% HapObject$Indfile$hap, 0, NULL),HapObject$Hapfile$hap)){
   framenum_ID <- rbind(framenum_ID, cbind(1:nsamples, dplyr::filter(HapObject$Indfile, hap == i)$Ind %>%
                                       sample(size = nsamples, replace = T)) %>% dplyr::as_tibble())
 }
 framenum_ID <- framenum_ID %>% dplyr::rename(Frame = V1, Ind = V2)
 
-xyvl_framenum <- x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
+#Attach UMAP X & Y with VCF information to the frame number individual information
+xyvl_framenum <- suppressWarnings(
+  x_y_vcf_long %>% dplyr::filter(Ind %in% framenum_ID$Ind) %>%
   dplyr::left_join(framenum_ID, by = 'Ind') %>%
   dplyr::mutate(hap = ifelse(hap==0,'Unassigned',paste0('Hap ', hap))) %>%
   dplyr::mutate(MG_cols = ifelse(!is.na(allele), MGs, NA)) %>%
   dplyr::mutate(MG_cols = ifelse(!is.na(allele) & is.na(MGs),0,MG_cols)) %>%
-  dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols))
+  dplyr::mutate(MG_cols = ifelse(MG_cols == '0','Non-MG (0)',MG_cols)))
 
+#Add dummy duplicate of each frame as hap A with all alternate alleles for the SNPs
+#placed in Marker Groups to have a static 'All MGs' frame in the top left.
 MGrows <- xyvl_framenum %>%
   dplyr::filter(hap == "Hap A") %>%
   dplyr::mutate(hap = "All MGs", Ind = "N/A", MG_cols = MGs)
 
+#Add it back to the composite tibble
 xyvlf_MG <- xyvl_framenum %>% rbind(MGrows)
 
+#Build a large ggplot object with all frames glued on top of one another
+#From this you can facet by haplotype and animate.
 pre_anim_gg <- ggplot2::ggplot(xyvlf_MG %>% dplyr::arrange(is.na(MG_cols), dplyr::desc(MG_cols)) , ggplot2::aes(x = UMAP1, y = UMAP2)) +
   ggplot2::geom_point(alpha = 0.4, ggplot2::aes(colour = MG_cols), size = 0.25)  +
   ggplot2::geom_text(data = framenum_ID %>% dplyr::mutate(allele = 1:nrow(framenum_ID)) %>%

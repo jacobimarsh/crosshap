@@ -92,7 +92,7 @@ test_LD <- read_LD(path_to_LD, vcf = test_vcf)
 head(test_LD, c(4,4))
 ```
 
-**Phenotype** scores for all, or at least some individuals in the VCF is useful for 
+**Phenotype** scores for all, or at least some individuals in the VCF is necessary for 
 uncovering trait-associated genomic variation and haplotypes. Given this tutorial 
 analyzes a seed protein QTL, seed protein % is the phenotype provided for this example.
 
@@ -113,7 +113,7 @@ head(test_pheno, n = 4)
 interpreting the haplotyping results. This example provides level of domestication for 
 each individual, including undomesticated wild-type soy (wt), to domesticated landraces 
 (lr), domesticated cultivars improved by advanced breeding (ocult) and further improved 
-modern cultivars (mcult). 
+modern cultivars (mcult).
 
 <details>
   <summary>**How do I prepare my own metadata file?**</summary>
@@ -121,7 +121,8 @@ The metadata file should be formatted the exact same as the phenotype file, thou
 a categorical metadata grouping variable in the second column instead of numerical
 phenotype score. This variable can be anything you want to check the spread of
 across the haplotypes (e.g. geographic region), or that could be associated with 
-phenotypic variation (e.g. year of collection).
+phenotypic variation (e.g. year of collection). Metadata is an optional 
+variable, though is highly recommended to include.
 </details>
 
 ```{r read_metadata}
@@ -200,7 +201,7 @@ resolved at different epsilon values.
 ```{r clustree, fig.width = 12, fig.height = 6}
 #Phenotype data and parameters used to create haplotype objects
 #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
-hap_clustree <- run_clustree(MGmin = test_MGmin,
+hap_clustree <- clustree_viz(MGmin = test_MGmin,
                               pheno = test_pheno,
                               type = 'hap',
                               epsilon = test_epsilon)
@@ -245,7 +246,7 @@ aren't assigned to a Marker Group.
 ```{r MG_clustree, fig.width = 12, fig.height = 6}
 #Provide phenotype data and parameters used to create haplotype objects
 #Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
-MG_clustree <- run_clustree(MGmin = test_MGmin,
+MG_clustree <- clustree_viz(MGmin = test_MGmin,
                               pheno = test_pheno,
                               type = 'MG',
                               epsilon = test_epsilon)

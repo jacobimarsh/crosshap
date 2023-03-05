@@ -22,6 +22,8 @@
 #'
 
 build_mid_dotplot <- function(HapObject, hide_labels) {
+
+#Recode hapfile to long format, with 0 as REF, 1 as HET and 2 as ALT (dots in plot)
 intersect <- HapObject$Hapfile %>%
   tidyr::gather(MG, present, 3:(base::ncol(.))) %>%
   dplyr::mutate(present = base::as.factor(present)) %>%
@@ -31,6 +33,7 @@ intersect <- HapObject$Hapfile %>%
                                     gsub(as.factor(0),"REF",present)))) %>%
   dplyr::mutate(Allele = factor(present, levels = c("REF", "HET", "ALT")))
 
+#Report min and max MG that each hap has an ALT allele for (edges in plot)
 intersect_lines <- intersect %>%
   dplyr::filter(Allele == "ALT") %>%
   dplyr::group_by(hap) %>%

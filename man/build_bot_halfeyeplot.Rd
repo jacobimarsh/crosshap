@@ -21,7 +21,8 @@ A ggplot2 object.
 \description{
 build_bot_halfeyeplot() builds a vertical plot displaying the
 phenotypic scores for each individual, grouped by haplotype, coloured by
-metadata variable. Makes use of the $Indfile information from haplotype
+metadata variable. Metadata groups can be isolated using the isolate_groups
+argument. Makes use of the $Indfile information from haplotype
 object. It is an internal function called by crosshap_viz(), though can be
 called separately to build a stand-alone plot.
 }

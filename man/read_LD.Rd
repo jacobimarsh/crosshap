@@ -17,7 +17,6 @@ If your correlation matrix does not have rownames and column names, a VCF
 will need to be provided so it can be added with read_LD().
 }
 \examples{
-$ plink --r2 square --vcf your_region.vcf
-read_LD(plink.out)
+read_LD(plink.ld)
 
 }

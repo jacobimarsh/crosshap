@@ -15,14 +15,12 @@
 #'
 #' @examples
 #'
-#' if (FALSE) {
-#'      build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
-#'}
+#' build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 #'
 
 build_top_metaplot <- function(HapObject, hide_labels) {
 
-
+#Remove unassigned individuals and convert Indfile to long format
 topplot_data <- suppressMessages(HapObject$Indfile %>%
   dplyr::group_by(hap, Metadata) %>%
   dplyr::summarise(counts = length(Metadata)) %>%
@@ -31,7 +29,6 @@ topplot_data <- suppressMessages(HapObject$Indfile %>%
 
 top_metaplot <- ggplot2::ggplot(topplot_data,
        ggplot2::aes(y = counts, x = hap, fill = base::factor(Metadata, levels = c(NA, sort(unique(HapObject$Indfile$Metadata))), exclude = NULL))) +
-  #ggplot2::geom_bar(stat = "identity") +
   ggplot2::geom_bar(position="stack", stat = "identity") +
   ggplot2::theme_minimal() +
     ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "grey20") +

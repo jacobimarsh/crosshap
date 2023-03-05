@@ -52,5 +52,3 @@ build_right_clusterplot <- function(HapObject, hide_labels = F) {
     return(right_clusterplot)
   }
 }
-
-  #D right plot

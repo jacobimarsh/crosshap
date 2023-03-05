@@ -1,8 +1,8 @@
 #' Left SNP-position plot
 #'
 #' build_left_alleleplot() builds a horizontal plot displaying the chromosomal
-#' position of each SNP locus, grouped by marker group.Makes use of the $Varfile
-#' position from haplotype object. It is an internal function called by
+#' position of each SNP locus, grouped by marker group. Makes use of the $Varfile
+#' file from haplotype object. It is an internal function called by
 #' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
@@ -21,9 +21,12 @@
 
 build_left_posplot <- function(HapObject, hide_labels = T) {
 
+#Find chromosomal positions at 10%, 50% and 90% intervals across region of interest
+#These act as the x-axis labels
 IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
                                         ((base::max(.) - base::min(.))*0.5 + base::min(.)),
-                                        ((base::max(.) - base::min(.))*0.9 + base::min(.)))}
+                                        ((base::max(.) - base::min(.))*0.9 + base::min(.)))} %>%
+  plyr::round_any(1000)
 
 left_posplot <- HapObject$Varfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
   ggplot2::ggplot() +

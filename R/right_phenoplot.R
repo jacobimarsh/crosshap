@@ -24,8 +24,6 @@
 
 build_right_phenoplot <- function(HapObject, hide_labels) {
 
-#D right plot
-
 right_phenoplot <- ggplot2::ggplot() +
   ggplot2::geom_jitter(data = HapObject$Varfile %>% dplyr::filter(MGs != 0),
                        ggplot2::aes(x = base::abs(phenodiff), y = base::as.factor(MGs), fill = AltAF),

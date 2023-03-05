@@ -17,9 +17,6 @@ Dashes,'-', in individual names are recoded to '.' for downstream
 compatability.
 }
 \examples{
-$ bgzip your.vcf
-$ tabix -p vcf your.vcf
-$ tabix your.vcf.gz chr1:15,000,000-15,250,000 > your_region.vcf
 read_vcf(your_region.vcf)
 
 }

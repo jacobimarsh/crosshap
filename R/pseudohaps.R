@@ -28,10 +28,10 @@ pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_out
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
-  db40_c1 <- preMGfile %>%
+  dbscan_c1 <- preMGfile %>%
     dplyr::filter(cluster == 1) %>% tibble::as_tibble()
   c1_vcf <- bin_vcf %>%
-    tibble::rownames_to_column() %>% dplyr::filter(rowname %in% db40_c1$ID) %>% tibble::column_to_rownames()
+    tibble::rownames_to_column() %>% dplyr::filter(rowname %in% dbscan_c1$ID) %>% tibble::column_to_rownames()
 
 #Calculate most common (alternate or ref) allele for MG1 across all individuals
   i_modes_1 <- base::apply(c1_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble() %>%
@@ -43,10 +43,10 @@ pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_out
 #Repeat for all other MGs, iteratively adding to pseudoSNP bin_vcf
 for (vel in c(2:base::max(preMGfile$cluster))) {
 
-    db40_cvel <- preMGfile %>%
+    dbscan_cvel <- preMGfile %>%
       dplyr::filter(cluster == vel) %>% tibble::as_tibble()
     cvel_vcf <- bin_vcf %>%
-      tibble::rownames_to_column() %>% dplyr::filter(rowname %in% db40_cvel$ID) %>% tibble::column_to_rownames()
+      tibble::rownames_to_column() %>% dplyr::filter(rowname %in% dbscan_cvel$ID) %>% tibble::column_to_rownames()
     i_modes_vel <-
       base::apply(cvel_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble()
     pseudoSNP <- dplyr::bind_cols(pseudoSNP, i_modes_vel)
@@ -76,52 +76,64 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
     tibble::as_tibble() %>%
     dplyr::arrange(by_group = -n)
 
-  over20_hhCounts <- dplyr::filter(hapCounts, n > minHap) %>%
+#Remove haplotypes with frequency below minHap and label remaining with letters
+  overmin_hap_counts <- dplyr::filter(hapCounts, n > minHap) %>%
     dplyr::mutate(hap=LETTERS[1:base::nrow(.)])
 
+#Report what each individual's haplotype letter is based on their pseudoSNP combination
   base::suppressMessages(
-    clustered_hpS <- dplyr::left_join(pseudoSNP, over20_hhCounts, by = c(as.character(1:max(db40_cvel$cluster)))) %>%
+    nophenIndfile <- dplyr::left_join(pseudoSNP, overmin_hap_counts, by = c(as.character(1:max(dbscan_cvel$cluster)))) %>%
                            dplyr::mutate_if(is.character,function(x){tidyr::replace_na(x, '0')}) %>%
                            dplyr::select(1,base::ncol(.))
     )
 
 #Change clusters to as.numeric
-   over20_hhCounts[,1:(base::ncol(over20_hhCounts)-1)] <-
-    base::sapply(over20_hhCounts[, 1:(base::ncol(over20_hhCounts)-1)], as.numeric)
+   overmin_hap_counts[,1:(base::ncol(overmin_hap_counts)-1)] <-
+    base::sapply(overmin_hap_counts[, 1:(base::ncol(overmin_hap_counts)-1)], as.numeric)
 
-   no0clust <- over20_hhCounts %>% dplyr::select(where(~ base::is.numeric(.x) && base::sum(.x) != 0))
+#Filter out clusters that don't have an alternate allele in remaining haplotypes
+   no0clust <- overmin_hap_counts %>% dplyr::select(where(~ base::is.numeric(.x) && base::sum(.x) != 0))
 
-   dat1 <- base::cbind(over20_hhCounts$hap,no0clust[,base::names(base::sort(base::colSums(no0clust), decreasing = TRUE))]) %>%
-     dplyr::rename(hap = "over20_hhCounts$hap")
+#Reformat as nice hapfile table
+   Hapfile <- base::cbind(overmin_hap_counts$hap,no0clust[,base::names(base::sort(base::colSums(no0clust), decreasing = TRUE))]) %>%
+     dplyr::rename(hap = "overmin_hap_counts$hap")
 
-   clust_preMGs <- base::colnames(dat1 %>% dplyr::select(-c(hap, n)))
+   clust_preMGs <- base::colnames(Hapfile %>% dplyr::select(-c(hap, n)))
 
+#Add 'MG' prefix to clusters
    for (veal in c(1:(base::length(clust_preMGs)))) {
-     base::colnames(dat1)[veal+2] <- base::paste0("MG",veal)
+     base::colnames(Hapfile)[veal+2] <- base::paste0("MG",veal)
      }
 
-   cluster2MGs <- base::cbind(clust_preMGs, base::colnames(dat1[3:base::ncol(dat1)])) %>%
+#Report which clusters labels from DBSCAN correspond to which final MGs
+   cluster2MGs <- base::cbind(clust_preMGs, base::colnames(Hapfile[3:base::ncol(Hapfile)])) %>%
      magrittr::set_colnames(c("cluster", "MGs")) %>%
      tibble::as_tibble() %>%
      dplyr::mutate(cluster = as.numeric(cluster))
 
+#Save MGfile created at this step before smoothing
   unsmoothed_MGfile <- dplyr::left_join(preMGfile, cluster2MGs, by = "cluster")
 
   unsmoothed_MGfile[is.na(unsmoothed_MGfile)] <- "0"
 
+#Prepare blank tibble for r2 files
   r2prefile <- tibble::tibble(ID = character(), premeanr2 = double(), MGs = character())
 
+#Calculate average R2 of each SNP with other SNPs within same MG and add to r2file
   for (grev in unique(unsmoothed_MGfile$MGs)){
     r2prefile <-  r2prefile %>% rbind(tibble::enframe(colMeans((LD %>%
                                                         dplyr::filter(row.names(LD) %in% dplyr::filter(unsmoothed_MGfile, MGs == grev)$ID))[,dplyr::filter(unsmoothed_MGfile, MGs == grev)$ID])) %>%
                               dplyr::rename(ID = "name", premeanr2 = "value"))
   }
 
+#Add premeanr2 results to unsmoothed MGfile
   unsmoothed_MGfile <- dplyr::left_join(unsmoothed_MGfile, r2prefile, by = "ID")
 
+#Remove SNPs from MGs when they are beyond 2 std devs from median premeanr2 of a given MG
   smoothed_MGfile <- unsmoothed_MGfile %>% dplyr::group_by(MGs) %>%
     dplyr::mutate(MGs = ifelse((abs(premeanr2 - median(premeanr2)) > 2*sd(premeanr2)),0, MGs))
 
+#Re-calculate meanR2 as before, now that outlier SNPs have been trimmed from MGs
   r2file <- tibble::tibble(ID = character(), meanr2 = double(), MGs = character())
 
   for (grev in unique(smoothed_MGfile$MGs)){
@@ -130,13 +142,14 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
                                         dplyr::rename(ID = "name", meanr2 = "value"))
   }
 
+#Add information to MGfile ready for export
   MGfile <- dplyr::left_join(smoothed_MGfile, r2file, by = "ID")
 
 
   if(keep_outliers == T){
-    return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = unsmoothed_MGfile %>% dplyr::rename(meanr2 = premeanr2)))
+    return(base::list(Hapfile = Hapfile, nophenIndfile = nophenIndfile, MGfile = unsmoothed_MGfile %>% dplyr::rename(meanr2 = premeanr2)))
   } else {
-    return(base::list(Hapfile = dat1, nophenIndfile = clustered_hpS, MGfile = MGfile))
+    return(base::list(Hapfile = Hapfile, nophenIndfile = nophenIndfile, MGfile = MGfile))
   }
 }
 

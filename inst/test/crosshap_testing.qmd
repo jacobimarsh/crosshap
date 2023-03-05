@@ -20,18 +20,18 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 ```
 
 ```{r}
-crosshap::run_haplotyping(vcf,
-                LD,
-                pheno,
-                metadata)
+crosshap::run_haplotyping(vcf = vcf,
+                LD = LD,
+                pheno =  pheno,
+                metadata = metadata)
 ```
 
 ```{r}
-hap_clustree <- crosshap::run_clustree(MGmin = 30,
+hap_clustree <- crosshap::clustree_viz(MGmin = 30,
                               pheno = pheno,
                               type = 'hap')
 
-MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG')
+MG_clustree <- crosshap::clustree_viz(MGmin = 30, pheno = pheno, type = 'MG')
 ```
 
 ```{r}
@@ -88,12 +88,12 @@ crosshap::run_haplotyping(vcf,
                 metadata,
                 MGmin = 20)
 
-hap_clustree <- crosshap::run_clustree(MGmin = 20,
+hap_clustree <- crosshap::clustree_viz(MGmin = 20,
                               pheno = pheno,
                               type = 'hap',
                               epsilon = c(0.5,1,1.5,2,2.5,3))
 
-MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
+MG_clustree <- crosshap::clustree_viz(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
 
 Hap_viz <- crosshap::crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_group = "lowland")
 
@@ -119,12 +119,12 @@ crosshap::run_haplotyping(vcf,
                 epsilon = c(0.5,1,1.5,2,2.5,3),
                 MGmin = 30)
 
-hap_clustree <- crosshap::run_clustree(MGmin = 30,
+hap_clustree <- crosshap::clustree_viz(MGmin = 30,
                               pheno = pheno,
                               type = 'hap',
                               epsilon = c(0.5,1,1.5,2,2.5,3))
 
-MG_clustree <- crosshap::run_clustree(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(1,1.5,2,2.5,3))
+MG_clustree <- crosshap::clustree_viz(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(1,1.5,2,2.5,3))
 
 Hap_viz <- crosshap_viz(Haplotypes_MGmin30_E1, plot_left = "pos")
 

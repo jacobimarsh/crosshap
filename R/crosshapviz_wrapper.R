@@ -33,22 +33,17 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
     base::message(paste0(sum(is.na(HapObject$Indfile$Pheno)), " individuals without phenotype information"))
   }
 
- # base::message(paste0("Building Mid Dot plot"))
   mid <- build_mid_dotplot(HapObject, hide_labels)
 
- # base::message(paste0("Building Top Metadata-Hap plot"))
   top <- build_top_metaplot(HapObject, hide_labels)
 
- # base::message(paste0("Building Bottom Hap-Pheno plot"))
   bot <- build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = isolate_group)
-
- # base::message(paste0("Building Left SNP info plot"))
 
   left <- switch(plot_left,
                  "allele" = build_left_alleleplot(HapObject, hide_labels),
                  "pos" = build_left_posplot(HapObject, hide_labels))
 
- # base::message(paste0("Building Right SNP-Pheno plot"))
+
   right <- switch(plot_right,
                   "pheno" = build_right_phenoplot(HapObject, hide_labels),
                   "cluster" = build_right_clusterplot(HapObject, hide_labels))
@@ -61,7 +56,6 @@ crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
   DAE
   HCG"
 
-  #base::message(paste0("Stitching plots"))
   crosshap_stitched <-
     patchwork::wrap_plots(mid, top, bot , left, right, MGtable, haptable) +
     patchwork::guide_area() +
