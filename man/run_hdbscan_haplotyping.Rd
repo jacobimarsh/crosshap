@@ -47,10 +47,3 @@ build clustering tree for epsilon optimization using clustree_viz(), and
 can be visualized with reference to phenotype and metadata using
 crosshap_viz().
 }
-\examples{
-
-if (FALSE) {
-    run_hdbscan_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
-}
-
-}

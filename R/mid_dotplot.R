@@ -15,10 +15,7 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#'
-#' if (FALSE) {
-#'      build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
-#'}
+#' build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
 #'
 
 build_mid_dotplot <- function(HapObject, hide_labels) {

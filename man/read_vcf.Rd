@@ -16,7 +16,3 @@ A tibble.
 Dashes,'-', in individual names are recoded to '.' for downstream
 compatability.
 }
-\examples{
-read_vcf(your_region.vcf)
-
-}

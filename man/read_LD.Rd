@@ -18,7 +18,3 @@ A tibble.
 If your correlation matrix does not have rownames and column names, a VCF
 will need to be provided so it can be added with read_LD().
 }
-\examples{
-read_LD(plink.ld)
-
-}

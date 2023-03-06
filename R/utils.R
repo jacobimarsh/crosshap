@@ -35,9 +35,6 @@ mean_na.rm <- function(x){
 #'
 #' @return A tibble.
 #'
-#' @examples
-#' read_LD(plink.ld)
-#'
 
 read_LD <- function(LDin, vcf = NULL){
   if(is.null(vcf)){
@@ -62,9 +59,6 @@ read_LD <- function(LDin, vcf = NULL){
 #'
 #' @return A tibble.
 #'
-#' @examples
-#' read_vcf(your_region.vcf)
-#'
 
 read_vcf <- function(VCFin){
   vcf <- data.table::fread(VCFin, nThread = 10) %>%  tibble::as_tibble() %>%
@@ -84,12 +78,6 @@ read_vcf <- function(VCFin){
 #'
 #' @return A tibble.
 #'
-#' @examples
-#'
-#' if (FALSE) {
-#'      read_pheno(yield.txt)
-#'}
-#'
 
 read_pheno <- function(Phenoin){
   data.table::fread(Phenoin, header = F) %>% tibble::as_tibble() %>%
@@ -107,12 +95,6 @@ read_pheno <- function(Phenoin){
 #' @export
 #'
 #' @return A tibble.
-#'
-#' @examples
-#'
-#' if (FALSE) {
-#'      read_metadata(country_of_origin.txt)
-#'}
 #'
 
 read_metadata <- function(Metain){

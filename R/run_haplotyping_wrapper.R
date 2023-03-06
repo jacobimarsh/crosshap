@@ -28,10 +28,7 @@
 #' epsilon value, needed for clustree_viz() and crosshap_viz().
 #'
 #' @examples
-#'
-#' if (FALSE) {
-#'      run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
-#'}
+#' run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
 #'
 
 run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,

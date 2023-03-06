@@ -18,10 +18,3 @@ Group with some of the information shown in the peripheral crosshap plots.
 It is an internal function called by crosshap_viz(), though can be called
 separately to build stand-along grob tables.
 }
-\examples{
-
-if (FALSE) {
-     build_summary_tables(Haplotypes_MGmin30_E0.6)
-}
-
-}

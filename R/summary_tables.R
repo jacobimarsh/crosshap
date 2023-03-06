@@ -11,12 +11,6 @@
 #'
 #' @return A list containing two TableGrob objects.
 #'
-#' @examples
-#'
-#' if (FALSE) {
-#'      build_summary_tables(Haplotypes_MGmin30_E0.6)
-#'}
-#'
 
 build_summary_tables <- function(HapObject){
 

@@ -23,9 +23,6 @@ be called separately to build a stand-alone plot (can be useful when patched
 to a a peripheral plot).
 }
 \examples{
-
-if (FALSE) {
-     build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
-}
+build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
 
 }

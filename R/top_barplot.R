@@ -14,8 +14,7 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#'
-#' build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#' build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
 #'
 
 build_top_metaplot <- function(HapObject, hide_labels) {
