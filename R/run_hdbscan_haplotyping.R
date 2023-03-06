@@ -11,7 +11,6 @@
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
 #' @param pheno Input numeric phenotype data for each individual.
-#' @param epsilon Epsilon values for clustering SNPs with DBscan.
 #' @param MGmin Minimum SNPs in marker groups, MinPts parameter for DBscan.
 #' @param minHap Minimum nIndividuals in a haplotype combination.
 #' @param hetmiss_as If hetmiss_as = "allele", heterozygous-missing SNPs './N'

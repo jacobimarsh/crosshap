@@ -20,19 +20,21 @@ Imports:
     data.table,
     dbscan,
     dplyr,
-    factoextra,
+    ggdist,
+    ggplot2,
     ggpp,
+    ggraph,
     grid,
     gridExtra,
     gtable,
-    janitor,
     magrittr,
     patchwork,
+    plyr,
     scales,
     stats,
+    stringr,
     tibble,
-    tidyr,
-    tsne
+    tidyr
 Suggests: 
     knitr,
     rmarkdown

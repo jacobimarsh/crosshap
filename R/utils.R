@@ -29,6 +29,7 @@ mean_na.rm <- function(x){
 #' will need to be provided so it can be added with read_LD().
 #'
 #' @param LDin Square correlation matrix
+#' @param vcf VCF object created by read_vcf() that can be used to assign column names
 #'
 #' @export
 #'

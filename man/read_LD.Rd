@@ -8,6 +8,8 @@ read_LD(LDin, vcf = NULL)
 }
 \arguments{
 \item{LDin}{Square correlation matrix}
+
+\item{vcf}{VCF object created by read_vcf() that can be used to assign column names}
 }
 \value{
 A tibble.

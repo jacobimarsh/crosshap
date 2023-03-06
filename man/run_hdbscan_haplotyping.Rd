@@ -33,8 +33,6 @@ are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}
-
-\item{epsilon}{Epsilon values for clustering SNPs with DBscan.}
 }
 \value{
 A comprehensive haplotyping S3 object (HapObject) for each provided

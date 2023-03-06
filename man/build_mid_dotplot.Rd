@@ -9,7 +9,7 @@ build_mid_dotplot(HapObject, hide_labels)
 \arguments{
 \item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
 
-\item{hide_labels}{}
+\item{hide_labels}{If TRUE, legend is hidden.}
 }
 \value{
 A ggplot2 object.

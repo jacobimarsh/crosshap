@@ -1,7 +1,7 @@
 ---
 title: "Getting_started.Rmd"
 output: html_document
-date: "2023-02-15"
+date: "2023-03-05"
 vignette: >
   %\VignetteIndexEntry{Getting_started}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,7 +11,6 @@ vignette: >
 ```{r setup, incude=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 ## Introduction
 
@@ -27,7 +26,7 @@ seed protein QTL, cqProt-003, with crosshap (Marsh et al. 2022).
 
 ``` {r installation, eval = FALSE}
 install.packages("devtools")
-devtools::install_github("JacobIMarsh/crosshap")
+devtools::install_github("jacobimarsh/crosshap")
 ```
 
 ``` {r message = FALSE, warning = FALSE, eval = TRUE}

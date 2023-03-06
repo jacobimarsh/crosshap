@@ -8,7 +8,7 @@
 #' to a a peripheral plot).
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
-#' @param hide_labels
+#' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @export
 #'

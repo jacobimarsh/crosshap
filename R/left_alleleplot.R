@@ -14,7 +14,7 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_left_alleleplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+#' build_left_alleleplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
 #'
 
 build_left_alleleplot <- function(HapObject, hide_labels = T) {
