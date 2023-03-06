@@ -4,6 +4,12 @@
     <loc>https://jacobimarsh.github.io/crosshap/404.html</loc>
   </url>
   <url>
+    <loc>https://jacobimarsh.github.io/crosshap/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://jacobimarsh.github.io/crosshap/LICENSE.html</loc>
+  </url>
+  <url>
     <loc>https://jacobimarsh.github.io/crosshap/articles/Getting_started.html</loc>
   </url>
   <url>
@@ -53,9 +59,6 @@
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/crosshap_viz.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/hello.html</loc>
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/index.html</loc>
