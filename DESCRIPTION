@@ -10,7 +10,6 @@ Authors@R:
            email = "jacob.marsh@research.uwa.edu.au")
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
@@ -42,3 +41,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 URL: https://jacobimarsh.github.io/crosshap/
+License: MIT + file LICENSE
