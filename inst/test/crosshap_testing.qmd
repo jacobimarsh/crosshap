@@ -22,7 +22,7 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 crosshap::run_haplotyping(vcf = vcf,
                 LD = LD,
                 pheno =  pheno,
-                metadata = metadata)
+                metadata = metadata)1
 ```
 
 ```{r}

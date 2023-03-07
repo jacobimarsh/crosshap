@@ -14,9 +14,11 @@
 
 build_summary_tables <- function(HapObject){
 
+#Filter out unassigned individuals
 no0Varfile <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
 
-q <- dplyr::left_join(
+#Format MG data in clean tibble to be build as tablegrob
+MGdata <- dplyr::left_join(
 no0Varfile %>% dplyr::count(MGs) %>% dplyr::rename(nSNP = 'n'),
 stats::aggregate(no0Varfile$phenodiff,
                  base::list(no0Varfile$MGs),
@@ -38,7 +40,8 @@ by = "MGs") %>%
     by = "MGs") %>%
   dplyr::mutate_if(is.double, function(x){round(x, digits = 2)})
 
-x <- gridExtra::tableGrob(q %>% tibble::column_to_rownames('MGs'),
+#Build basic tableGrob using MGdata with alternating shaded rows
+basic_MGgrob <- gridExtra::tableGrob(MGdata %>% tibble::column_to_rownames('MGs'),
                           theme = ggpp::ttheme_gtstripes(
   colhead = list(bg_params = list(fill = "white"),
                  fg_params = list(fontface = 2L)),
@@ -46,39 +49,41 @@ x <- gridExtra::tableGrob(q %>% tibble::column_to_rownames('MGs'),
                  fg_params = list(fontface = 2L))
 ))
 
-
-zbot <- gtable::gtable_add_grob(x,
-                             grobs = grid::segmentsGrob( # line across the bottom
+#Add a line at the bottom of the grob
+MG_botline <- gtable::gtable_add_grob(basic_MGgrob,
+                             grobs = grid::segmentsGrob(
                                x0 = grid::unit(0,"npc"),
                                y0 = grid::unit(0,"npc"),
                                x1 = grid::unit(1,"npc"),
                                y1 = grid::unit(0,"npc"),
                                gp = grid::gpar(lwd = 1)),
-                             t = nrow(x), b = nrow(x), l = 2, r = ncol(x))
+                             t = nrow(basic_MGgrob), b = nrow(basic_MGgrob), l = 2, r = ncol(basic_MGgrob))
 
-ztop <- gtable::gtable_add_grob(zbot,
+#Add a line  under column names
+MG_colnamesline <- gtable::gtable_add_grob(MG_botline,
+                        grobs = grid::segmentsGrob(
+                          x0 = grid::unit(0,"npc"),
+                          y0 = grid::unit(1,"npc"),
+                          x1 = grid::unit(1,"npc"),
+                          y1 = grid::unit(1,"npc"),
+                          gp = grid::gpar(lwd = 1)),
+                        t = 2, b = 2, l = 2, r = ncol(MG_botline))
+
+#Add a line at the top above column names
+MG_final <- gtable::gtable_add_grob(MG_colnamesline,
                         grobs = grid::segmentsGrob( # line across the bottom
                           x0 = grid::unit(0,"npc"),
                           y0 = grid::unit(1,"npc"),
                           x1 = grid::unit(1,"npc"),
                           y1 = grid::unit(1,"npc"),
                           gp = grid::gpar(lwd = 1)),
-                        t = 2, b = 2, l = 2, r = ncol(zbot))
+                        t = 1, b = 1, l = 2, r = ncol(MG_colnamesline))
 
-zall <- gtable::gtable_add_grob(ztop,
-                        grobs = grid::segmentsGrob( # line across the bottom
-                          x0 = grid::unit(0,"npc"),
-                          y0 = grid::unit(1,"npc"),
-                          x1 = grid::unit(1,"npc"),
-                          y1 = grid::unit(1,"npc"),
-                          gp = grid::gpar(lwd = 1)),
-                        t = 1, b = 1, l = 2, r = ncol(ztop))
+#MGtable <- ggplot2::ggplot() + MG_final + ggplot2::theme_minimal()
 
-#MGtable <- ggplot2::ggplot() + zall + ggplot2::theme_minimal()
-
-#########DONE 1
-
-phen <- HapObject$Indfile %>%
+#The next few lines progressively organise and build the data for the hap table
+#First, calculate phenotype averages for each haplotype
+hap_pheno <- HapObject$Indfile %>%
   dplyr::filter(hap != 0) %>%
   dplyr::group_by(hap) %>%
   dplyr::summarise(phenav = mean_na.rm(Pheno)) %>%
@@ -89,7 +94,7 @@ phen <- HapObject$Indfile %>%
   dplyr::mutate(rname = "Pheno") %>%
   tibble::column_to_rownames("rname")
 
-
+#Build a table summarising metadata frequency across haplotypes
 temp_meta <- suppressMessages(HapObject$Indfile %>%
                                    dplyr::group_by(hap, Metadata) %>%
                                    dplyr::summarise(counts = length(Metadata)) %>%
@@ -97,20 +102,24 @@ temp_meta <- suppressMessages(HapObject$Indfile %>%
                               tidyr::spread('hap', 'counts'))
 temp_meta$Metadata[is.na(temp_meta$Metadata)] <- "NA"
 temp_meta[is.na(temp_meta)] <- 0
-meta <- tibble::column_to_rownames(temp_meta, "Metadata") %>% as.matrix()
+hap_meta <- tibble::column_to_rownames(temp_meta, "Metadata") %>% as.matrix()
 
-n <- HapObject$Hapfile %>%
+#Extract total frequency of each haplotype
+hap_total <- HapObject$Hapfile %>%
   dplyr::select(hap, n) %>%
   tidyr::spread(hap, n) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(rname = "nTotal") %>%
   tibble::column_to_rownames("rname")
 
-hapdat <- rbind(phen, meta, n)
+#Glue together
+hapdata <- rbind(hap_pheno, hap_meta, hap_total)
 
-nometa_dat <- rbind(phen, n)
+#Don't need hap_meta when metadata isn't present
+nometa_data <- rbind(phen, n)
 
-y <- gridExtra::tableGrob(if(nrow(meta) == 1){nometa_dat}else{hapdat},
+#Ensures table has proper formatting without metadata
+basic_hapgrob <- gridExtra::tableGrob(if(nrow(hap_meta) == 1){nometa_data}else{hapdata},
                           theme = ggpp::ttheme_gtstripes(
                             colhead = list(bg_params = list(fill = "white"),
                                            fg_params = list(fontface = 2L)),
@@ -118,34 +127,31 @@ y <- gridExtra::tableGrob(if(nrow(meta) == 1){nometa_dat}else{hapdat},
                                            fg_params = list(fontface = 2L))))
 
 
-ybot <- gtable::gtable_add_grob(y,
-                                grobs = grid::segmentsGrob( # line across the bottom
+hap_botline <- gtable::gtable_add_grob(basic_hapgrob,
+                                grobs = grid::segmentsGrob(
                                   x0 = grid::unit(0,"npc"),
                                   y0 = grid::unit(0,"npc"),
                                   x1 = grid::unit(1,"npc"),
                                   y1 = grid::unit(0,"npc"),
                                   gp = grid::gpar(lwd = 1)),
-                                t = nrow(y), b = nrow(y), l = 2, r = ncol(y))
+                                t = nrow(basic_hapgrob), b = nrow(basic_hapgrob), l = 2, r = ncol(basic_hapgrob))
 
-ytop <- gtable::gtable_add_grob(ybot,
-                                grobs = grid::segmentsGrob( # line across the bottom
+hap_colnamesline <- gtable::gtable_add_grob(hap_botline,
+                                grobs = grid::segmentsGrob(
                                   x0 = grid::unit(0,"npc"),
                                   y0 = grid::unit(1,"npc"),
                                   x1 = grid::unit(1,"npc"),
                                   y1 = grid::unit(1,"npc"),
                                   gp = grid::gpar(lwd = 1)),
-                                t = 2, b = 2, l = 2, r = ncol(ybot))
+                                t = 2, b = 2, l = 2, r = ncol(hap_botline))
 
-yall <- gtable::gtable_add_grob(ytop,
-                                grobs = grid::segmentsGrob( # line across the bottom
+hap_final <- gtable::gtable_add_grob(hap_colnamesline,
+                                grobs = grid::segmentsGrob(
                                   x0 = grid::unit(0,"npc"),
                                   y0 = grid::unit(1,"npc"),
                                   x1 = grid::unit(1,"npc"),
                                   y1 = grid::unit(1,"npc"),
                                   gp = grid::gpar(lwd = 1)),
-                                t = 1, b = 1, l = 2, r = ncol(ytop))
-
-#haptable <- ggplot2::ggplot() + yall + ggplot2::theme_minimal()
-
-return(list(zall, yall))
+                                t = 1, b = 1, l = 2, r = ncol(hap_colnamesline))
+return(list(MG_final, hap_final))
 }
