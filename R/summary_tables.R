@@ -116,7 +116,7 @@ hap_total <- HapObject$Hapfile %>%
 hapdata <- rbind(hap_pheno, hap_meta, hap_total)
 
 #Don't need hap_meta when metadata isn't present
-nometa_data <- rbind(phen, n)
+nometa_data <- rbind(hap_pheno, hap_total)
 
 #Ensures table has proper formatting without metadata
 basic_hapgrob <- gridExtra::tableGrob(if(nrow(hap_meta) == 1){nometa_data}else{hapdata},
