@@ -10,6 +10,9 @@
     <loc>https://jacobimarsh.github.io/crosshap/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://jacobimarsh.github.io/crosshap/articles/Delimiting_region.html</loc>
+  </url>
+  <url>
     <loc>https://jacobimarsh.github.io/crosshap/articles/Getting_started.html</loc>
   </url>
   <url>
@@ -23,6 +26,12 @@
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/index.html</loc>
+  </url>
+  <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/Haplotypes_MGmin30_E0.6.html</loc>
+  </url>
+  <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/LD.html</loc>
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/arith_mode.html</loc>
@@ -67,6 +76,12 @@
     <loc>https://jacobimarsh.github.io/crosshap/reference/mean_na.rm.html</loc>
   </url>
   <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/metadata.html</loc>
+  </url>
+  <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/pheno.html</loc>
+  </url>
+  <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/pipe.html</loc>
   </url>
   <url>
@@ -95,5 +110,8 @@
   </url>
   <url>
     <loc>https://jacobimarsh.github.io/crosshap/reference/tagphenos.html</loc>
+  </url>
+  <url>
+    <loc>https://jacobimarsh.github.io/crosshap/reference/vcf.html</loc>
   </url>
 </urlset>
