@@ -3,7 +3,7 @@
 \docType{data}
 \name{metadata}
 \alias{metadata}
-\title{Domestication metadata}
+\title{Example Domestication metadata}
 \format{
 A two-column tibble read in by read_metadata()
 }

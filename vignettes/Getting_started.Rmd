@@ -1,5 +1,5 @@
 ---
-title: "Getting_started.Rmd"
+title: "Getting started"
 output: html_document
 date: "2023-03-05"
 vignette: >
@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, incude=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 

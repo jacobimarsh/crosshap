@@ -3,7 +3,7 @@
 \docType{data}
 \name{Haplotypes_MGmin30_E0.6}
 \alias{Haplotypes_MGmin30_E0.6}
-\title{Haplotype object}
+\title{Example Haplotype object}
 \format{
 A haplotype (S3) object containing results needed for haplotype visualization
 \describe{

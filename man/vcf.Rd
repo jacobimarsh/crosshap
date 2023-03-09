@@ -3,7 +3,7 @@
 \docType{data}
 \name{vcf}
 \alias{vcf}
-\title{VCF}
+\title{Example VCF}
 \format{
 A VCF read in by read_vcf()
 }

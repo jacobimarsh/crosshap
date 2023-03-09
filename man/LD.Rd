@@ -3,7 +3,7 @@
 \docType{data}
 \name{LD}
 \alias{LD}
-\title{LD matrix}
+\title{Example LD matrix}
 \format{
 A square matrix read in by read_LD()
 }

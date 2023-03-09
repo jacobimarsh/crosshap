@@ -3,7 +3,7 @@
 \docType{data}
 \name{pheno}
 \alias{pheno}
-\title{Seed protein phenotype data}
+\title{Example phenotype data}
 \format{
 A two-column tibble read in by read_pheno()
 }
