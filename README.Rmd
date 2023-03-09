@@ -44,7 +44,7 @@ among local variants, and to classify individuals based on shared haplotypes.
 Note: crosshap is designed for in-depth, user-driven analysis of inheritance 
 patterns in specific regions of interest, not genome-wide scans.
 
-![alt text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
+![](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
 
 ## Installation
 
