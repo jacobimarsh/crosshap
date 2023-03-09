@@ -48,7 +48,7 @@ patterns in specific regions of interest, not genome-wide scans.
 
 ## Installation
 
-You can install the development version of crosshap from [GitHub](https://github.com/) with:
+You can install the development version of crosshap from [GitHub](https://github.com/crosshap) with:
 
 ``` r
 # install.packages("devtools")

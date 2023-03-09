@@ -41,7 +41,7 @@ text](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?
 ## Installation
 
 You can install the development version of crosshap from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/crosshap) with:
 
 ``` r
 # install.packages("devtools")
