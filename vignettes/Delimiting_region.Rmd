@@ -1,5 +1,6 @@
 ---
 title: "Delimiting a region of interest"
+author: "Jacob Marsh"
 output: html_document
 date: "2023-03-08"
 vignette: >
@@ -40,7 +41,7 @@ of significance. If your GWAS method combines linked SNPs into single loci
 all SNPs in a wider region and delimit it based on the furthest loci above a given 
 threshold (e.g. R^2 with GWAS SNP > 0.8).
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method1.jpeg?raw=true)
+![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method1.jpeg?raw=true){width=650px}
 
 This method will result in a region that contains all highly significant SNPs that are 
 highly associated with a given trait.
@@ -52,7 +53,7 @@ agnostic of trait association information. In these cases a visualized LD matrix
 using [LDBlockShow](https://doi.org/10.1093/bib/bbaa227)) or the boundaries of a haplotype block (e.g. defined using     
 [Haploview](https://doi.org/10.1093/bioinformatics/bth457)) may be useful for delimiting a genomic region of interest.
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method2.jpeg?raw=true)
+![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method2.jpeg?raw=true){width=650}
 
 This method will result in a region with high homogeneous internal linkage relative to 
 distal sites and will ensure that you're haplotyping a region with strong linkage patterns.
@@ -65,7 +66,7 @@ a gene cluster you're interested in characterising, the positions of these featu
 directly be used as the boundaries for your region of interest. It can be useful to 
 use this method alongside testing of general linkage in the region (Method 2).
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method3.jpeg?raw=true)
+![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method3.jpeg?raw=true){width=800}
 
 This method will result in a region that contains relevant genomic features, however this 
 may not include with the breadth of linkage patterns (i.e. Marker Groups may extend beyond 
