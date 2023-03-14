@@ -40,7 +40,7 @@ Haplotypes_MGmin30_E0.6 <- crosshap::Haplotypes_MGmin30_E0.6
 
 ## UMAP
 
-A Uniform Manifold Approximation Projection ([UMAP](https://doi.org/10.48550/arXiv.1802.03426)) is a useful dimension 
+Uniform Manifold Approximation Projection ([UMAP](https://doi.org/10.48550/arXiv.1802.03426)) is a useful dimension 
 reduction tool for visualizing clustering results. In brief, it will attempt to 
 co-locate points (SNPs) that are correlated (in linkage) in two-dimensional space, 
 similar to PCA.
@@ -125,7 +125,7 @@ animation will be rendered with the `gifski_renderer()`.
 Feel free to experiment with the `transition_length`, `state_length` and `animate()` 
 display parameters to find what you think best represents your data.
 
-```{r, out.width="650px"}
+```{r, out.width="650px", eval=FALSE}
 hap_gganim <- pre_anim_gg +
   ggplot2::facet_wrap(~hap) +
   gganimate::transition_states(Frame,
@@ -136,7 +136,7 @@ gganimate::animate(
   hap_gganim,
   renderer = gganimate::gifski_renderer(),
   fps = 3,
-  res = 300,
+  res = 1200,
   width  = 6,
   height = 6,
   units = "in",
@@ -144,7 +144,7 @@ gganimate::animate(
   nframes = 25
 )
 
-anim_save("hap_animation.gif")
+gganimate::anim_save("hap_animation.gif")
 ```
 
 ![](https://github.com/JacobIMarsh/crosshap/blob/main/images/hap_animation.gif?raw=true){width=650px}

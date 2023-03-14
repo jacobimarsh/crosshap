@@ -55,15 +55,8 @@ VCF, along with header information labeling each individual.
   <summary>**How do I prepare my own VCF?**</summary>
 The data has been filtered and imputed; currently only biallelic variant sites
 are supported by crosshap. We suggest you filter your data prior to analysis, 
-though imputation is optional and often it will be preferable to keep it unimputed.
-To extract the region of interest from your VCF, you can use something like tabix on 
-the command line, just make sure you keep the final header line that starts with '#CHR': 
-
-`$ grep -m 1 '#CHR' in.vcf > in.region.vcf`
-
-`$ bgzip in.vcf`
-
-`$ tabix in.vcf.gz Chr1:100000-200000 >> in.region.vcf`
+though imputation is optional and often it will be preferable to keep it unimputed. For more information on how best to isolate your region, take 
+a look at vignette: [Delimiting a region of interest](Delimiting_region.html).
 
 </details>
 
@@ -140,9 +133,11 @@ Local haplotyping involves classifying individuals by shared haplotypes
 (combinations of alleles) across loci within a region of interest. In crosshap, 
 haplotypes are not defined by individual loci but rather by allelic combinations 
 of Marker Groups. Marker Groups are clusters of tightly linked SNPs which are 
-typically inherited as a unit throughout the population. The clustering algorithm
-used to capture Marker Groups is DBSCAN (Ester et al. 1996) which has two main 
-parameters in crosshap: MGmin and epsilon.
+typically inherited as a unit throughout the population. For an explanatory visualization 
+showing how Marker Group SNPs inform haplotyping with crosshap, take a look at our 
+vignette: [Haplotype UMAP GIF](hap_UMAP.html). The clustering algorithm used to capture 
+Marker Groups is DBSCAN (Ester et al. 1996) which has two main parameters in crosshap: 
+MGmin and epsilon.
 
 **MGmin** (minPts) is the minimum number of linked SNPs in a cluster for it to be 
 classified as a Marker Group instead of background noise. In this example (2041 SNPs in 
