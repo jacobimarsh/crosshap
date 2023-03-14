@@ -43,9 +43,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="core-analysis-functions">Core analysis functions<a class="anchor" aria-label="anchor" href="#core-analysis-functions"></a></h2>
       
-      
+      <p class="section-desc"></p><p>Analysis and visualization functions</p>
 
       
     </div><div id="" class="section level2">
@@ -55,20 +55,67 @@
 
       <dl><dt>
           
-          <code><a href="Haplotypes_MGmin30_E0.6.html">Haplotypes_MGmin30_E0.6</a></code> 
+          <code><a href="run_haplotyping.html">run_haplotyping()</a></code> 
         </dt>
-        <dd>Example Haplotype object</dd>
+        <dd>Cluster SNPs and identify haplotypes</dd>
       </dl><dl><dt>
           
-          <code><a href="LD.html">LD</a></code> 
+          <code><a href="clustree_viz.html">clustree_viz()</a></code> 
         </dt>
-        <dd>Example LD matrix</dd>
+        <dd>Clustering tree</dd>
       </dl><dl><dt>
           
-          <code><a href="arith_mode.html">arith_mode()</a></code> 
+          <code><a href="crosshap_viz.html">crosshap_viz()</a></code> 
         </dt>
-        <dd>Mode utility function</dd>
+        <dd>Visualize haplotypes</dd>
       </dl><dl><dt>
+          
+          <code><a href="prepare_hap_umap.html">prepare_hap_umap()</a></code> 
+        </dt>
+        <dd>UMAP haplotype visualization helper</dd>
+      </dl></div><div class="section level2">
+      <h2 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions to read in and format data for haplotyping</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="read_LD.html">read_LD()</a></code> 
+        </dt>
+        <dd>Read LD correlation matrix to tibble</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_metadata.html">read_metadata()</a></code> 
+        </dt>
+        <dd>Read metadata to tibble</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_vcf.html">read_vcf()</a></code> 
+        </dt>
+        <dd>Read VCF to tibble</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_pheno.html">read_pheno()</a></code> 
+        </dt>
+        <dd>Read phenotype data to tibble</dd>
+      </dl></div><div class="section level2">
+      <h2 id="individual-crosshap-plots">Individual crosshap plots<a class="anchor" aria-label="anchor" href="#individual-crosshap-plots"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for building standalone plots that are stitched together by crosshap_viz()</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="build_bot_halfeyeplot.html">build_bot_halfeyeplot()</a></code> 
         </dt>
@@ -100,29 +147,35 @@
         <dd>Right SNP-pheno phenoplot</dd>
       </dl><dl><dt>
           
-          <code><a href="build_summary_tables.html">build_summary_tables()</a></code> 
-        </dt>
-        <dd>Hap/MG summary tables</dd>
-      </dl><dl><dt>
-          
           <code><a href="build_top_metaplot.html">build_top_metaplot()</a></code> 
         </dt>
         <dd>Top metadata-hap bar plot</dd>
       </dl><dl><dt>
           
-          <code><a href="clustree_viz.html">clustree_viz()</a></code> 
+          <code><a href="build_summary_tables.html">build_summary_tables()</a></code> 
         </dt>
-        <dd>Clustering tree</dd>
+        <dd>Hap/MG summary tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a></h2>
+      
+      <p class="section-desc"></p><p>Example inputs for haplotyping and results for vignettes</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="LD.html">LD</a></code> 
+        </dt>
+        <dd>Example LD matrix</dd>
       </dl><dl><dt>
           
-          <code><a href="crosshap_viz.html">crosshap_viz()</a></code> 
+          <code><a href="vcf.html">vcf</a></code> 
         </dt>
-        <dd>Visualize haplotypes</dd>
-      </dl><dl><dt>
-          
-          <code><a href="mean_na.rm.html">mean_na.rm()</a></code> 
-        </dt>
-        <dd>Mean utility function</dd>
+        <dd>Example VCF</dd>
       </dl><dl><dt>
           
           <code><a href="metadata.html">metadata</a></code> 
@@ -135,9 +188,30 @@
         <dd>Example phenotype data</dd>
       </dl><dl><dt>
           
-          <code><a href="prepare_hap_umap.html">prepare_hap_umap()</a></code> 
+          <code><a href="Haplotypes_MGmin30_E0.6.html">Haplotypes_MGmin30_E0.6</a></code> 
         </dt>
-        <dd>UMAP haplotype visualization helper</dd>
+        <dd>Example Haplotype object</dd>
+      </dl></div><div class="section level2">
+      <h2 id="internal-functions">Internal functions<a class="anchor" aria-label="anchor" href="#internal-functions"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions called internally by crosshap to perform certain tasks</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="arith_mode.html">arith_mode()</a></code> 
+        </dt>
+        <dd>Mode utility function</dd>
+      </dl><dl><dt>
+          
+          <code><a href="mean_na.rm.html">mean_na.rm()</a></code> 
+        </dt>
+        <dd>Mean utility function</dd>
       </dl><dl><dt>
           
           <code><a href="pseudo_haps.html">pseudo_haps()</a></code> 
@@ -145,46 +219,28 @@
         <dd>Identify haplotypes from clustered SNPs</dd>
       </dl><dl><dt>
           
-          <code><a href="read_LD.html">read_LD()</a></code> 
+          <code><a href="tagphenos.html">tagphenos()</a></code> 
         </dt>
-        <dd>Read LD correlation matrix to tibble</dd>
-      </dl><dl><dt>
-          
-          <code><a href="read_metadata.html">read_metadata()</a></code> 
-        </dt>
-        <dd>Read metadata to tibble</dd>
-      </dl><dl><dt>
-          
-          <code><a href="read_pheno.html">read_pheno()</a></code> 
-        </dt>
-        <dd>Read phenotype data to tibble</dd>
-      </dl><dl><dt>
-          
-          <code><a href="read_vcf.html">read_vcf()</a></code> 
-        </dt>
-        <dd>Read VCF to tibble</dd>
-      </dl><dl><dt>
-          
-          <code><a href="run_haplotyping.html">run_haplotyping()</a></code> 
-        </dt>
-        <dd>Cluster SNPs and identify haplotypes</dd>
-      </dl><dl><dt>
+        <dd>Calculate SNP phenotypic associations</dd>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated-functions">Deprecated functions<a class="anchor" aria-label="anchor" href="#deprecated-functions"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions from previous versions that are not actively tested and supported</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="run_hdbscan_haplotyping.html">run_hdbscan_haplotyping()</a></code> 
         </dt>
         <dd>Cluster SNPs with HDBSCAN and identify haplotypes</dd>
-      </dl><dl><dt>
-          
-          <code><a href="tagphenos.html">tagphenos()</a></code> 
-        </dt>
-        <dd>Calculate SNP phenotypic associations</dd>
-      </dl><dl><dt>
-          
-          <code><a href="vcf.html">vcf</a></code> 
-        </dt>
-        <dd>Example VCF</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

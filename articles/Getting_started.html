@@ -113,12 +113,8 @@ each individual.</p>
 </summary><p>The data has been filtered and imputed; currently only biallelic
 variant sites are supported by crosshap. We suggest you filter your data
 prior to analysis, though imputation is optional and often it will be
-preferable to keep it unimputed. To extract the region of interest from
-your VCF, you can use something like tabix on the command line, just
-make sure you keep the final header line that starts with ‘#CHR’:</p>
-<p><code>$ grep -m 1 '#CHR' in.vcf &gt; in.region.vcf</code></p>
-<p><code>$ bgzip in.vcf</code></p>
-<p><code>$ tabix in.vcf.gz Chr1:100000-200000 &gt;&gt; in.region.vcf</code></p>
+preferable to keep it unimputed. For more information on how best to
+isolate your region, take a look at vignette: <a href="Delimiting_region.html">Delimiting a region of interest</a>.</p>
 </details><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Read vcf into R and standardize using read_vcf()</span></span>
 <span><span class="va">test_vcf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_vcf.html">read_vcf</a></span><span class="op">(</span><span class="va">path_to_vcf</span><span class="op">)</span></span>
@@ -212,9 +208,11 @@ haplotypes (combinations of alleles) across loci within a region of
 interest. In crosshap, haplotypes are not defined by individual loci but
 rather by allelic combinations of Marker Groups. Marker Groups are
 clusters of tightly linked SNPs which are typically inherited as a unit
-throughout the population. The clustering algorithm used to capture
-Marker Groups is DBSCAN (Ester et al. 1996) which has two main
-parameters in crosshap: MGmin and epsilon.</p>
+throughout the population. For an explanatory visualization showing how
+Marker Group SNPs inform haplotyping with crosshap, take a look at our
+vignette: <a href="hap_UMAP.html">Haplotype UMAP GIF</a>. The clustering
+algorithm used to capture Marker Groups is DBSCAN (Ester et al. 1996)
+which has two main parameters in crosshap: MGmin and epsilon.</p>
 <p><strong>MGmin</strong> (minPts) is the minimum number of linked SNPs
 in a cluster for it to be classified as a Marker Group instead of
 background noise. In this example (2041 SNPs in 173kb region), a MGmin
