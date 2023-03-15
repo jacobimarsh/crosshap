@@ -25,11 +25,11 @@ A large ggplot2 object.
 }
 \description{
 prepare_hap_umap() builds a large composite ggplot2 object ready for faceting
-and animation (see examples) for visualizing SNP alleles (coloured by marker
-group) possessed by randomly sampled individuals within each haplotype. UMAP
+and animation (see examples) for visualizing SNP alleles (coloured by Marker
+Group) possessed by randomly sampled individuals within each haplotype. UMAP
 coordinates for each SNP can be generated using umap::umap(), with the LD
 matrix generated for run_haplotyping() as input. When fully rendered and
 faceted, the resultant GIF intuitively visualizes the consistent alleles for
-marker groups SNPs for each haplotype combination, despite variation across
-non-marker group SNP alleles.
+Marker Groups SNPs for each haplotype combination, despite variation across
+non-Marker Group SNP alleles.
 }

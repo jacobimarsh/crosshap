@@ -5,10 +5,12 @@
 #' that define them. Makes use of the $Hapfile information from a haplotype
 #' object. This is an internal function called by crosshap_viz(), though can
 #' be called separately to build a stand-alone plot (can be useful when patched
-#' to a a peripheral plot).
+#' to a peripheral plot).
 #'
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #' @param hide_labels If TRUE, legend is hidden.
+#'
+#' @importFrom rlang .data
 #'
 #' @export
 #'
@@ -23,25 +25,25 @@ build_mid_dotplot <- function(HapObject, hide_labels) {
 #Recode hapfile to long format, with 0 as REF, 1 as HET and 2 as ALT (dots in plot)
 intersect <- HapObject$Hapfile %>%
   tidyr::gather(MG, present, 3:(base::ncol(.))) %>%
-  dplyr::mutate(present = base::as.factor(present)) %>%
-  dplyr::mutate(MG = base::as.numeric(stringr::str_remove(MG, "MG"))) %>%
+  dplyr::mutate(present = base::as.factor(.data$present)) %>%
+  dplyr::mutate(MG = base::as.numeric(stringr::str_remove(.data$MG, "MG"))) %>%
   dplyr::mutate(present = gsub(as.factor(2),"ALT",
                                gsub(as.factor(1),"HET",
-                                    gsub(as.factor(0),"REF",present)))) %>%
-  dplyr::mutate(Allele = factor(present, levels = c("REF", "HET", "ALT")))
+                                    gsub(as.factor(0),"REF",.data$present)))) %>%
+  dplyr::mutate(Allele = factor(.data$present, levels = c("REF", "HET", "ALT")))
 
 #Report min and max MG that each hap has an ALT allele for (edges in plot)
 intersect_lines <- intersect %>%
   dplyr::filter(Allele == "ALT") %>%
   dplyr::group_by(hap) %>%
-  dplyr::summarise(max = base::max(MG), min = base::min(MG)) %>%
+  dplyr::summarise(max = base::max(.data$MG), min = base::min(.data$MG)) %>%
   dplyr::mutate(min = base::as.character(min), max = base::as.character(max))
 
 mid_dotplot <- ggplot2::ggplot() +
   ggplot2::geom_segment(data = intersect_lines, col = "grey", linewidth = 1.5,
                ggplot2::aes(x = hap, xend = hap, y = min, yend = max)) +
   ggplot2::geom_point(data = intersect, col = 'black', pch = 21,
-             ggplot2::aes(hap, base::as.character(MG), fill = Allele, size= 2)) +
+             ggplot2::aes(hap, base::as.character(.data$MG), fill = Allele, size= 2)) +
   ggplot2::scale_fill_manual(values = c('white','black','grey')) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.direction = 'horizontal',

@@ -58,7 +58,7 @@ individuals.
 
 ```{r}
 #Run UMAP on LD matrix to get x & y coordinates for plotting
-umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
+umap_in <- umap::umap(LD, .min_dist = 2, .spread = 2.5, .n_neighbors = 30)
 
 #Add UMAP coordinates to SNPs with Marker Group information
 MGumap_data <- umap_in$layout %>% tibble::as_tibble() %>%
@@ -80,7 +80,7 @@ MGumap
 <details>
   <summary>**What haplotypes do these Marker Groups define?**</summary>
 ```{r}  
-build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+crosshap::build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 ```
 
 </details>

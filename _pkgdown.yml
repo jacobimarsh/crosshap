@@ -1,4 +1,50 @@
+reference:
+  - title: "Core analysis functions"
+    desc: "Analysis and visualization functions"
+  - contents:
+      - run_haplotyping
+      - clustree_viz
+      - crosshap_viz
+      - prepare_hap_umap
+  - title: "Helper functions"
+    desc: "Functions to read in and format data for haplotyping"
+  - contents:
+      - read_LD
+      - read_metadata
+      - read_vcf
+      - read_pheno
+  - title: "Individual crosshap plots"
+    desc: "Functions for building standalone plots that are stitched together by crosshap_viz()"
+  - contents:
+      - build_bot_halfeyeplot
+      - build_left_alleleplot
+      - build_left_posplot
+      - build_mid_dotplot
+      - build_right_clusterplot
+      - build_right_phenoplot
+      - build_top_metaplot
+      - build_summary_tables
+
+  - title: "Example data"
+    desc: "Example inputs for haplotyping and results for vignettes"
+  - contents:
+      - LD
+      - vcf
+      - metadata
+      - pheno
+      - Haplotypes_MGmin30_E0.6
+  - title: "Internal functions"
+    desc: "Functions called internally by crosshap to perform certain tasks"
+  - contents:
+      - arith_mode
+      - mean_na.rm
+      - pseudo_haps
+      - tagphenos
+  - title: "Deprecated functions"
+    desc: "Functions from previous versions that are not actively tested and supported"
+  - contents:
+      - run_hdbscan_haplotyping
+
 url: https://jacobimarsh.github.io/crosshap/
 template:
   bootstrap: 5
-
