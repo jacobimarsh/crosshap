@@ -8,6 +8,8 @@
 #' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels If TRUE, legend is hidden.
 #'
+#' @importFrom rlang ".data"
+#'
 #' @export
 #'
 #' @return A ggplot2 object.
@@ -20,15 +22,15 @@ build_left_posplot <- function(HapObject, hide_labels = T) {
 
 #Find chromosomal positions at 10%, 50% and 90% intervals across region of interest
 #These act as the x-axis labels
-IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(.) - base::min(.))*0.1 + base::min(.)),
-                                        ((base::max(.) - base::min(.))*0.5 + base::min(.)),
-                                        ((base::max(.) - base::min(.))*0.9 + base::min(.)))} %>%
+IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.1 + base::min(HapObject$Varfile$POS)),
+                                        ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.5 + base::min(HapObject$Varfile$POS)),
+                                        ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.9 + base::min(HapObject$Varfile$POS)))} %>%
   plyr::round_any(1000)
 
-left_posplot <- HapObject$Varfile %>% dplyr::filter(MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(MGs,"MG"))) %>%
+left_posplot <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(.data$MGs,"MG"))) %>%
   ggplot2::ggplot() +
-  ggplot2::geom_segment(size = 0.2,
-                        ggplot2::aes(x = POS, xend = POS, y = MGs-0.2, yend = MGs+0.2)) +
+  ggplot2::geom_segment(linewidth = 0.2,
+                        ggplot2::aes(x = .data$POS, xend = .data$POS, y = .data$MGs-0.2, yend = .data$MGs+0.2)) +
   ggplot2::scale_x_continuous(breaks = IQRs) +
   ggplot2::scale_y_reverse(breaks = (base::length(unique(HapObject$Varfile$MGs))-1):1,
     labels = c(paste0("MG", base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))),

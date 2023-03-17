@@ -9,6 +9,8 @@
 #' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels If TRUE, legend is hidden.
 #'
+#' @importFrom rlang ".data"
+#'
 #' @export
 #'
 #' @return A ggplot2 object.
@@ -20,29 +22,29 @@
 build_left_alleleplot <- function(HapObject, hide_labels = T) {
 
 #Filter out individuals unassigned to a haplotype
-pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
+pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0)
 
 #Count allele averages across SNPs in each Marker Group
 leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
           base::list(pre_leftplotdata$MGs),
-          mean) %>% dplyr::rename(MGs = 'Group.1', ref = 'x') %>%
+          mean) %>% dplyr::rename('MGs' = 'Group.1', 'ref' = 'x') %>%
   dplyr::left_join(stats::aggregate(pre_leftplotdata$miss,
                                     base::list(pre_leftplotdata$MGs),
-                                    mean) %>% dplyr::rename(MGs = 'Group.1', miss = 'x'), by = "MGs") %>%
+                                    mean) %>% dplyr::rename('MGs' = 'Group.1', 'miss' = 'x'), by = "MGs") %>%
   dplyr::left_join(stats::aggregate(pre_leftplotdata$het,
                       base::list(pre_leftplotdata$MGs),
-                      mean) %>% dplyr::rename(MGs = 'Group.1', het = 'x'), by = "MGs") %>%
+                      mean) %>% dplyr::rename('MGs' = 'Group.1', 'het' = 'x'), by = "MGs") %>%
   dplyr::left_join(stats::aggregate(pre_leftplotdata$alt,
                       base::list(pre_leftplotdata$MGs),
-                      mean) %>% dplyr::rename(MGs = 'Group.1', alt = 'x'), by = "MGs") %>%
+                      mean) %>% dplyr::rename('MGs' = 'Group.1', 'alt' = 'x'), by = "MGs") %>%
   dplyr::rename("REF" = "ref", "MISS" = "miss", "HET" = "het", "ALT" = "alt")
 
 left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd", 2:5) %>%
-           dplyr::mutate(Type = base::factor(Type, levels = c("REF", "MISS", "HET", "ALT"))),
-           ggplot2::aes(x = nInd,
-             y = base::as.character(MGs),
-             fill = Type,
-             color = Type),
+           dplyr::mutate(Type = base::factor(.data$Type, levels = c("REF", "MISS", "HET", "ALT"))),
+           ggplot2::aes(x = .data$nInd,
+             y = base::as.character(.data$MGs),
+             fill = .data$Type,
+             color = .data$Type),
            ggplot2::ylim()) +
   ggplot2::geom_bar(ggplot2::aes(), position = 'stack', stat = "identity", width = 0.8, color = "black") +
   ggplot2::scale_x_reverse(breaks = scales::pretty_breaks(),

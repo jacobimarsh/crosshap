@@ -12,6 +12,9 @@
 #' @param type When type = "hap", nodes represent haplotype populations, when
 #' type = "MG", nodes represent marker groups.
 #'
+#' @importFrom rlang ".data"
+#' @importFrom rlang ":="
+#'
 #' @export
 #'
 #' @return A ggplot2 object.
@@ -34,8 +37,8 @@ pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno, by = c("Ind", "Pheno"
 #Plot with clustree
 haptree <- base::suppressMessages(
   clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
-  ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,Pheno)$Pheno),
-                                 base::min(dplyr::top_frac(pre_clustree_phen,0.1,Pheno)$Pheno)),
+  ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,.data$Pheno)$Pheno),
+                                 base::min(dplyr::top_frac(pre_clustree_phen,0.1,.data$Pheno)$Pheno)),
                         high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'Pheno') +
   ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
   ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
@@ -50,7 +53,7 @@ haplbls <-
 
 #Re-plot with epsilon label data added
 labeled_haptree <- haptree +
-  ggplot2::geom_text(data = haplbls, ggplot2::aes(x=xval, y=yval, label=labelval), hjust = 0)
+  ggplot2::geom_text(data = haplbls, ggplot2::aes(x=.data$xval, y=.data$yval, label=.data$labelval), hjust = 0)
 
 #Repeat with MGs rather than haplotype groups
 pre_MGtree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Varfile"]] %>%
@@ -59,7 +62,7 @@ pre_MGtree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], se
 for (drez in epsilon[2:base::length(epsilon)]){
   pre_MGtree <- dplyr::left_join(pre_MGtree,
                                  base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",drez,sep=""))[["Varfile"]] %>%
-                                   dplyr::select(ID, MGs)%>%
+                                   dplyr::select("ID", "MGs")%>%
                                    dplyr::rename(!!base::paste0("MGs_eps",drez) := 'MGs'), by = "ID")
 }
 
@@ -81,7 +84,7 @@ MGlbls <-
 
 #Re-plot with epsilon label data added
 labeled_MGtree <- MGtree +
-  ggplot2::geom_text(data = MGlbls, ggplot2::aes(x=xval, y=yval, label=labelval), hjust = 0)
+  ggplot2::geom_text(data = MGlbls, ggplot2::aes(x=.data$xval, y=.data$yval, label=.data$labelval), hjust = 0)
 
 return(switch(type,
        "hap" = labeled_haptree,

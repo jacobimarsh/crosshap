@@ -22,7 +22,7 @@ metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/crosshap_
 crosshap::run_haplotyping(vcf = vcf,
                 LD = LD,
                 pheno =  pheno,
-                metadata = metadata)1
+                metadata = metadata)
 ```
 
 ```{r}
@@ -125,7 +125,42 @@ hap_clustree <- crosshap::clustree_viz(MGmin = 30,
 
 MG_clustree <- crosshap::clustree_viz(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(1,1.5,2,2.5,3))
 
-Hap_viz <- crosshap_viz(Haplotypes_MGmin30_E1, plot_left = "pos")
+Hap_viz <- crosshap_viz(Haplotypes_MGmin30_E1)
 
 Haplotypes_MGmin30_E1$Varfile %>% dplyr::filter(POS == 11555451)
 ```
+
+## Maize
+
+```{r}
+
+library(crosshap)
+library(umap)
+library(gganimate)
+
+vcf <- crosshap::read_vcf("/Users/jmarsh96/Desktop/bash_misc/maize/filtered_SNP_near_C6_92210924_q30_m0.1_af0.01_SNP.recode.vcf")
+LD <- crosshap::read_LD("/Users/jmarsh96/Desktop/bash_misc/maize/plink.ld", vcf = vcf)
+pheno <- crosshap::read_pheno("/Users/jmarsh96/Desktop/bash_misc/maize/LH185_pheno.txt")
+metadata <- crosshap::read_metadata('/Users/jmarsh96/Desktop/bash_misc/maize/test_metadata_seeddense.tsv')
+
+
+crosshap::run_haplotyping(vcf,
+                LD,
+                pheno,
+                MGmin = 30)
+
+hap_clustree <- crosshap::clustree_viz(MGmin = 30,
+                              pheno = pheno,
+                              type = 'hap',
+                              epsilon = c(2,3))
+
+MG_clustree <- crosshap::clustree_viz(MGmin = 30, pheno = pheno, type = 'MG', epsilon = c(0.5,1,1.5,2,2.5,3))
+
+Hap_viz <- crosshap::crosshap_viz(Haplotypes_MGmin20_E1, hide_labels = F, isolate_group = "lowland")
+
+dat <- data.table::fread("/Users/jmarsh96/Desktop/sandbox/quinoa/doi_10/quinoa2/tkw.txt") %>% tibble::as.tibble() %>% dplyr::group_by(ID) %>% dplyr::summarise(avg = mean_na.rm(TKW))
+
+write.table(dat, "abc")
+```
+
+## 

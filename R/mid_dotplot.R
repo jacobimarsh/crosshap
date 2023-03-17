@@ -10,7 +10,7 @@
 #' @param HapObject Haplotype object created by crosshap::run_haplotyping
 #' @param hide_labels If TRUE, legend is hidden.
 #'
-#' @importFrom rlang .data
+#' @importFrom rlang ".data"
 #'
 #' @export
 #'
@@ -23,8 +23,8 @@
 build_mid_dotplot <- function(HapObject, hide_labels) {
 
 #Recode hapfile to long format, with 0 as REF, 1 as HET and 2 as ALT (dots in plot)
-intersect <- HapObject$Hapfile %>%
-  tidyr::gather(MG, present, 3:(base::ncol(.))) %>%
+intersect <- HapObject$Hapfile %>% tibble::as_tibble() %>%
+  tidyr::gather("MG", "present", 3:(base::ncol(HapObject$Hapfile))) %>%
   dplyr::mutate(present = base::as.factor(.data$present)) %>%
   dplyr::mutate(MG = base::as.numeric(stringr::str_remove(.data$MG, "MG"))) %>%
   dplyr::mutate(present = gsub(as.factor(2),"ALT",
@@ -34,16 +34,16 @@ intersect <- HapObject$Hapfile %>%
 
 #Report min and max MG that each hap has an ALT allele for (edges in plot)
 intersect_lines <- intersect %>%
-  dplyr::filter(Allele == "ALT") %>%
-  dplyr::group_by(hap) %>%
+  dplyr::filter(.data$Allele == "ALT") %>%
+  dplyr::group_by(.data$hap) %>%
   dplyr::summarise(max = base::max(.data$MG), min = base::min(.data$MG)) %>%
   dplyr::mutate(min = base::as.character(min), max = base::as.character(max))
 
 mid_dotplot <- ggplot2::ggplot() +
   ggplot2::geom_segment(data = intersect_lines, col = "grey", linewidth = 1.5,
-               ggplot2::aes(x = hap, xend = hap, y = min, yend = max)) +
+               ggplot2::aes(x = .data$hap, xend = .data$hap, y = min, yend = max)) +
   ggplot2::geom_point(data = intersect, col = 'black', pch = 21,
-             ggplot2::aes(hap, base::as.character(.data$MG), fill = Allele, size= 2)) +
+             ggplot2::aes(.data$hap, base::as.character(.data$MG), fill = .data$Allele, size= 2)) +
   ggplot2::scale_fill_manual(values = c('white','black','grey')) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.direction = 'horizontal',

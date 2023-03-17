@@ -7,6 +7,8 @@
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
 #'
+#' @importFrom rlang ".data"
+#'
 #' @export
 #'
 #' @return A list containing two TableGrob objects.
@@ -15,27 +17,27 @@
 build_summary_tables <- function(HapObject){
 
 #Filter out unassigned individuals
-no0Varfile <- HapObject$Varfile %>% dplyr::filter(MGs != 0)
+no0Varfile <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0)
 
 #Format MG data in clean tibble to be build as tablegrob
 MGdata <- dplyr::left_join(
-no0Varfile %>% dplyr::count(MGs) %>% dplyr::rename(nSNP = 'n'),
+no0Varfile %>% dplyr::count(.data$MGs) %>% dplyr::rename(nSNP = 'n'),
 stats::aggregate(no0Varfile$phenodiff,
                  base::list(no0Varfile$MGs),
-                 mean) %>% dplyr::rename(MGs = 'Group.1', phenodiff = 'x') %>%
+                 mean) %>% dplyr::rename('MGs' = 'Group.1', 'phenodiff' = 'x') %>%
   tibble::as_tibble(),
 by = "MGs") %>%
   dplyr::left_join(
 
 stats::aggregate(no0Varfile$meanr2,
                  base::list(no0Varfile$MGs),
-                 mean) %>% dplyr::rename(MGs = 'Group.1', meanR2 = 'x') %>%
+                 mean) %>% dplyr::rename('MGs' = 'Group.1', 'meanR2' = 'x') %>%
   tibble::as_tibble(),
 by = "MGs") %>%
   dplyr::left_join(
     stats::aggregate(no0Varfile$AltAF,
                        base::list(no0Varfile$MGs),
-                       mean) %>% dplyr::rename(MGs = 'Group.1', AltAF = 'x') %>%
+                       mean) %>% dplyr::rename('MGs' = 'Group.1', 'AltAF' = 'x') %>%
       tibble::as_tibble(),
     by = "MGs") %>%
   dplyr::mutate_if(is.double, function(x){round(x, digits = 2)})
@@ -84,10 +86,10 @@ MG_final <- gtable::gtable_add_grob(MG_colnamesline,
 #The next few lines progressively organise and build the data for the hap table
 #First, calculate phenotype averages for each haplotype
 hap_pheno <- HapObject$Indfile %>%
-  dplyr::filter(hap != 0) %>%
-  dplyr::group_by(hap) %>%
-  dplyr::summarise(phenav = mean_na.rm(Pheno)) %>%
-  tidyr::spread(hap, phenav) %>%
+  dplyr::filter(.data$hap != 0) %>%
+  dplyr::group_by(.data$hap) %>%
+  dplyr::summarise(phenav = mean_na.rm(.data$Pheno)) %>%
+  tidyr::spread(.data$hap, .data$phenav) %>%
   tibble::as_tibble() %>%
   dplyr::mutate_if(is.double, function(x){signif(x, 3)}) %>%
   dplyr::mutate_if(is.double, as.character) %>%
@@ -96,9 +98,9 @@ hap_pheno <- HapObject$Indfile %>%
 
 #Build a table summarising metadata frequency across haplotypes
 temp_meta <- suppressMessages(HapObject$Indfile %>%
-                                   dplyr::group_by(hap, Metadata) %>%
-                                   dplyr::summarise(counts = length(Metadata)) %>%
-                                   dplyr::filter(hap != 0) %>%
+                                   dplyr::group_by(.data$hap, .data$Metadata) %>%
+                                   dplyr::summarise(counts = length(.data$Metadata)) %>%
+                                   dplyr::filter(.data$hap != 0) %>%
                               tidyr::spread('hap', 'counts'))
 temp_meta$Metadata[is.na(temp_meta$Metadata)] <- "NA"
 temp_meta[is.na(temp_meta)] <- 0
@@ -106,8 +108,8 @@ hap_meta <- tibble::column_to_rownames(temp_meta, "Metadata") %>% as.matrix()
 
 #Extract total frequency of each haplotype
 hap_total <- HapObject$Hapfile %>%
-  dplyr::select(hap, n) %>%
-  tidyr::spread(hap, n) %>%
+  dplyr::select('hap', 'n') %>%
+  tidyr::spread('hap', 'n') %>%
   tibble::as_tibble() %>%
   dplyr::mutate(rname = "nTotal") %>%
   tibble::column_to_rownames("rname")

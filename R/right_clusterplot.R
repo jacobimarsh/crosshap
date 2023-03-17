@@ -11,6 +11,8 @@
 #' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels If TRUE, legend is hidden.
 #'
+#' @importFrom rlang ".data"
+#'
 #' @export
 #'
 #' @return A ggplot2 object.
@@ -21,8 +23,8 @@
 
 build_right_clusterplot <- function(HapObject, hide_labels = F) {
   right_clusterplot <-   ggplot2::ggplot() +
-    ggplot2::geom_boxplot(data = HapObject$Varfile %>% dplyr::filter(MGs != 0),
-                         ggplot2::aes(x = meanr2, y = MGs),
+    ggplot2::geom_boxplot(data = HapObject$Varfile %>% dplyr::filter(.data$MGs != 0),
+                         ggplot2::aes(x = .data$meanr2, y = .data$MGs),
                          alpha = 0.25, pch = 21, #height = 0.25,
                          coef = 2) +
   ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF')  +

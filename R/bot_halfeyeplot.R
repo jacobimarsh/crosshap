@@ -13,6 +13,8 @@
 #' groups will be masked from the plot. NOTE: it does change the summary tables
 #' or marker group phenotype scores.
 #'
+#' @importFrom rlang ".data"
+#'
 #' @export
 #'
 #' @return A ggplot2 object.
@@ -25,23 +27,23 @@
 build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_group = NA) {
 
 #Drop individuals where pheno is missing and haplotype is unassigned
-no0data <- tidyr::drop_na(HapObject$Indfile, Pheno) %>% dplyr::filter(hap !=0 )
+no0data <- tidyr::drop_na(HapObject$Indfile, "Pheno") %>% dplyr::filter(.data$hap !=0 )
 
 #Filter no0data by isolate_group if specified for input into halfeye plot
 halfeyedat <-  if(is.na(isolate_group)) {
   no0data } else {
-  tidyr::drop_na(HapObject$Indfile %>% dplyr::mutate(Pheno = ifelse(Metadata != isolate_group, NA, Pheno)),
-                                 Pheno) %>% dplyr::filter(hap !=0 )
+  tidyr::drop_na(HapObject$Indfile %>% dplyr::mutate(Pheno = ifelse(.data$Metadata != isolate_group, NA, .data$Pheno)),
+                                 .data$Pheno) %>% dplyr::filter(.data$hap !=0 )
 }
 
 #Add a 'keep' variable with excluded groups as NA
 jitterdat <- if(is.na(isolate_group)) {
   no0data %>% dplyr::mutate(keep = "A")
 } else {
-  no0data %>% dplyr::mutate(keep = ifelse(Metadata != isolate_group, NA, "A"))
+  no0data %>% dplyr::mutate(keep = ifelse(.data$Metadata != isolate_group, NA, "A"))
 }
 
-#If a haplotype is missing from halfeyedat either because it has no individuals
+  #If a haplotype is missing from halfeyedat either because it has no individuals
 #with a phenotype score or no individuals of the isolated group, an invisible
 #dummy individual is added so that it retains ncol = nhap to align with midplot.
 if(length(setdiff(HapObject$Indfile$hap,c(unique(halfeyedat$hap),0))) > 0){
@@ -53,11 +55,11 @@ jitterdat <- jitterdat %>% tibble::add_row(Ind = "Dummy",
 }
 
 bot_halfeyeplot <-
-  ggplot2::ggplot(data = no0data, ggplot2::aes(x = hap, y = Pheno)) +
+  ggplot2::ggplot(data = no0data, ggplot2::aes(x = .data$hap, y = .data$Pheno)) +
   ggdist::stat_halfeye(data = halfeyedat, adjust = .5, width = .6, .width = 0, justification = -.3, point_colour = NA) +
   ggplot2::geom_jitter(data = jitterdat,
                          pch = 21, width = 0.1,
-                       ggplot2::aes(fill = Metadata, alpha = keep)) +
+                       ggplot2::aes(fill = .data$Metadata, alpha = .data$keep)) +
   ggplot2::scale_fill_brewer(palette = "Dark2") +
   ggplot2::theme_minimal() +
   ggplot2::ylab("Pheno")+
@@ -78,17 +80,17 @@ bot_halfeyeplot <-
 #Prints summary table for isolated group's phenotype averages across haplotypes
 if(!is.na(isolate_group)) {
 print_pheno <- halfeyedat %>%
-  dplyr::filter(hap != 0) %>%
-  dplyr::group_by(hap) %>%
-  dplyr::summarise(phenav = mean_na.rm(Pheno)) %>%
-  tidyr::spread(hap, phenav) %>%
+  dplyr::filter(.data$hap != 0) %>%
+  dplyr::group_by(.data$hap) %>%
+  dplyr::summarise(phenav = mean_na.rm(.data$Pheno)) %>%
+  tidyr::spread(.data$hap, .data$phenav) %>%
   tibble::as_tibble() %>%
   dplyr::mutate_if(is.double, function(x){signif(x, 3)}) %>%
   dplyr::mutate_if(is.double, as.character) %>%
   dplyr::mutate(rname = "Pheno") %>%
   tibble::column_to_rownames("rname")
 message(paste("Haplotype phenotype averages of", isolate_group ,"individuals only:"))
-message(paste(capture.output({print_pheno}), collapse = "\n"))
+message(paste(utils::capture.output({print_pheno}), collapse = "\n"))
 }
 
 if(hide_labels == T){
