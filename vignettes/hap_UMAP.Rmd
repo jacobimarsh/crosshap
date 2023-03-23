@@ -23,7 +23,7 @@ this information. The GIF doesn't necessarily reveal more details about our hapl
 however it can be useful as a sanity check, and to get a better understanding of what our 
 results reflect. 
 
-```{r, results='hide', message=FALSE, warnings=FALSE, error=FALSE}
+```{r, results='hide', message=FALSE, warnings=FALSE, error=FALSE, eval = FALSE}
 #Load relevant libraries
 library(crosshap)
 library(umap)
@@ -56,9 +56,9 @@ First lets visualize where our Marker Groups are in the UMAP which can be a usef
 reference for later, and can help us optimize our UMAP before we use it to map our 
 individuals. 
 
-```{r}
+```{r, eval = FALSE}
 #Run UMAP on LD matrix to get x & y coordinates for plotting
-umap_in <- umap::umap(LD, .min_dist = 2, .spread = 2.5, .n_neighbors = 30)
+umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
 
 #Add UMAP coordinates to SNPs with Marker Group information
 MGumap_data <- umap_in$layout %>% tibble::as_tibble() %>%
@@ -69,7 +69,7 @@ MGumap_data <- umap_in$layout %>% tibble::as_tibble() %>%
   dplyr::mutate(MGs = gsub('0', NA, MGs))
 
 #Plot SNPs by UMAP coordinates, coloured by Marker Group 
-MGumap <-ggplot2::ggplot(MGumap_data, ggplot2::aes(x = UMAP1, y = UMAP2)) +
+MGumap <- ggplot2::ggplot(MGumap_data, ggplot2::aes(x = UMAP1, y = UMAP2)) +
   ggplot2::geom_point(alpha = 0.4, ggplot2::aes(colour = MGs), size = 1, na.rm = F)+
   ggplot2::theme_minimal() +
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 5, alpha = 0.7), title = "Marker group"))
@@ -79,7 +79,7 @@ MGumap
 
 <details>
   <summary>**What haplotypes do these Marker Groups define?**</summary>
-```{r}  
+```{r, eval = FALSE}  
 crosshap::build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
 ```
 
@@ -109,7 +109,7 @@ when nsamples > nIndividuals within a given haplotype.
 
 </details>
 
-```{r}
+```{r, eval = FALSE}
 pre_anim_gg <- crosshap::prepare_hap_umap(umap_in,
                             HapObject = Haplotypes_MGmin30_E0.6,
                             vcf = vcf,
