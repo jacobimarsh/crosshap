@@ -41,7 +41,7 @@ of significance. If your GWAS method combines linked SNPs into single loci
 all SNPs in a wider region and delimit it based on the furthest loci above a given 
 threshold (e.g. R^2 with GWAS SNP > 0.8).
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/Method1.jpeg?raw=true){width=650px}
+![](https://github.com/JacobIMarsh/crosshapimages/blob/main/images/Method1.jpeg?raw=true){width=650px}
 
 This method will result in a region that contains all highly significant SNPs that are 
 highly associated with a given trait.
