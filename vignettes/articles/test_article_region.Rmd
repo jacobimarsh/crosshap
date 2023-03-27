@@ -1,12 +1,5 @@
 ---
-title: "Delimiting a region of interest"
-author: "Jacob Marsh"
-output: html_document
-date: "2023-03-08"
-vignette: >
-  %\VignetteIndexEntry{Delimiting_region}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "test_article_region"
 ---
 
 ```{r setup, include=FALSE}
@@ -88,4 +81,5 @@ the command line, just make sure you keep the final header line that starts with
 
 Now your VCF is ready for analysis with crosshap! For more information have a look at 
 the [Getting started](Getting_started.html) vignette. 
+
 

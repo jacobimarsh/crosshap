@@ -147,7 +147,7 @@ gganimate::animate(
 gganimate::anim_save("hap_animation.gif")
 ```
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/hap_animation.gif?raw=true){width=650px}
+![](https://github.com/JacobIMarsh/crosshapimages/blob/main/images/hap_animation.gif?raw=true){width=650px}
 
 <details>
   <summary>**What do the dots and facets indicate here?**</summary>
