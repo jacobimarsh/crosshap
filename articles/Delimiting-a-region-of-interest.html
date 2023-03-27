@@ -66,97 +66,17 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Delimiting a region of interest</h1>
-                        <h4 data-toc-skip class="author">Jacob
-Marsh</h4>
             
-            <h4 data-toc-skip class="date">2023-03-08</h4>
       
       
-      <div class="d-none name"><code>Delimiting_region.Rmd</code></div>
+      <div class="d-none name"><code>Delimiting-a-region-of-interest.Rmd</code></div>
     </div>
 
     
     
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h2>
-<p>Local haplotyping first and foremost requires the specification of a
-genomic region to analyse. The fundamental aim of delimiting a genomic
-region to haplotype with crosshap should be to include the minimum range
-of sites that sufficiently captures groups of linked sites that are
-relevant to a trait or feature of interest.</p>
-<p>There is no universally ‘correct’ way to delimit your region of
-interest, it should instead be decided upon after carefully considering
-your dataset, the purpose of your analysis, and the genomic features
-surrounding a prospective site. Here, we’ll have a look at a few
-possible methods that could be used to delimit a region of interest.</p>
-</div>
-<div class="section level2">
-<h2 id="method-1-range-of-significant-snps-from-gwas">Method 1: Range of significant SNPs from GWAS<a class="anchor" aria-label="anchor" href="#method-1-range-of-significant-snps-from-gwas"></a>
-</h2>
-<p>Trait-associated regions identified through GWAS are particularly
-suitable for analysis with crosshap as the phenotypic data used as input
-can be directly used as input for crosshap to aid in capturing and
-characterizing informative haplotypes. However, crosshap characterises a
-specific region of interest, where GWAS only provides individual trait
-associated loci.</p>
-<p>General (GLM) and mixed linear (MLM) GWAS models provide association
-results for all genomic sites, which allows the user to delimit a
-genomic region by including all variants between the most distal loci
-possessing a minimum level of significance. If your GWAS method combines
-linked SNPs into single loci (e.g. <a href="https://doi.org/10.1371/journal.pgen.1005767" class="external-link">FarmCPU</a>), then
-you can disentangle this by calculating pairwise linkage between all
-SNPs in a wider region and delimit it based on the furthest loci above a
-given threshold (e.g. R^2 with GWAS SNP &gt; 0.8).</p>
-<p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/Method1.jpeg?raw=true" width="650"></p>
-<p>This method will result in a region that contains all highly
-significant SNPs that are highly associated with a given trait.</p>
-</div>
-<div class="section level2">
-<h2 id="method-2-haplotype-block-boundaries">Method 2: Haplotype block boundaries<a class="anchor" aria-label="anchor" href="#method-2-haplotype-block-boundaries"></a>
-</h2>
-<p>Sometimes you may be more interested in analysing the linkage
-structures between variants agnostic of trait association information.
-In these cases a visualized LD matrix (e.g.  using <a href="https://doi.org/10.1093/bib/bbaa227" class="external-link">LDBlockShow</a>) or the
-boundaries of a haplotype block (e.g. defined using<br><a href="https://doi.org/10.1093/bioinformatics/bth457" class="external-link">Haploview</a>)
-may be useful for delimiting a genomic region of interest.</p>
-<p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/Method2.jpeg?raw=true" width="650"></p>
-<p>This method will result in a region with high homogeneous internal
-linkage relative to distal sites and will ensure that you’re haplotyping
-a region with strong linkage patterns.</p>
-</div>
-<div class="section level2">
-<h2 id="method-3-gene-cluster">Method 3: Gene cluster<a class="anchor" aria-label="anchor" href="#method-3-gene-cluster"></a>
-</h2>
-<p>The co-location of two or more gene structures or independent
-variants of interest can be useful for delimiting a region to explore
-linkage patterns that span them. If there is a gene cluster you’re
-interested in characterising, the positions of these features can
-directly be used as the boundaries for your region of interest. It can
-be useful to use this method alongside testing of general linkage in the
-region (Method 2).</p>
-<p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/Method3.jpeg?raw=true" width="800"></p>
-<p>This method will result in a region that contains relevant genomic
-features, however this may not include with the breadth of linkage
-patterns (i.e. Marker Groups may extend beyond the region analysed).</p>
-</div>
-<div class="section level2">
-<h2 id="what-now">What now?<a class="anchor" aria-label="anchor" href="#what-now"></a>
-</h2>
-<p>After figuring out the boundaries of your region, the next step is to
-subset your VCF to only include SNP information for that region.</p>
-<p>To extract the region of interest from your VCF, you can use
-something like tabix on the command line, just make sure you keep the
-final header line that starts with ‘#CHR’:</p>
-<p><code>$ grep -m 1 '#CHR' in.vcf &gt; in.region.vcf</code></p>
-<p><code>$ bgzip in.vcf</code></p>
-<p><code>$ tabix in.vcf.gz Chr1:100000-200000 &gt;&gt; in.region.vcf</code></p>
-<p>Now your VCF is ready for analysis with crosshap! For more
-information have a look at the <a href="Getting_started.html">Getting
-started</a> vignette.</p>
-</div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jacobimarsh.github.io/crosshap/">crosshap</a></span><span class="op">)</span></span></code></pre></div>
+  </main>
 </div>
 
 
