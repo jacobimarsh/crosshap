@@ -43,8 +43,6 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Delimiting_region.html">Delimiting a region of interest</a>
     <a class="dropdown-item" href="../articles/Getting_started.html">Getting started</a>
-    <a class="dropdown-item" href="../articles/Delimiting-a-region-of-interest.html">Delimiting a region of interest</a>
-    <a class="dropdown-item" href="../articles/test_article_region.html">test_article_region</a>
     <a class="dropdown-item" href="../articles/hap_UMAP.html">Haplotype UMAP GIF</a>
   </div>
 </li>
@@ -66,6 +64,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Getting started</h1>
+                        <h4 data-toc-skip class="author">Jacob
+Marsh</h4>
             
             <h4 data-toc-skip class="date">2023-03-05</h4>
       
@@ -87,7 +87,8 @@ data.</p>
 <p>The data we’ll be analyzing is soybean data from the USDA core
 collection (Bayer et al. 2021). This tutorial will re-perform local
 haplotype analysis of the seed protein QTL, cqProt-003, with crosshap
-(Marsh et al. 2022).</p>
+(Marsh et al. 2022). The data can be downloaded from the <a href="https://figshare.com/articles/dataset/fin_b51_173kb_only_vcf/22331167" class="external-link">crosshap
+example data figshare repository</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
@@ -97,16 +98,16 @@ haplotype analysis of the seed protein QTL, cqProt-003, with crosshap
 <div class="section level2">
 <h2 id="preparing-inputs">Preparing inputs<a class="anchor" aria-label="anchor" href="#preparing-inputs"></a>
 </h2>
-<p>For all inputs a wrapper is provided in crosshap to help read them in
-consistently. You can just provide the path to the files for your data,
-but for this tutorial we need to find the example data within the local
-cloned directory.</p>
+<p>For all inputs a helper function is provided in crosshap to help read
+them in consistently. For this tutorial, you’ll need to download the <a href="https://figshare.com/articles/dataset/fin_b51_173kb_only_vcf/22331167" class="external-link">crosshap
+example data</a> and save it to a local directory.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Save the paths to cqprot-003 example data</span></span>
-<span><span class="va">path_to_vcf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>,<span class="st">'imputed_173kb.vcf'</span>, package <span class="op">=</span> <span class="st">'crosshap'</span><span class="op">)</span></span>
-<span><span class="va">path_to_LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>,<span class="st">'plink.ld'</span>, package <span class="op">=</span> <span class="st">'crosshap'</span><span class="op">)</span></span>
-<span><span class="va">path_to_pheno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>,<span class="st">'protein_phenotypes.txt'</span>, package <span class="op">=</span> <span class="st">'crosshap'</span><span class="op">)</span></span>
-<span><span class="va">path_to_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>,<span class="st">'domestication.txt'</span>, package <span class="op">=</span> <span class="st">'crosshap'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Read example data into R and standardize using helper functions</span></span>
+<span><span class="va">vcf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_vcf.html">read_vcf</a></span><span class="op">(</span><span class="st">'path/to/fin_b51_173kb_only.vcf'</span><span class="op">)</span></span>
+<span><span class="co">#VCF is provided as additional argument to help assign column and row names</span></span>
+<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_LD.html">read_LD</a></span><span class="op">(</span><span class="st">'path/to/plink.ld'</span>, vcf <span class="op">=</span> <span class="va">vcf</span><span class="op">)</span></span>
+<span><span class="va">pheno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_pheno.html">read_pheno</a></span><span class="op">(</span><span class="st">'path/to/sprot_phen.txt'</span><span class="op">)</span></span>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_metadata.html">read_metadata</a></span><span class="op">(</span><span class="st">'path/to/namepopfile.txt'</span><span class="op">)</span></span></code></pre></div>
 <p><strong>VCF</strong> contains genomic variation (SNP) information of
 985 accessions. Only sites within the 173kb trait associated region of
 interest are present in the VCF, along with header information labeling
@@ -118,17 +119,15 @@ prior to analysis, though imputation is optional and often it will be
 preferable to keep it unimputed. For more information on how best to
 isolate your region, take a look at vignette: <a href="Delimiting_region.html">Delimiting a region of interest</a>.</p>
 </details><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Read vcf into R and standardize using read_vcf()</span></span>
-<span><span class="va">test_vcf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_vcf.html">read_vcf</a></span><span class="op">(</span><span class="va">path_to_vcf</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_vcf</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 11</span></span></span>
-<span><span class="co">##   `#CHROM`      POS ID     REF   ALT   QUAL  FILTER INFO  FORMAT SRR15…¹ USB.129</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> 20       31<span style="text-decoration: underline;">604</span>185 20_31… C     A     .     PASS   .     GT     1|0     0|0    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> 20       31<span style="text-decoration: underline;">604</span>420 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> 20       31<span style="text-decoration: underline;">604</span>498 20_31… A     G     .     PASS   .     GT     1|0     0|0    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> 20       31<span style="text-decoration: underline;">604</span>889 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
-<span><span class="co">## <span style="color: #949494;"># … with abbreviated variable name ¹​SRR1533182</span></span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">vcf</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">11</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 11</span></span></span>
+<span><span class="co">#&gt;   `#CHROM`      POS ID     REF   ALT   QUAL  FILTER INFO  FORMAT SRR15…¹ USB.129</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 20       31<span style="text-decoration: underline;">604</span>185 20_31… C     A     .     PASS   .     GT     1|0     0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 20       31<span style="text-decoration: underline;">604</span>420 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 20       31<span style="text-decoration: underline;">604</span>498 20_31… A     G     .     PASS   .     GT     1|0     0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 20       31<span style="text-decoration: underline;">604</span>889 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​SRR1533182</span></span></span></code></pre></div>
 <p><strong>LD matrix</strong> provides pairwise linkage information
 between all SNP loci within the region of interest (173kb). Any LD
 metric that captures pairwise correlation on a scale from 0 (unlinked)
@@ -137,21 +136,18 @@ kinship or population structure. For this example, we are using R^2
 values.</p>
 <details><summary><strong>How do I prepare my own LD matrix?</strong>
 </summary><p>The LD file must be a square correlation matrix using the same loci
-present in test_vcf, ordered by position, with or without position
-labels (vcf object must be provided if position labels are missing). A
-simple R^2 matrix can be calculated using PLINK (Purcell et al 2007)
-from which the output can be directly used as input:</p>
+present in vcf, ordered by position, with or without position labels
+(vcf object must be provided if position labels are missing). A simple
+R^2 matrix can be calculated using PLINK (Purcell et al 2007) from which
+the output can be directly used as input:</p>
 <code>$ plink --r2 square --vcf imputed_173kb.vcf</code>
-</details><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Read into R using read_LD</span></span>
-<span><span class="co">#VCF is provided as additional argument to help assign column and row names</span></span>
-<span><span class="va">test_LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_LD.html">read_LD</a></span><span class="op">(</span><span class="va">path_to_LD</span>, vcf <span class="op">=</span> <span class="va">test_vcf</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_LD</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##             20_31604185 20_31604420 20_31604498 20_31604889</span></span>
-<span><span class="co">## 20_31604185  1.00000000  0.00175092    0.237836  0.96147300</span></span>
-<span><span class="co">## 20_31604420  0.00175092  1.00000000    0.292267  0.00158741</span></span>
-<span><span class="co">## 20_31604498  0.23783600  0.29226700    1.000000  0.23367800</span></span>
-<span><span class="co">## 20_31604889  0.96147300  0.00158741    0.233678  1.00000000</span></span></code></pre>
+</details><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">LD</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             20_31604185 20_31604420 20_31604498 20_31604889</span></span>
+<span><span class="co">#&gt; 20_31604185  1.00000000  0.00175092    0.237836  0.96147300</span></span>
+<span><span class="co">#&gt; 20_31604420  0.00175092  1.00000000    0.292267  0.00158741</span></span>
+<span><span class="co">#&gt; 20_31604498  0.23783600  0.29226700    1.000000  0.23367800</span></span>
+<span><span class="co">#&gt; 20_31604889  0.96147300  0.00158741    0.233678  1.00000000</span></span></code></pre></div>
 <p><strong>Phenotype</strong> scores for all, or at least some
 individuals in the VCF is necessary for uncovering trait-associated
 genomic variation and haplotypes. Given this tutorial analyzes a seed
@@ -164,17 +160,15 @@ with individual names (same as VCF IDs) in the first column, and
 numerical phenotype scores in the second column, either with columns
 untitled or labeled ‘Ind’ and ‘Pheno’. This can be the same phenotype
 file provided for a GWAS.
-</details><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Read into R using read_pheno()</span></span>
-<span><span class="va">test_pheno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_pheno.html">read_pheno</a></span><span class="op">(</span><span class="va">path_to_pheno</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_pheno</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
-<span><span class="co">##   Ind   Pheno</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> AB.01  44  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> AB.02  50.5</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> BR.24  43.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> ESS    45.5</span></span></code></pre>
+</details><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pheno</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">#&gt;   Ind   Pheno</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AB.01  44  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AB.02  50.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> BR.24  43.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ESS    45.5</span></span></code></pre></div>
 <p><strong>Metadata</strong> grouping labels for distinct subpopulations
 in your dataset can aid in interpreting the haplotyping results. This
 example provides level of domestication for each individual, including
@@ -190,17 +184,15 @@ anything you want to check the spread of across the haplotypes
 (e.g. geographic region), or that could be associated with phenotypic
 variation (e.g. year of collection). Metadata is an optional variable,
 though is highly recommended to include.
-</details><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Read into R using read_metadata()</span></span>
-<span><span class="va">test_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_metadata.html">read_metadata</a></span><span class="op">(</span><span class="va">path_to_metadata</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_metadata</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
-<span><span class="co">##   Ind   Metadata</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> AB.01 lr      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> AB.02 lr      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> BR.01 mcult   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> BR.02 mcult</span></span></code></pre>
+</details><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">metadata</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">#&gt;   Ind   Metadata</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AB.01 lr      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AB.02 lr      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> BR.01 mcult   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> BR.02 mcult</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="local-haplotyping">Local haplotyping<a class="anchor" aria-label="anchor" href="#local-haplotyping"></a>
@@ -219,27 +211,27 @@ which has two main parameters in crosshap: MGmin and epsilon.</p>
 in a cluster for it to be classified as a Marker Group instead of
 background noise. In this example (2041 SNPs in 173kb region), a MGmin
 of 30 was chosen.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Add minimum Marker Group SNP count</span></span>
-<span><span class="va">test_MGmin</span> <span class="op">&lt;-</span> <span class="fl">30</span></span></code></pre></div>
+<span><span class="va">MGmin</span> <span class="op">&lt;-</span> <span class="fl">30</span></span></code></pre></div>
 <p><strong>Epsilon</strong> roughly translates to cluster density, when
 epsilon increases, more SNPs will typically be included in more Marker
 Groups. At this stage it’s worth providing a range of epsilons so you
 can pick the best one later. This dataset has a lot of SNPs (2041 loci),
 so the range of epsilons we will test will be quite low (0.2 - 1).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Add list of epsilon values to run haplotyping on</span></span>
-<span><span class="va">test_epsilon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.6</span>,<span class="fl">0.8</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">epsilon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.6</span>,<span class="fl">0.8</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Now you’ve got all your inputs and parameters ready, it’s time to run
 the haplotyping!</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Run the haplotyping at all provided epsilon values</span></span>
-<span><span class="fu"><a href="../reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span>vcf <span class="op">=</span> <span class="va">test_vcf</span>,</span>
-<span>                LD <span class="op">=</span> <span class="va">test_LD</span>,</span>
-<span>                pheno <span class="op">=</span> <span class="va">test_pheno</span>,</span>
-<span>                metadata <span class="op">=</span> <span class="va">test_metadata</span>,</span>
-<span>                epsilon <span class="op">=</span> <span class="va">test_epsilon</span>,</span>
-<span>                MGmin <span class="op">=</span> <span class="va">test_MGmin</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span>vcf <span class="op">=</span> <span class="va">vcf</span>,</span>
+<span>                LD <span class="op">=</span> <span class="va">LD</span>,</span>
+<span>                pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
+<span>                metadata <span class="op">=</span> <span class="va">metadata</span>,</span>
+<span>                epsilon <span class="op">=</span> <span class="va">epsilon</span>,</span>
+<span>                MGmin <span class="op">=</span> <span class="va">MGmin</span><span class="op">)</span></span></code></pre></div>
 <p>If everything went to plan, 5 Haplotype S3 objects should have been
 saved to your global environment - one for each provided epsilon value.
 These files will be needed to build the crosshap visualizations.</p>
@@ -267,13 +259,13 @@ created at the different epsilon values to help you pick the best
 one.</p>
 <p>The first clustering tree option provides a summary of changes in
 haplotype groups resolved at different epsilon values.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Phenotype data and parameters used to create haplotype objects</span></span>
 <span><span class="co">#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups</span></span>
-<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
-<span>                              pheno <span class="op">=</span> <span class="va">test_pheno</span>,</span>
+<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">MGmin</span>,</span>
+<span>                              pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'hap'</span>,</span>
-<span>                              epsilon <span class="op">=</span> <span class="va">test_epsilon</span><span class="op">)</span></span>
+<span>                              epsilon <span class="op">=</span> <span class="va">epsilon</span><span class="op">)</span></span>
 <span><span class="va">hap_clustree</span></span></code></pre></div>
 <p><img src="Getting_started_files/figure-html/clustree-1.png" width="1152"></p>
 <details><summary><strong>What are the nodes and arrows on this plot?</strong>
@@ -313,13 +305,13 @@ will instead represent Marker Groups, with size indicating number of
 SNPs, and colour reflecting the phenotypic association of a given Marker
 Groups. The ‘0’ group represents background SNPs that aren’t assigned to
 a Marker Group.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
 <span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
-<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">test_MGmin</span>,</span>
-<span>                              pheno <span class="op">=</span> <span class="va">test_pheno</span>,</span>
+<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">MGmin</span>,</span>
+<span>                              pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'MG'</span>,</span>
-<span>                              epsilon <span class="op">=</span> <span class="va">test_epsilon</span><span class="op">)</span></span>
+<span>                              epsilon <span class="op">=</span> <span class="va">epsilon</span><span class="op">)</span></span>
 <span><span class="va">MG_clustree</span></span></code></pre></div>
 <img src="Getting_started_files/figure-html/MG_clustree-1.png" width="1152"></details>
 </div>
@@ -370,12 +362,12 @@ SNP.</p></li>
 <li><p>The table in the bottom right summarizes the haplotype
 information and the table in the top right summarizes the Marker Group
 information. All guides are shown in the bottom left.</p></li>
-</ul></details><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+</ul></details><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Visualize haplotype object created by run_haplotyping() at the chosen epsilon (0.6)</span></span>
 <span><span class="va">Hap_viz</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">)</span></span>
 <span><span class="va">Hap_viz</span></span></code></pre></div>
 <p><img src="Getting_started_files/figure-html/crosshap_viz-1.png" width="1056"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#If it doesn't scale well in your plot viewer, try exporting it as an image with ggsave()</span></span></code></pre></div>
 <details><summary><strong>Are there other options for these plots?</strong>
 </summary>
@@ -466,7 +458,7 @@ Group combinations</li>
 <li>The Varfile reports information for each SNP, including Marker Group
 assignments</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Print first lines of haplotype object buckets</span></span>
 <span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Indfile</span></span>
 <span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Hapfile</span></span>
@@ -477,7 +469,7 @@ build the plots one-by one and stitch them together as you like using
 the patchwork package in R (Pederson 2022).</p>
 <p>Below we’ll only include the top and bottom plots that are relevant
 that characterize our haplotype populations.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Install patchwork if you don't have it using install.packages("patchwork")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span></span>
