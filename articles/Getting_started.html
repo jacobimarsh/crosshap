@@ -121,13 +121,12 @@ isolate your region, take a look at vignette: <a href="Delimiting_region.html">D
 </details><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">vcf</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">11</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 11</span></span></span>
-<span><span class="co">#&gt;   `#CHROM`      POS ID     REF   ALT   QUAL  FILTER INFO  FORMAT SRR15…¹ USB.129</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 20       31<span style="text-decoration: underline;">604</span>185 20_31… C     A     .     PASS   .     GT     1|0     0|0    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 20       31<span style="text-decoration: underline;">604</span>420 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 20       31<span style="text-decoration: underline;">604</span>498 20_31… A     G     .     PASS   .     GT     1|0     0|0    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 20       31<span style="text-decoration: underline;">604</span>889 20_31… C     T     .     PASS   .     GT     0|0     0|0    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​SRR1533182</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   `#CHROM`    POS ID    REF   ALT   QUAL  FILTER INFO  FORMAT SRR1533182 USB.129</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 20       3.16<span style="color: #949494;">e</span>7 20_3… C     A     .     PASS   .     GT     1|0        0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 20       3.16<span style="color: #949494;">e</span>7 20_3… C     T     .     PASS   .     GT     0|0        0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 20       3.16<span style="color: #949494;">e</span>7 20_3… A     G     .     PASS   .     GT     1|0        0|0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 20       3.16<span style="color: #949494;">e</span>7 20_3… C     T     .     PASS   .     GT     0|0        0|0</span></span></code></pre></div>
 <p><strong>LD matrix</strong> provides pairwise linkage information
 between all SNP loci within the region of interest (173kb). Any LD
 metric that captures pairwise correlation on a scale from 0 (unlinked)
@@ -144,10 +143,10 @@ the output can be directly used as input:</p>
 </details><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">LD</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             20_31604185 20_31604420 20_31604498 20_31604889</span></span>
-<span><span class="co">#&gt; 20_31604185  1.00000000  0.00175092    0.237836  0.96147300</span></span>
-<span><span class="co">#&gt; 20_31604420  0.00175092  1.00000000    0.292267  0.00158741</span></span>
-<span><span class="co">#&gt; 20_31604498  0.23783600  0.29226700    1.000000  0.23367800</span></span>
-<span><span class="co">#&gt; 20_31604889  0.96147300  0.00158741    0.233678  1.00000000</span></span></code></pre></div>
+<span><span class="co">#&gt; 20_31604185        1.00        0.00        0.24        0.96</span></span>
+<span><span class="co">#&gt; 20_31604420        0.00        1.00        0.29        0.00</span></span>
+<span><span class="co">#&gt; 20_31604498        0.24        0.29        1.00        0.23</span></span>
+<span><span class="co">#&gt; 20_31604889        0.96        0.00        0.23        1.00</span></span></code></pre></div>
 <p><strong>Phenotype</strong> scores for all, or at least some
 individuals in the VCF is necessary for uncovering trait-associated
 genomic variation and haplotypes. Given this tutorial analyzes a seed
