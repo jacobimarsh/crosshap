@@ -215,3 +215,13 @@ square_val <- function(x){
 pre %>% plyr::round_any(1000)
 pre %>% round(digits = -3)
 
+
+HapObject$Varfile %>%
+  dplyr::filter(.data$MGs != 0) %>%
+  dplyr::mutate(MGs = as.numeric(gsub("MG","",.data$MGs)))
+
+
+HapObject$Varfile %>%
+  dplyr::filter(.data$MGs != 0) %>%
+  dplyr::mutate(MGs = as.numeric(
+    stringr::str_remove(.data$MGs,"MG")))

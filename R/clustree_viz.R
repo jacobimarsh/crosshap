@@ -39,7 +39,7 @@ haptree <- base::suppressMessages(
   clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
   ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,.data$Pheno)$Pheno),
                                  base::min(dplyr::top_frac(pre_clustree_phen,0.1,.data$Pheno)$Pheno)),
-                        high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'Pheno') +
+                        high = "#8ADD81",low = "#6870F6", oob = scales::squish,name = 'Pheno') +
   ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
   ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))

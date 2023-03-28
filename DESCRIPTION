@@ -28,10 +28,9 @@ Imports:
     gtable,
     magrittr,
     patchwork,
-    plyr,
     rlang,
+    scales,
     stats,
-    stringr,
     tibble,
     tidyr
 Suggests: 

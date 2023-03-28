@@ -26,7 +26,7 @@ build_mid_dotplot <- function(HapObject, hide_labels) {
 intersect <- HapObject$Hapfile %>% tibble::as_tibble() %>%
   tidyr::gather("MG", "present", 3:(base::ncol(HapObject$Hapfile))) %>%
   dplyr::mutate(present = base::as.factor(.data$present)) %>%
-  dplyr::mutate(MG = base::as.numeric(stringr::str_remove(.data$MG, "MG"))) %>%
+  dplyr::mutate(MG = base::as.numeric(gsub("MG","",.data$MG))) %>%
   dplyr::mutate(present = gsub(as.factor(2),"ALT",
                                gsub(as.factor(1),"HET",
                                     gsub(as.factor(0),"REF",.data$present)))) %>%
