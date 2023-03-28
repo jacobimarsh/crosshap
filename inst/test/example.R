@@ -195,3 +195,23 @@ crosshap_stitched <-
   patchwork::plot_layout(design = layout, guides = "collect")
 
 
+square_val <- function(x){
+  x^2
+}
+
+  test_that("square_val  actually squares", {
+    expect_equal(square_val(2),4)
+  })
+
+
+
+
+
+ pre <-  base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.1 + base::min(HapObject$Varfile$POS)),
+                                                 ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.5 + base::min(HapObject$Varfile$POS)),
+                                                 ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.9 + base::min(HapObject$Varfile$POS)))} #%>%
+    plyr::round_any(1000)
+
+pre %>% plyr::round_any(1000)
+pre %>% round(digits = -3)
+

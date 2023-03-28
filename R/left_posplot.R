@@ -25,7 +25,7 @@ build_left_posplot <- function(HapObject, hide_labels = T) {
 IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.1 + base::min(HapObject$Varfile$POS)),
                                         ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.5 + base::min(HapObject$Varfile$POS)),
                                         ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.9 + base::min(HapObject$Varfile$POS)))} %>%
-  plyr::round_any(1000)
+  base::round(digits = -3)
 
 left_posplot <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0) %>% dplyr::mutate(MGs = as.numeric(stringr::str_remove(.data$MGs,"MG"))) %>%
   ggplot2::ggplot() +
