@@ -195,13 +195,6 @@ crosshap_stitched <-
   patchwork::plot_layout(design = layout, guides = "collect")
 
 
-square_val <- function(x){
-  x^2
-}
-
-  test_that("square_val  actually squares", {
-    expect_equal(square_val(2),4)
-  })
 
 
 
