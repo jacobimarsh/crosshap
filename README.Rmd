@@ -4,6 +4,10 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+  <!-- badges: start -->
+  [![Codecov test coverage](https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main)
+  <!-- badges: end -->
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -14,9 +18,6 @@ knitr::opts_chunk$set(
 ```
 
 # crosshap
-
-<!-- badges: start -->
-<!-- badges: end -->
 
 LD-based local haplotype analysis and visualization tool
 
@@ -44,7 +45,7 @@ among local variants, and to classify individuals based on shared haplotypes.
 Note: crosshap is designed for in-depth, user-driven analysis of inheritance 
 patterns in specific regions of interest, not genome-wide scans.
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
+![](https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_jpg.jpg?raw=true)
 
 ## Installation
 

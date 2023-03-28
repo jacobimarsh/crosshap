@@ -1,10 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# crosshap
-
-<!-- badges: start -->
+<!-- badges: start --> [![Codecov test
+coverage](https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main)
 <!-- badges: end -->
+
+# crosshap
 
 LD-based local haplotype analysis and visualization tool
 
@@ -35,7 +36,7 @@ Note: crosshap is designed for in-depth, user-driven analysis of
 inheritance patterns in specific regions of interest, not genome-wide
 scans.
 
-![](https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true)
+![](https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_jpg.jpg?raw=true)
 
 ## Installation
 

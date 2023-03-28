@@ -37,6 +37,7 @@ Imports:
     tibble,
     tidyr
 Suggests: 
+    covr,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
