@@ -1,10 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<!-- badges: start --> [![Codecov test
-coverage](https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main)
-<!-- badges: end -->
-
 # crosshap
 
 LD-based local haplotype analysis and visualization tool

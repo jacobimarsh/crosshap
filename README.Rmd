@@ -4,11 +4,6 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-  <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main)
-  <!-- badges: end -->
-
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
