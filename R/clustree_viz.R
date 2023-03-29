@@ -40,7 +40,7 @@ haptree <- base::suppressMessages(
   ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,.data$Pheno)$Pheno),
                                  base::min(dplyr::top_frac(pre_clustree_phen,0.1,.data$Pheno)$Pheno)),
                         high = "#8ADD81",low = "#6870F6", oob = scales::squish,name = 'Pheno') +
-  ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
+  ggplot2::scale_colour_gradient(high = 'black', low = 'grey80', guide = "edge_colourbar", aesthetics = "edge_colour") +
   ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
 )
@@ -71,7 +71,7 @@ clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'phenodiff',nod
   ggplot2::scale_colour_gradient(limits=c(base::max(pre_MGtree$phenodiff),
                                           base::min(pre_MGtree$phenodiff)),
                                  high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'phenodiff') +
-  ggraph::scale_edge_color_continuous(high = 'black',low = 'grey80') +
+  ggplot2::scale_colour_gradient(high = 'black', low = 'grey80', guide = "edge_colourbar", aesthetics = "edge_colour") +
   ggplot2::labs(size = 'nSNPs', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
 )

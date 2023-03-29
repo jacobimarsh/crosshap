@@ -1,6 +1,6 @@
 Package: crosshap
 Type: Package
-Title: Haplotype clustering and visualization
+Title: Local haplotype clustering and visualization
 Version: 1.0.0
 Author: Jacob I. Marsh
 Authors@R:
@@ -8,8 +8,12 @@ Authors@R:
            family = "Marsh", 
            role = c("aut", "cre"), 
            email = "jacob.marsh@research.uwa.edu.au")
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A local haplotyping visualization toolbox to capture major patterns 
+    of co-inheritance between clusters of linked SNPs, whilst connecting findings 
+    to phenotypic and demographic traits across individuals. 'crosshap' enables users 
+    to explore and understand genomic variation across a trait-associated region. 
+    For an example of successful local haplotype analysis, see: 
+    https://doi.org/10.1007/s00122-022-04045-8.
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
@@ -23,14 +27,12 @@ Imports:
     ggdist,
     ggplot2,
     ggpp,
-    ggraph,
     gridExtra,
     gtable,
     magrittr,
     patchwork,
     rlang,
     scales,
-    stats,
     tibble,
     tidyr
 Suggests: 
