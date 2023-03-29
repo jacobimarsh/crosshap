@@ -195,8 +195,20 @@ crosshap_stitched <-
   patchwork::plot_layout(design = layout, guides = "collect")
 
 
+sq <-function(x){
+x^2
+}
+
+testthat::test_that("run_haplotyping works",{
+  testthat::expect_identical(crosshap::run_haplotyping(vcf = crosshap::vcf,
+                                                       LD = crosshap::LD,
+                                                       pheno = crosshap::pheno,
+                                                       metadata = crosshap::metadata,
+                                                       epsilon = 0.6),
+                             crosshap::Haplotypes_MGmin30_E0.6)
 
 
+})
 
 
 

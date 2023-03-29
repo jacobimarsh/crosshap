@@ -38,9 +38,11 @@ Imports:
 Suggests: 
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.00)
 URL: https://jacobimarsh.github.io/crosshap/
 License: MIT + file LICENSE
+Config/testthat/edition: 3
