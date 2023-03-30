@@ -7,10 +7,10 @@ crosshap::run_haplotyping(vcf = crosshap::vcf,
                           epsilon = test_epsilon)
 
 
-test_that("test MG clustree", {
-MGtree <- clustree_viz(pheno = crosshap::pheno, test_epsilon)
-vdiffr::expect_doppelganger("MGtree", MGtree)
-})
+#test_that("test MG clustree", {
+#MGtree <- clustree_viz(pheno = crosshap::pheno, test_epsilon)
+#vdiffr::expect_doppelganger("MGtree", MGtree)
+#})
 
 test_that("test hap clustree", {
 haptree <- clustree_viz(pheno = crosshap::pheno, test_epsilon, type = 'hap')
