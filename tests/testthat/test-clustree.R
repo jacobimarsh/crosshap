@@ -8,11 +8,11 @@ crosshap::run_haplotyping(vcf = crosshap::vcf,
 
 
 test_that("test MG clustree", {
-MGtree <- clustree_viz(epsilon = test_epsilon, pheno = crosshap::pheno, type = 'MG')
+MGtree <- clustree_viz(pheno = crosshap::pheno, test_epsilon)
 vdiffr::expect_doppelganger("MGtree", MGtree)
 })
 
 test_that("test hap clustree", {
-haptree <- clustree_viz(epsilon = test_epsilon, pheno = crosshap::pheno, type = 'hap')
+haptree <- clustree_viz(pheno = crosshap::pheno, test_epsilon, type = 'hap')
 vdiffr::expect_doppelganger("haptree", haptree)
 })
