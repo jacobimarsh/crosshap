@@ -39,7 +39,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.00)

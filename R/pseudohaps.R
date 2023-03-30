@@ -101,7 +101,7 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
    Hapfile <- base::cbind(overmin_hap_counts$hap,no0clust[,base::names(base::sort(base::colSums(no0clust), decreasing = TRUE))]) %>%
      dplyr::rename('hap' = "overmin_hap_counts$hap")
 
-   clust_preMGs <- base::colnames(Hapfile %>% dplyr::select(-c(.data$hap, .data$n)))
+   clust_preMGs <- base::colnames(Hapfile %>% dplyr::select(-c("hap", "n")))
 
 #Add 'MG' prefix to clusters
    for (veal in c(1:(base::length(clust_preMGs)))) {
