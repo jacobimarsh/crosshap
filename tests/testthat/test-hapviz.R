@@ -17,3 +17,13 @@ test_that("test alt crosshap viz", {
 alt_viz2 <- crosshap_viz(Haplotypes_MGmin30_E0.61, plot_left = 'pos', plot_right = 'cluster')
 vdiffr::expect_doppelganger("haplotype_viz_alt2", alt_viz2)
 })
+
+test_that("test no labels crosshap viz", {
+nolabs <- crosshap_viz(Haplotypes_MGmin30_E0.61, hide_labels = T)
+vdiffr::expect_doppelganger("haplotype_viz_nolabs", nolabs)
+})
+
+test_that("test isolate_groups", {
+isolate_wt <- crosshap_viz(Haplotypes_MGmin30_E0.61, isolate_group = "wt")
+vdiffr::expect_doppelganger("haplotype_viz_isolatewt", isolate_wt)
+})

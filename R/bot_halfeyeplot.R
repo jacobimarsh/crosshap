@@ -33,7 +33,7 @@ no0data <- tidyr::drop_na(HapObject$Indfile, "Pheno") %>% dplyr::filter(.data$ha
 halfeyedat <-  if(is.na(isolate_group)) {
   no0data } else {
   tidyr::drop_na(HapObject$Indfile %>% dplyr::mutate(Pheno = ifelse(.data$Metadata != isolate_group, NA, .data$Pheno)),
-                                 .data$Pheno) %>% dplyr::filter(.data$hap !=0 )
+                                 'Pheno') %>% dplyr::filter(.data$hap !=0 )
 }
 
 #Add a 'keep' variable with excluded groups as NA
