@@ -22,10 +22,6 @@
 #'
 #' @return A patchwork object.
 #'
-#' @examples
-#' run_haplotyping(vcf, LD, pheno, metadata)
-#' crosshap_viz(Haplotypes_MGmin30_E0.6)
-#'
 crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
                          hide_labels = F, isolate_group = NA) {
 
