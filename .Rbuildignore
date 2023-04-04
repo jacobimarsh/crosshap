@@ -12,3 +12,4 @@
 ^LICENSE\.md$
 ^vignettes/articles$
 ^codecov\.yml$
+^CRAN-SUBMISSION$

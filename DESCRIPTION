@@ -2,7 +2,6 @@ Package: crosshap
 Type: Package
 Title: Local haplotype clustering and visualization
 Version: 1.0.0
-Author: Jacob I. Marsh
 Authors@R:
   c(person(given = "Jacob", 
            family = "Marsh", 
