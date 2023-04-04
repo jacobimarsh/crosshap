@@ -20,7 +20,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Brady Johnston \email{brady.johnston@me.com} (\href{https://orcid.org/000-0001-6301-2269}{ORCID})
+  \item Brady Johnston \email{brady.johnston@me.com} (\href{https://orcid.org/0000-0001-6301-2269}{ORCID})
+  \item Jakob Petereit \email{petinho86@gmail.com} (\href{https://orcid.org/0000-0003-2159-0380}{ORCID})
 }
 
 }

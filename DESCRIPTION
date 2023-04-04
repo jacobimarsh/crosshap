@@ -13,7 +13,13 @@ Authors@R:
            family = "Johnston",
            role = "aut",
            email = "brady.johnston@me.com",
-           comment = c(ORCID = "000-0001-6301-2269")))
+           comment = c(ORCID = "0000-0001-6301-2269")),
+    person(given = "Jakob",
+           family = "Petereit",
+           role = "aut",
+           email = "petinho86@gmail.com",
+           comment = c(ORCID = "0000-0003-2159-0380"))
+           )
 Maintainer: Jacob Marsh <jake.marsh@live.com.au>
 Description: A local haplotyping visualization toolbox to capture major patterns 
     of co-inheritance between clusters of linked SNPs, whilst connecting findings 
