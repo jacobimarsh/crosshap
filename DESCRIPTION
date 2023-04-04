@@ -1,6 +1,6 @@
 Package: crosshap
 Type: Package
-Title: Local haplotype clustering and visualization
+Title: Local Haplotype Clustering and Visualization
 Version: 1.0.0
 Authors@R:
   c(person(given = "Jacob", 
@@ -25,7 +25,7 @@ Description: A local haplotyping visualization toolbox to capture major patterns
     to phenotypic and demographic traits across individuals. 'crosshap' enables users 
     to explore and understand genomic variation across a trait-associated region. 
     For an example of successful local haplotype analysis, see: 
-    https://doi.org/10.1007/s00122-022-04045-8.
+    <doi:10.1007/s00122-022-04045-8>.
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
@@ -54,7 +54,6 @@ Suggests:
     testthat (>= 3.0.0),
     umap,
     vdiffr
-VignetteBuilder: knitr
 Depends: 
     R (>= 4.00)
 URL: https://jacobimarsh.github.io/crosshap/

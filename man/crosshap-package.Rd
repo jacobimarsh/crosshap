@@ -4,9 +4,9 @@
 \name{crosshap-package}
 \alias{crosshap}
 \alias{crosshap-package}
-\title{crosshap: Local haplotype clustering and visualization}
+\title{crosshap: Local Haplotype Clustering and Visualization}
 \description{
-A local haplotyping visualization toolbox to capture major patterns of co-inheritance between clusters of linked SNPs, whilst connecting findings to phenotypic and demographic traits across individuals. 'crosshap' enables users to explore and understand genomic variation across a trait-associated region. For an example of successful local haplotype analysis, see: https://doi.org/10.1007/s00122-022-04045-8.
+A local haplotyping visualization toolbox to capture major patterns of co-inheritance between clusters of linked SNPs, whilst connecting findings to phenotypic and demographic traits across individuals. 'crosshap' enables users to explore and understand genomic variation across a trait-associated region. For an example of successful local haplotype analysis, see: \doi{10.1007/s00122-022-04045-8}.
 }
 \seealso{
 Useful links:

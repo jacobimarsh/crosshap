@@ -27,9 +27,6 @@
 #' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
 #' epsilon value, needed for clustree_viz() and crosshap_viz().
 #'
-#' @examples
-#' run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
-#'
 
 run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                             epsilon = c(0.2,0.4,0.6,0.8,1),

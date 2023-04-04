@@ -54,7 +54,3 @@ haplotyping object (HapObject), which can be used as input to build clustering
 tree for epsilon optimization using clustree_viz(), and can be visualized with
 reference to phenotype and metadata using crosshap_viz().
 }
-\examples{
-run_haplotyping(vcf, LD, pheno, metadata, MGmin = 30)
-
-}
