@@ -16,7 +16,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Jacob Marsh \email{jacob.marsh@research.uwa.edu.au}
+\strong{Maintainer}: Jacob Marsh \email{jake.marsh@live.com.au} (\href{https://orcid.org/0000-0003-3734-2023}{ORCID})
+
+Authors:
+\itemize{
+  \item Brady Johnston \email{brady.johnston@me.com} (\href{https://orcid.org/000-0001-6301-2269}{ORCID})
+}
 
 }
 \keyword{internal}

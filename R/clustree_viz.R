@@ -1,10 +1,10 @@
 #' Clustering tree
 #'
 #' clustree_viz() builds a clustering tree displaying changes in haplotype
-#' assignment between individuals or changes in marker group assignment for
-#' SNPs, across different epsilon values. Its essential the epsilon and MGmin
+#' assignment between individuals or changes in Marker Group assignment for
+#' SNPs, across different epsilon values. It's essential the epsilon and MGmin
 #' values match the haplotype objects created by run_haplotyping(). This function
-#' is a clustree wrapper.
+#' is a `clustree` wrapper.
 #'
 #' @param epsilon Epsilon values passed through run_haplotyping().
 #' @param MGmin MGmin values passed through run_haplotyping().

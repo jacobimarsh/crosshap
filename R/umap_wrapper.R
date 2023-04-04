@@ -2,7 +2,7 @@
 #'
 #' prepare_hap_umap() builds a large composite ggplot2 object ready for faceting
 #' and animation (see vignette) for visualizing SNP alleles (coloured by Marker
-#' Group) possessed by randomly sampled individuals within each haplotype. UMAP
+#' Group) possessed by individuals with each haplotype. UMAP
 #' coordinates for each SNP can be generated using umap::umap(), with the LD
 #' matrix generated for run_haplotyping() as input. When fully rendered and
 #' faceted, the resultant GIF intuitively visualizes the shared loci within each

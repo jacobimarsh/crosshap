@@ -86,7 +86,7 @@ clustree_viz(pheno)
 crosshap_viz(HapObject)
 ```
 
-<img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_figure_nolabs-01.jpg?raw=true" width="80%" height="80%" />
+<img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_figure_nolabs-01.jpg?raw=true" width="90%" height="90%" />
 
 From here you can examine haplotype and Marker Group features from the
 visualization, and export relevant information from the haplotype

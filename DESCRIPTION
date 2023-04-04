@@ -4,10 +4,17 @@ Title: Local haplotype clustering and visualization
 Version: 1.0.0
 Author: Jacob I. Marsh
 Authors@R:
-    person(given = "Jacob", 
+  c(person(given = "Jacob", 
            family = "Marsh", 
            role = c("aut", "cre"), 
-           email = "jacob.marsh@research.uwa.edu.au")
+           email = "jake.marsh@live.com.au",
+           comment = c(ORCID = "0000-0003-3734-2023")),
+    person(given = "Brady",
+           family = "Johnston",
+           role = "aut",
+           email = "brady.johnston@me.com",
+           comment = c(ORCID = "000-0001-6301-2269")))
+Maintainer: Jacob Marsh <jake.marsh@live.com.au>
 Description: A local haplotyping visualization toolbox to capture major patterns 
     of co-inheritance between clusters of linked SNPs, whilst connecting findings 
     to phenotypic and demographic traits across individuals. 'crosshap' enables users 

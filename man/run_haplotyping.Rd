@@ -49,7 +49,7 @@ epsilon value, needed for clustree_viz() and crosshap_viz().
 \description{
 run_haplotyping() performs density-based clustering of SNPs in region of
 interest to identify Marker Groups. Individuals are classified by haplotype
-combination based on shared combinations of marker group alleles. Returns a
+combination based on shared combinations of Marker Group alleles. Returns a
 haplotyping object (HapObject), which can be used as input to build clustering
 tree for epsilon optimization using clustree_viz(), and can be visualized with
 reference to phenotype and metadata using crosshap_viz().

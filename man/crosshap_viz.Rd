@@ -34,8 +34,8 @@ A patchwork object.
 \description{
 crosshap_viz() builds five individual plots using various elements of a
 HapObject created by run_haplotyping(). The central dotplot displays
-relationship between clusters of linked SNPs (marker groups), and distinct
+relationship between clusters of linked SNPs (Marker Groups), and distinct
 haplotypes present within the population. Vertical plots (top/bottom)
 visualize individuals and populations, grouped by haplotype. Horizontal plots
-(left/right) visualize SNP information, grouped by marker group cluster.
+(left/right) visualize SNP information, grouped by Marker Group cluster.
 }
