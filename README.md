@@ -2,8 +2,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/jacobimarsh/crosshap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jacobimarsh/crosshap/actions/workflows/R-CMD-check.yaml)
 [![Codecov](https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main)
 <!-- badges: end -->
