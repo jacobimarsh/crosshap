@@ -10,7 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 
 # crosshap
 
-<img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_hex_sticker_eps-01.png?raw=true" width="15%" height="15%" />
+<img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_hex_sticker_eps_whitebackground-01.png?raw=true" width="15%" height="15%" />
 
 ## What does it do?
 
