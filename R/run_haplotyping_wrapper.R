@@ -5,7 +5,7 @@
 #' combination based on shared combinations of Marker Group alleles. Returns a
 #' haplotyping object (HapObject), which can be used as input to build clustering
 #' tree for epsilon optimization using clustree_viz(), and can be visualized with
-#' reference to phenotype and metadata using crosshap_viz().
+#' reference to phenotype and metadata using crosshap_viz(). Test
 #'
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
