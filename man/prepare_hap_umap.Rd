@@ -4,17 +4,26 @@
 \alias{prepare_hap_umap}
 \title{UMAP haplotype visualization helper}
 \usage{
-prepare_hap_umap(umap_in, hetmiss_as = "allele", HapObject, vcf, nsamples = 25)
+prepare_hap_umap(
+  umap_in,
+  hetmiss_as = "allele",
+  HapObject,
+  epsilon,
+  vcf,
+  nsamples = 25
+)
 }
 \arguments{
-\item{umap_in}{Epsilon values passed through run_haplotyping().}
+\item{umap_in}{UMAP results produced for a haplotype object at a given epsilon.}
 
 \item{hetmiss_as}{If hetmiss_as = "allele", heterozygous-missing SNPs './N'
 are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
 \item{HapObject}{Haplotype object created by run_haplotyping().}
 
-\item{vcf}{Input vcf}
+\item{epsilon}{Epsilon matching the haplotype object used for umap_in.}
+
+\item{vcf}{Input vcf.}
 
 \item{nsamples}{Number of times to sample each haplotype group, will directly
 translate to the number of frames in animation. Should be the same as the

@@ -9,6 +9,7 @@
 #' stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @importFrom rlang ".data"
@@ -18,12 +19,20 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_right_clusterplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_right_clusterplot <- function(HapObject, hide_labels = F) {
+build_right_clusterplot <- function(HapObject, epsilon, hide_labels = FALSE) {
+
+  #Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
+
   right_clusterplot <-   ggplot2::ggplot() +
-    ggplot2::geom_boxplot(data = HapObject$Varfile %>% dplyr::filter(.data$MGs != 0),
+    ggplot2::geom_boxplot(data = HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0),
                          ggplot2::aes(x = .data$meanr2, y = .data$MGs),
                          alpha = 0.25, pch = 21, #height = 0.25,
                          coef = 2) +
@@ -44,7 +53,7 @@ build_right_clusterplot <- function(HapObject, hide_labels = F) {
                    axis.title.x = ggplot2::element_text()) +
     ggplot2::xlab("Mean intra-cluster R^2") +
     ggplot2::scale_y_discrete(limits = rev, position = "left",
-                              labels = c(paste0("MG", base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))))
+                              labels = c(paste0("MG", base::as.character((base::length(unique(HapObject_eps$Varfile$MGs))-1):1))))
 
   if(hide_labels == T){
     return(right_clusterplot + ggplot2::theme(legend.position = "none"))

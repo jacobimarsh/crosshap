@@ -4,10 +4,12 @@
 \alias{build_summary_tables}
 \title{Hap/MG summary tables}
 \usage{
-build_summary_tables(HapObject)
+build_summary_tables(HapObject, epsilon)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 }
 \value{
 A list containing two TableGrob objects.

@@ -7,6 +7,7 @@
 #' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon matching the haplotype object used for umap_in.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @importFrom rlang ".data"
@@ -16,13 +17,20 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_left_alleleplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_left_alleleplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_left_alleleplot <- function(HapObject, hide_labels = T) {
+build_left_alleleplot <- function(HapObject, epsilon, hide_labels = TRUE) {
+
+  #Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Filter out individuals unassigned to a haplotype
-pre_leftplotdata <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0)
+pre_leftplotdata <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0)
 
 #Count allele averages across SNPs in each Marker Group
 leftplot_data <- stats::aggregate(pre_leftplotdata$ref,
@@ -68,7 +76,7 @@ left_alleleplot <- ggplot2::ggplot(leftplot_data %>% tidyr::gather("Type", "nInd
   ggplot2::scale_fill_manual(values = c("#FFFFFF", '#FDE725FF', "#73D055FF", '#440154FF')) +
   ggplot2::xlab("Allele count") +
   ggplot2::scale_y_discrete(position = "right", limits = rev,
-                   labels = c(paste0("MG",base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))))
+                   labels = c(paste0("MG",base::as.character((base::length(unique(HapObject_eps$Varfile$MGs))-1):1))))
 
 
 if(hide_labels == T){

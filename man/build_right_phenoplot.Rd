@@ -4,10 +4,12 @@
 \alias{build_right_phenoplot}
 \title{Right SNP-pheno phenoplot}
 \usage{
-build_right_phenoplot(HapObject, hide_labels)
+build_right_phenoplot(HapObject, epsilon, hide_labels = TRUE)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
@@ -24,6 +26,6 @@ called by crosshap_viz(), though can be called separately to build a
 stand-alone plot.
 }
 \examples{
-    build_right_phenoplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+    build_right_phenoplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }

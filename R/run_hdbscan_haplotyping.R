@@ -3,10 +3,8 @@
 #' run_hdbscan_haplotyping() performs HDBSCAN clustering of SNPs in region of
 #' interest to identify marker groups. Individuals are classified by haplotype
 #' combination based on shared combinations of marker group alleles. Returns a
-#' comprehensive haplotyping object (HapObject), which can be used as input to
-#' build clustering tree for epsilon optimization using clustree_viz(), and
-#' can be visualized with reference to phenotype and metadata using
-#' crosshap_viz().
+#' comprehensive haplotyping object (HapObject), which can be visualized with reference
+#' to phenotype and metadata using crosshap_viz() (set epsilon to 1 as a dummy value).
 #'
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
@@ -24,7 +22,7 @@
 #' @returns A comprehensive haplotyping S3 object (HapObject) for each provided
 #' epsilon value, needed for clustree_viz() and crosshap_viz().
 
-run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_as = 'allele', metadata = NULL, keep_outliers = F){
+run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_as = 'allele', metadata = NULL, keep_outliers = FALSE){
   bin_vcf <- dplyr::select(vcf, -c(1,2,4:9)) %>% tibble::column_to_rownames('ID') %>%
     dplyr::mutate_all(function(x){base::ifelse(x=='0|0',0,
                                                base::ifelse(x=='1|0'|x=='0|1',1,
@@ -51,7 +49,7 @@ run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_a
     base::message(paste0("Collating haplotype information"))
 
     Varfile <- tagphenos(MGfile = phaps_out$MGfile, bin_vcf, pheno)
-    clustered_hpS_obj <-  base::list(MGmin = db40$minPts,
+    HDBHapObject <-  base::list(MGmin = db40$minPts,
                                      Hapfile = phaps_out$Hapfile,
                                      Indfile = if(missing(metadata)|is.null(metadata)){
                                        dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::mutate(Metadata = as.character(NA))
@@ -59,8 +57,12 @@ run_hdbscan_haplotyping <- function(vcf, LD, pheno, MGmin, minHap = 5, hetmiss_a
                                        dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")
                                      },
                                      Varfile = Varfile,
-                                     MGfile = phaps_out$MGfile)
-    base::assign(paste("Haplotypes_MGmin",MGmin, "_HDBSCAN",sep = ""), clustered_hpS_obj, envir = .GlobalEnv)
-  base::message(paste0("Info saved in Haplotypes_",MGmin, "_E_HDBSCAN"))
+                                     MGfile = phaps_out$MGfile,
+                                    epsilon = 1)
+
+
+HDBHapList    <- list(HDBHapObject)
+
+return(HDBHapList)
 }
 

@@ -23,6 +23,9 @@ recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}
 }
+\value{
+Returns intermediate of haplotype object
+}
 \description{
 pseudo_haps() calls the most common allelic states for each SNP marker group
 across individuals, before building dummy SNPs for each marker group that

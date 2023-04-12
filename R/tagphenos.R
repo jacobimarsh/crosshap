@@ -14,6 +14,8 @@
 #'
 #' @export
 #'
+#' @return Returns intermediate of haplotype object.
+#'
 
 tagphenos <- function(MGfile, bin_vcf, pheno) {
 

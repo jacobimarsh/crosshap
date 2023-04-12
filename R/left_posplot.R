@@ -6,6 +6,7 @@
 #' crosshap_viz(), though can be called separately to build a stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon matching the haplotype object used for umap_in.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @importFrom rlang ".data"
@@ -15,25 +16,32 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_left_posplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_left_posplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_left_posplot <- function(HapObject, hide_labels = T) {
+build_left_posplot <- function(HapObject, epsilon, hide_labels = TRUE) {
+
+  #Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Find chromosomal positions at 10%, 50% and 90% intervals across region of interest
 #These act as the x-axis labels
-IQRs <- base::as.numeric(HapObject$Varfile$POS) %>% {c(((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.1 + base::min(HapObject$Varfile$POS)),
-                                        ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.5 + base::min(HapObject$Varfile$POS)),
-                                        ((base::max(HapObject$Varfile$POS) - base::min(HapObject$Varfile$POS))*0.9 + base::min(HapObject$Varfile$POS)))} %>%
+IQRs <- base::as.numeric(HapObject_eps$Varfile$POS) %>% {c(((base::max(HapObject_eps$Varfile$POS) - base::min(HapObject_eps$Varfile$POS))*0.1 + base::min(HapObject_eps$Varfile$POS)),
+                                        ((base::max(HapObject_eps$Varfile$POS) - base::min(HapObject_eps$Varfile$POS))*0.5 + base::min(HapObject_eps$Varfile$POS)),
+                                        ((base::max(HapObject_eps$Varfile$POS) - base::min(HapObject_eps$Varfile$POS))*0.9 + base::min(HapObject_eps$Varfile$POS)))} %>%
   base::round(digits = -3)
 
-left_posplot <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0) %>% dplyr::mutate(MGs = as.numeric(gsub("MG","",.data$MGs))) %>%
+left_posplot <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0) %>% dplyr::mutate(MGs = as.numeric(gsub("MG","",.data$MGs))) %>%
   ggplot2::ggplot() +
   ggplot2::geom_segment(linewidth = 0.2,
                         ggplot2::aes(x = .data$POS, xend = .data$POS, y = .data$MGs-0.2, yend = .data$MGs+0.2)) +
   ggplot2::scale_x_continuous(breaks = IQRs) +
-  ggplot2::scale_y_reverse(breaks = (base::length(unique(HapObject$Varfile$MGs))-1):1,
-    labels = c(paste0("MG", base::as.character((base::length(unique(HapObject$Varfile$MGs))-1):1))),
+  ggplot2::scale_y_reverse(breaks = (base::length(unique(HapObject_eps$Varfile$MGs))-1):1,
+    labels = c(paste0("MG", base::as.character((base::length(unique(HapObject_eps$Varfile$MGs))-1):1))),
     position = "right") +
   ggplot2::labs(x = "Position") +
   ggplot2::theme_minimal() +

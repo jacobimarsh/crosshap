@@ -30,10 +30,11 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-#Read in example data (LD Matrix, VCF and Haplotype object)
+#Read in example data (LD Matrix, VCF, Haplotype object and chosen epsilon)
 LD <- crosshap::LD
 vcf <- crosshap::vcf
-Haplotypes_MGmin30_E0.6 <- crosshap::Haplotypes_MGmin30_E0.6
+HapObject <- crosshap::HapObject
+epsilon <- 0.6
 ```
 
 ## UMAP
@@ -62,7 +63,8 @@ umap_in <- umap::umap(LD, min_dist = 2, spread = 2.5, n_neighbors = 30)
 MGumap_data <- umap_in$layout %>% tibble::as_tibble() %>%
   cbind(rownames(umap_in$data)) %>% tibble::as_tibble() %>%
   dplyr::rename(UMAP1 = V1, UMAP2 = V2, ID = 'rownames(umap_in$data)') %>%
-  dplyr::left_join(Haplotypes_MGmin30_E0.6$Varfile %>% 
+#HapObject$Haplotypes_MGmin30_E0.6$Varfile contains variant information at epsilon = 0.6
+  dplyr::left_join(HapObject$Haplotypes_MGmin30_E0.6$Varfile %>% 
                      dplyr::select(ID, MGs), by = "ID") %>%
   dplyr::mutate(MGs = gsub('0', NA, MGs))
 
@@ -79,7 +81,7 @@ MGumap
 <details>
   <summary>**What haplotypes do these Marker Groups define?**</summary>
 ```{r, eval = FALSE}  
-crosshap::build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = F)
+crosshap::build_mid_dotplot(HapObject, epsilon = 0.6, hide_labels = F)
 ```
 ![](https://github.com/JacobIMarsh/crosshapimages/blob/main/images/middotplot.png?raw=true){width=500px}
 
@@ -95,8 +97,8 @@ information on how to optimize `min_dist` and don't forget to keep `spread` abov
 ## Building UMAP GIF
 
 The `prepare_hap_umap()` function in crosshap takes UMAP results and a haplotype object 
-built by `run_haplotyping()` and builds a plot for individuals from each haplotype 
-with their SNP alleles across the UMAP. 
+built by `run_haplotyping()` with an epsilon resolution and builds a plot for individuals 
+from each haplotype with their SNP alleles across the UMAP. 
 
 <details>
   <summary>**What's the `nsamples` parameter?**</summary>
@@ -111,7 +113,8 @@ when nsamples > nIndividuals within a given haplotype.
 
 ```{r, eval = FALSE}
 pre_anim_gg <- crosshap::prepare_hap_umap(umap_in,
-                            HapObject = Haplotypes_MGmin30_E0.6,
+                            HapObject = HapObject,
+                            epsilon = 0.6,
                             vcf = vcf,
                             nsamples = 25)
 ```

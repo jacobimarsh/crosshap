@@ -7,6 +7,7 @@
 #' though can be called separately to build a stand-alone plot
 #'
 #' @param HapObject Haplotype object created by run_haplotyping()
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @importFrom rlang ".data"
@@ -16,20 +17,27 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_top_metaplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_top_metaplot <- function(HapObject, hide_labels) {
+build_top_metaplot <- function(HapObject, epsilon, hide_labels = FALSE) {
+
+#Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Remove unassigned individuals and convert Indfile to long format
-topplot_data <- suppressMessages(HapObject$Indfile %>%
+topplot_data <- suppressMessages(HapObject_eps$Indfile %>%
   dplyr::group_by(.data$hap, .data$Metadata) %>%
   dplyr::summarise(counts = length(.data$Metadata)) %>%
   dplyr::filter(.data$hap != 0))
 
 
 top_metaplot <- ggplot2::ggplot(topplot_data,
-       ggplot2::aes(y = .data$counts, x = .data$hap, fill = base::factor(.data$Metadata, levels = c(NA, sort(unique(HapObject$Indfile$Metadata))), exclude = NULL))) +
+       ggplot2::aes(y = .data$counts, x = .data$hap, fill = base::factor(.data$Metadata, levels = c(NA, sort(unique(HapObject_eps$Indfile$Metadata))), exclude = NULL))) +
   ggplot2::geom_bar(position="stack", stat = "identity") +
   ggplot2::theme_minimal() +
     ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "grey20") +

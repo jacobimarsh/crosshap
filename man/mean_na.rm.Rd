@@ -9,6 +9,9 @@ mean_na.rm(x)
 \arguments{
 \item{x}{Input vector}
 }
+\value{
+Mean numerical values
+}
 \description{
 Mean utility function
 }

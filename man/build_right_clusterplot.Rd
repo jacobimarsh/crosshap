@@ -4,10 +4,12 @@
 \alias{build_right_clusterplot}
 \title{Right intra-cluster linkage plot}
 \usage{
-build_right_clusterplot(HapObject, hide_labels = F)
+build_right_clusterplot(HapObject, epsilon, hide_labels = FALSE)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
@@ -23,6 +25,6 @@ called by crosshap_viz(), though can be called separately to build a
 stand-alone plot.
 }
 \examples{
-build_right_clusterplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+build_right_clusterplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }

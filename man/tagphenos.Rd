@@ -14,6 +14,9 @@ run_haplotyping().}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
 }
+\value{
+Returns intermediate of haplotype object.
+}
 \description{
 tagphenos() reports the frequency of allele types for each SNP and calculates
 phenotype associations for the different alleles, before returning this

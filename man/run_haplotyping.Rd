@@ -14,7 +14,7 @@ run_haplotyping(
   minHap = 9,
   hetmiss_as = "allele",
   het_as = "alt",
-  keep_outliers = F
+  keep_outliers = FALSE
 )
 }
 \arguments{

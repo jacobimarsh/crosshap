@@ -7,7 +7,8 @@
 #' be called separately to build a stand-alone plot (can be useful when patched
 #' to a peripheral plot).
 #'
-#' @param HapObject Haplotype object created by crosshap::run_haplotyping
+#' @param HapObject Haplotype object created by run_haplotyping
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #' @param hide_labels If TRUE, legend is hidden.
 #'
 #' @importFrom rlang ".data"
@@ -17,14 +18,21 @@
 #' @return A ggplot2 object.
 #'
 #' @examples
-#' build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_mid_dotplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_mid_dotplot <- function(HapObject, hide_labels) {
+build_mid_dotplot <- function(HapObject, epsilon, hide_labels = FALSE) {
+
+  #Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Recode hapfile to long format, with 0 as REF, 1 as HET and 2 as ALT (dots in plot)
-intersect <- HapObject$Hapfile %>% tibble::as_tibble() %>%
-  tidyr::gather("MG", "present", 3:(base::ncol(HapObject$Hapfile))) %>%
+intersect <- HapObject_eps$Hapfile %>% tibble::as_tibble() %>%
+  tidyr::gather("MG", "present", 3:(base::ncol(HapObject_eps$Hapfile))) %>%
   dplyr::mutate(present = base::as.factor(.data$present)) %>%
   dplyr::mutate(MG = base::as.numeric(gsub("MG","",.data$MG))) %>%
   dplyr::mutate(present = gsub(as.factor(2),"ALT",

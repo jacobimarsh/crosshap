@@ -2,13 +2,10 @@
 #'
 #' clustree_viz() builds a clustering tree displaying changes in haplotype
 #' assignment between individuals or changes in Marker Group assignment for
-#' SNPs, across different epsilon values. It's essential the epsilon and MGmin
-#' values match the haplotype objects created by run_haplotyping(). This function
-#' is a `clustree` wrapper.
+#' SNPs, across different epsilon values. This function is a `clustree` wrapper.
 #'
-#' @param epsilon Epsilon values passed through run_haplotyping().
-#' @param MGmin MGmin values passed through run_haplotyping().
-#' @param pheno Input numeric phenotype data for each individual.
+#' @param HapObject A haplotyping object with a range of results from different
+#' epsilons created by run_haplotyping()
 #' @param type When type = "hap", nodes represent haplotype populations, when
 #' type = "MG", nodes represent marker groups.
 #'
@@ -20,25 +17,33 @@
 #' @return A ggplot2 object.
 
 
-clustree_viz <- function(pheno, epsilon = c(0.2,0.4,0.6,0.8,1), MGmin = 30, type = "MG") {
-#Extract ID file first epsilon value and change column name to hap_epsXX
-pre_clustree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Indfile"]] %>%
-    dplyr::rename(!!base::paste0("hap_eps",epsilon[1]) := 'hap')
+clustree_viz <- function(HapObject, type = "MG") {
+#Prepare epsilon values
+epsilon <- NULL
 
-#Iterate over all other epsilon values, adding hap_epsXX columns to tibble
-for (drez in epsilon[2:base::length(epsilon)]){
-  pre_clustree <- pre_clustree %>%
-    dplyr::left_join(base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",drez,sep=""))[["Indfile"]] %>%
-                dplyr::rename(!!base::paste0("hap_eps",drez) := 'hap'), by = c("Ind", "Pheno"))
+for (x in 1:length(HapObject)){
+epsilon <- base::append(epsilon, HapObject[[x]][["epsilon"]])
 }
 
-pre_clustree_phen <- dplyr::left_join(pre_clustree, pheno, by = c("Ind", "Pheno"))
+#Extract ID file first epsilon value and change column name to hap_epsXX
+pre_clustree <- HapObject[[1]]$Indfile %>%
+  dplyr::rename(!!base::paste0("hap_eps", HapObject[[1]]$epsilon) := 'hap') %>%
+  dplyr::select(-("Metadata"))
+
+#Iterate over all other epsilon values, adding hap_epsXX columns to tibble
+for (ecks in 2:length(HapObject)){
+  pre_clustree <- dplyr::left_join(pre_clustree,
+                     HapObject[[ecks]][["Indfile"]] %>%
+    dplyr::select(-("Metadata")) %>%
+    dplyr::rename(!!base::paste0("hap_eps", HapObject[[ecks]]$epsilon) := 'hap'), by = c("Ind", "Pheno")
+)
+}
 
 #Plot with clustree
 haptree <- base::suppressMessages(
-  clustree::clustree(pre_clustree_phen, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
-  ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree_phen,-0.1,.data$Pheno)$Pheno),
-                                 base::min(dplyr::top_frac(pre_clustree_phen,0.1,.data$Pheno)$Pheno)),
+  clustree::clustree(pre_clustree, prefix = 'hap_eps', node_colour = 'Pheno',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1)+
+  ggplot2::scale_colour_gradient(limits=c(base::max(dplyr::top_frac(pre_clustree,-0.1,.data$Pheno)$Pheno),
+                                 base::min(dplyr::top_frac(pre_clustree,0.1,.data$Pheno)$Pheno)),
                         high = "#8ADD81",low = "#6870F6", oob = scales::squish,name = 'Pheno') +
   ggplot2::scale_colour_gradient(high = 'black', low = 'grey80', guide = "edge_colourbar", aesthetics = "edge_colour") +
   ggplot2::labs(size = 'nIndividuals', edge_alpha = "Proportion") +
@@ -56,14 +61,16 @@ labeled_haptree <- haptree +
   ggplot2::geom_text(data = haplbls, ggplot2::aes(x=.data$xval, y=.data$yval, label=.data$labelval), hjust = 0)
 
 #Repeat with MGs rather than haplotype groups
-pre_MGtree <- base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",epsilon[1], sep=""))[["Varfile"]] %>%
-  dplyr::rename(!!base::paste0("MGs_eps",epsilon[1]) := 'MGs')
 
-for (drez in epsilon[2:base::length(epsilon)]){
+pre_MGtree <- HapObject[[1]]$Varfile %>%
+  dplyr::select(c("ID", "phenodiff", "MGs")) %>%
+  dplyr::rename(!!base::paste0("MGs_eps", HapObject[[1]]$epsilon) := 'MGs')
+
+for (ecks in 2:length(HapObject)){
   pre_MGtree <- dplyr::left_join(pre_MGtree,
-                                 base::get(base::paste("Haplotypes_MGmin",MGmin,"_E",drez,sep=""))[["Varfile"]] %>%
+                                 HapObject[[ecks]][["Varfile"]] %>%
                                    dplyr::select("ID", "MGs")%>%
-                                   dplyr::rename(!!base::paste0("MGs_eps",drez) := 'MGs'), by = "ID")
+                                   dplyr::rename(!!base::paste0("MGs_eps",HapObject[[ecks]]$epsilon) := 'MGs'), by = "ID")
 }
 
 MGtree <- base::suppressMessages(

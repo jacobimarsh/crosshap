@@ -12,7 +12,7 @@ run_hdbscan_haplotyping(
   minHap = 5,
   hetmiss_as = "allele",
   metadata = NULL,
-  keep_outliers = F
+  keep_outliers = FALSE
 )
 }
 \arguments{
@@ -42,8 +42,6 @@ epsilon value, needed for clustree_viz() and crosshap_viz().
 run_hdbscan_haplotyping() performs HDBSCAN clustering of SNPs in region of
 interest to identify marker groups. Individuals are classified by haplotype
 combination based on shared combinations of marker group alleles. Returns a
-comprehensive haplotyping object (HapObject), which can be used as input to
-build clustering tree for epsilon optimization using clustree_viz(), and
-can be visualized with reference to phenotype and metadata using
-crosshap_viz().
+comprehensive haplotyping object (HapObject), which can be visualized with reference
+to phenotype and metadata using crosshap_viz() (set epsilon to 1 as a dummy value).
 }

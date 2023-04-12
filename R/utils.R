@@ -4,6 +4,8 @@
 #'
 #' @export
 #'
+#' @return Mode numerical values
+#'
 
 arith_mode <- function(x) {
   ux <- base::unique(x)
@@ -15,6 +17,8 @@ arith_mode <- function(x) {
 #' @param x Input vector
 #'
 #' @export
+#'
+#' @return Mean numerical values
 #'
 
 mean_na.rm <- function(x){

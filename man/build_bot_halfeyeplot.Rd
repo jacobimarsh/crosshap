@@ -4,10 +4,17 @@
 \alias{build_bot_halfeyeplot}
 \title{Bot hap-pheno raincloud plot}
 \usage{
-build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = NA)
+build_bot_halfeyeplot(
+  HapObject,
+  epsilon,
+  hide_labels = TRUE,
+  isolate_group = NA
+)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 
@@ -28,6 +35,6 @@ called separately to build a stand-alone plot.
 }
 \examples{
 
-build_bot_halfeyeplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+build_bot_halfeyeplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }

@@ -26,6 +26,8 @@
 #'
 #' @export
 #'
+#' @return Returns intermediate of haplotype object
+#'
 
 pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_outliers) {
 

@@ -6,6 +6,7 @@
 #' separately to build stand-along grob tables.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #'
 #' @importFrom rlang ".data"
 #'
@@ -14,10 +15,17 @@
 #' @return A list containing two TableGrob objects.
 #'
 
-build_summary_tables <- function(HapObject){
+build_summary_tables <- function(HapObject, epsilon){
+
+#Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Filter out unassigned individuals
-no0Varfile <- HapObject$Varfile %>% dplyr::filter(.data$MGs != 0)
+no0Varfile <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0)
 
 #Format MG data in clean tibble to be build as tablegrob
 MGdata <- dplyr::left_join(
@@ -85,7 +93,7 @@ MG_final <- gtable::gtable_add_grob(MG_colnamesline,
 
 #The next few lines progressively organise and build the data for the hap table
 #First, calculate phenotype averages for each haplotype
-hap_pheno <- HapObject$Indfile %>%
+hap_pheno <- HapObject_eps$Indfile %>%
   dplyr::filter(.data$hap != 0) %>%
   dplyr::group_by(.data$hap) %>%
   dplyr::summarise(phenav = mean_na.rm(.data$Pheno)) %>%
@@ -97,7 +105,7 @@ hap_pheno <- HapObject$Indfile %>%
   tibble::column_to_rownames("rname")
 
 #Build a table summarising metadata frequency across haplotypes
-temp_meta <- suppressMessages(HapObject$Indfile %>%
+temp_meta <- suppressMessages(HapObject_eps$Indfile %>%
                                    dplyr::group_by(.data$hap, .data$Metadata) %>%
                                    dplyr::summarise(counts = length(.data$Metadata)) %>%
                                    dplyr::filter(.data$hap != 0) %>%
@@ -107,7 +115,7 @@ temp_meta[is.na(temp_meta)] <- 0
 hap_meta <- tibble::column_to_rownames(temp_meta, "Metadata") %>% as.matrix()
 
 #Extract total frequency of each haplotype
-hap_total <- HapObject$Hapfile %>%
+hap_total <- HapObject_eps$Hapfile %>%
   dplyr::select('hap', 'n') %>%
   tidyr::spread('hap', 'n') %>%
   tibble::as_tibble() %>%

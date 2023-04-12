@@ -5,7 +5,7 @@
 #' combination based on shared combinations of Marker Group alleles. Returns a
 #' haplotyping object (HapObject), which can be used as input to build clustering
 #' tree for epsilon optimization using clustree_viz(), and can be visualized with
-#' reference to phenotype and metadata using crosshap_viz(). Test
+#' reference to phenotype and metadata using crosshap_viz().
 #'
 #' @param vcf Input VCF for region of interest.
 #' @param LD Pairwise correlation matrix of SNPs in region (e.g. from PLINK).
@@ -31,7 +31,7 @@
 run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                             epsilon = c(0.2,0.4,0.6,0.8,1),
                             MGmin = 30, minHap = 9, hetmiss_as = 'allele',
-                            het_as = 'alt', keep_outliers = F){
+                            het_as = 'alt', keep_outliers = FALSE){
     #Reformat VCF
 
   cli::cli_progress_bar(total = 4*length(epsilon) + 2
@@ -48,6 +48,7 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                                                                                                                  base::ifelse(x=='0|.'|x=='.|0',0,NA)),
                                                                                          "miss" = NA))))})
   cli::cli_progress_update()
+  HapObject <- NULL
   for (arez in epsilon){
 
     #Run DBscan on LD matrix
@@ -79,13 +80,19 @@ if(length(unique(preMGfile$cluster)) != 1){
                                  dplyr::left_join(phaps_out$nophenIndfile, pheno, by = "Ind") %>% dplyr::left_join(metadata, by = "Ind")
                                },
                                Varfile = Varfile)
-    base::assign(paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = ""), clustered_hap_obj, envir = .GlobalEnv)} else {
+    HapObject[[paste("Haplotypes_MGmin",MGmin, "_E", arez,sep = "")]] <- clustered_hap_obj
+    } else {
       cli::cli_progress_update()
       base::message(paste0("No Marker Groups identified for Epsilon = ",arez, ""))
-    }
+
+      }
     cli::cli_progress_update()
   }
+
+list(paste("Haplotypes_MGmin",MGmin, "_E", epsilon,sep = ""))
+
   cli::cli_alert_success(paste0("Haplotyping complete!"))
   base::message(paste0("Info saved in Haplotypes_",MGmin, "_E objects"))
-}
+return(HapObject)
+  }
 

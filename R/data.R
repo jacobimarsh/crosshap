@@ -42,7 +42,7 @@
 #'
 #' A haplotyping object created by run_haplotyping() for example cqProt-003 soy data
 #'
-#' @format A haplotype (S3) object containing results needed for haplotype visualization
+#' @format A haplotype (S3) object containing results needed for haplotype visualization across five epsilon values (0.2,0.4,0.6,0.8,1)
 #' \describe{
 #'   \item{epsilon}{Epsilon value chosen for haplotyping with DBSCAN}
 #'   \item{MGmin}{MGmin value (minPts) chosen for haplotyping with DBSCAN}
@@ -52,4 +52,4 @@
 #'   }
 #'   @concept data
 #'
-"Haplotypes_MGmin30_E0.6"
+"HapObject"

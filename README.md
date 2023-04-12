@@ -69,19 +69,19 @@ read_pheno(pheno.txt)
 1.  Run local haplotyping at a range of epsilon values
 
 ``` r
-run_haplotyping(vcf, LD, metadata, pheno)
+HapObject <- run_haplotyping(vcf, LD, metadata, pheno, epsilon, MGmin)
 ```
 
 2.  Build clustering tree to optimize epsilon value
 
 ``` r
-clustree_viz(pheno)
+clustree_viz(HapObject)
 ```
 
 3.  Visualize local haplotypes and Marker Groups
 
 ``` r
-crosshap_viz(HapObject)
+crosshap_viz(HapObject, epsilon)
 ```
 
 <img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_figure_nolabs-01.jpg?raw=true" width="90%" height="90%" />
@@ -91,9 +91,9 @@ visualization, and export relevant information from the haplotype
 object.
 
 ``` r
-HapObject$Indfile
-HapObject$Varfile
-HapObject$Hapfile
+HapObject$Haplotypes_MGmin30_E0.6$Indfile
+HapObject$Haplotypes_MGmin30_E0.6$Hapfile
+HapObject$Haplotypes_MGmin30_E0.6$Varfile
 ```
 
 ## Contact

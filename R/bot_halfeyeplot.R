@@ -8,6 +8,7 @@
 #' called separately to build a stand-alone plot.
 #'
 #' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #' @param hide_labels If TRUE, legend is hidden.
 #' @param isolate_group If a Metadata group is provided, all other Metadata
 #' groups will be masked from the plot. NOTE: it does change the summary tables
@@ -21,18 +22,25 @@
 #'
 #' @examples
 #'
-#' build_bot_halfeyeplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+#' build_bot_halfeyeplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 #'
 
-build_bot_halfeyeplot <- function(HapObject, hide_labels = T, isolate_group = NA) {
+build_bot_halfeyeplot <- function(HapObject, epsilon, hide_labels = TRUE, isolate_group = NA) {
+
+#Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
+  }
 
 #Drop individuals where pheno is missing and haplotype is unassigned
-no0data <- tidyr::drop_na(HapObject$Indfile, "Pheno") %>% dplyr::filter(.data$hap !=0 )
+no0data <- tidyr::drop_na(HapObject_eps$Indfile, "Pheno") %>% dplyr::filter(.data$hap !=0 )
 
 #Filter no0data by isolate_group if specified for input into halfeye plot
 halfeyedat <-  if(is.na(isolate_group)) {
   no0data } else {
-  tidyr::drop_na(HapObject$Indfile %>% dplyr::mutate(Pheno = ifelse(.data$Metadata != isolate_group, NA, .data$Pheno)),
+  tidyr::drop_na(HapObject_eps$Indfile %>% dplyr::mutate(Pheno = ifelse(.data$Metadata != isolate_group, NA, .data$Pheno)),
                                  'Pheno') %>% dplyr::filter(.data$hap !=0 )
 }
 
@@ -46,11 +54,11 @@ jitterdat <- if(is.na(isolate_group)) {
   #If a haplotype is missing from halfeyedat either because it has no individuals
 #with a phenotype score or no individuals of the isolated group, an invisible
 #dummy individual is added so that it retains ncol = nhap to align with midplot.
-if(length(setdiff(HapObject$Indfile$hap,c(unique(halfeyedat$hap),0))) > 0){
+if(length(setdiff(HapObject_eps$Indfile$hap,c(unique(halfeyedat$hap),0))) > 0){
 jitterdat <- jitterdat %>% tibble::add_row(Ind = "Dummy",
-                hap = setdiff(HapObject$Indfile$hap,c(unique(halfeyedat$hap),0)),
-                Pheno = crosshap::mean_na.rm(HapObject$Indfile$Pheno),
-                Metadata = HapObject$Indfile$Metadata[[1]],
+                hap = setdiff(HapObject_eps$Indfile$hap,c(unique(halfeyedat$hap),0)),
+                Pheno = crosshap::mean_na.rm(HapObject_eps$Indfile$Pheno),
+                Metadata = HapObject_eps$Indfile$Metadata[[1]],
                 keep = NA)
 }
 

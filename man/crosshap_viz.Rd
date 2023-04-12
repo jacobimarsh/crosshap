@@ -6,14 +6,17 @@
 \usage{
 crosshap_viz(
   HapObject,
+  epsilon,
   plot_left = "allele",
   plot_right = "pheno",
-  hide_labels = F,
+  hide_labels = FALSE,
   isolate_group = NA
 )
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{plot_left}{When plot_left = "allele", SNP allele frequency information
 is displayed, when plot_left = "pos", SNP position information is displayed.}

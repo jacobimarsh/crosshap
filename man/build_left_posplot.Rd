@@ -4,10 +4,12 @@
 \alias{build_left_posplot}
 \title{Left SNP-position plot}
 \usage{
-build_left_posplot(HapObject, hide_labels = T)
+build_left_posplot(HapObject, epsilon, hide_labels = TRUE)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping().}
+
+\item{epsilon}{Epsilon matching the haplotype object used for umap_in.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
@@ -21,6 +23,6 @@ file from haplotype object. It is an internal function called by
 crosshap_viz(), though can be called separately to build a stand-alone plot.
 }
 \examples{
-build_left_posplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+build_left_posplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }

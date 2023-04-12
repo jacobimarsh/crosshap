@@ -9,6 +9,9 @@ arith_mode(x)
 \arguments{
 \item{x}{Input vector}
 }
+\value{
+Mode numerical values
+}
 \description{
 Mode utility function
 }

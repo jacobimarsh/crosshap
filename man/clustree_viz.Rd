@@ -4,19 +4,11 @@
 \alias{clustree_viz}
 \title{Clustering tree}
 \usage{
-clustree_viz(
-  pheno,
-  epsilon = c(0.2, 0.4, 0.6, 0.8, 1),
-  MGmin = 30,
-  type = "MG"
-)
+clustree_viz(HapObject, type = "MG")
 }
 \arguments{
-\item{pheno}{Input numeric phenotype data for each individual.}
-
-\item{epsilon}{Epsilon values passed through run_haplotyping().}
-
-\item{MGmin}{MGmin values passed through run_haplotyping().}
+\item{HapObject}{A haplotyping object with a range of results from different
+epsilons created by run_haplotyping()}
 
 \item{type}{When type = "hap", nodes represent haplotype populations, when
 type = "MG", nodes represent marker groups.}
@@ -27,7 +19,5 @@ A ggplot2 object.
 \description{
 clustree_viz() builds a clustering tree displaying changes in haplotype
 assignment between individuals or changes in Marker Group assignment for
-SNPs, across different epsilon values. It's essential the epsilon and MGmin
-values match the haplotype objects created by run_haplotyping(). This function
-is a `clustree` wrapper.
+SNPs, across different epsilon values. This function is a `clustree` wrapper.
 }

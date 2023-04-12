@@ -4,10 +4,12 @@
 \alias{build_top_metaplot}
 \title{Top metadata-hap bar plot}
 \usage{
-build_top_metaplot(HapObject, hide_labels)
+build_top_metaplot(HapObject, epsilon, hide_labels = FALSE)
 }
 \arguments{
 \item{HapObject}{Haplotype object created by run_haplotyping()}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
@@ -22,6 +24,6 @@ haplotype object. This is an in internal function called by crosshap_viz(),
 though can be called separately to build a stand-alone plot
 }
 \examples{
-build_top_metaplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+build_top_metaplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }

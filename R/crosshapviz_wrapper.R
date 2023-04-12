@@ -7,12 +7,13 @@
 #' visualize individuals and populations, grouped by haplotype. Horizontal plots
 #' (left/right) visualize SNP information, grouped by Marker Group cluster.
 #'
+#' @param HapObject Haplotype object created by run_haplotyping().
+#' @param epsilon Epsilon to visualize haplotyping results for.
 #' @param plot_left When plot_left = "allele", SNP allele frequency information
 #' is displayed, when plot_left = "pos", SNP position information is displayed.
 #' @param plot_right When plot_right = "pheno", phenotype associations for SNPs
 #' are displayed, when plot_right = "cluster", internal marker group linkage is
 #' displayed.
-#' @param HapObject Haplotype object created by run_haplotyping().
 #' @param hide_labels When TRUE, legends from plots are hidden.
 #' @param isolate_group If one or more Metadata groups are provided, all other
 #' Metadata groups will be masked from the plot. NOTE: it does change the
@@ -22,29 +23,36 @@
 #'
 #' @return A patchwork object.
 #'
-crosshap_viz <- function(HapObject, plot_left = "allele", plot_right = "pheno",
-                         hide_labels = F, isolate_group = NA) {
+crosshap_viz <- function(HapObject, epsilon, plot_left = "allele", plot_right = "pheno",
+                         hide_labels = FALSE, isolate_group = NA) {
 
-  if(sum(is.na(HapObject$Indfile$Pheno)) > 0){
-    base::message(paste0(sum(is.na(HapObject$Indfile$Pheno)), " individuals without phenotype information"))
+#Extract haplotype results for given epsilon
+  for (x in 1:length(HapObject)){
+    if(HapObject[[x]]$epsilon == epsilon){
+      HapObject_eps <- HapObject[[x]]
+    }
   }
 
-  mid <- build_mid_dotplot(HapObject, hide_labels)
+  if(sum(is.na(HapObject_eps$Indfile$Pheno)) > 0){
+    base::message(paste0(sum(is.na(HapObject_eps$Indfile$Pheno)), " individuals without phenotype information"))
+  }
 
-  top <- build_top_metaplot(HapObject, hide_labels)
+  mid <- build_mid_dotplot(HapObject, epsilon = epsilon, hide_labels = hide_labels)
 
-  bot <- build_bot_halfeyeplot(HapObject, hide_labels = T, isolate_group = isolate_group)
+  top <- build_top_metaplot(HapObject, epsilon = epsilon, hide_labels =  hide_labels)
+
+  bot <- build_bot_halfeyeplot(HapObject, epsilon = epsilon, hide_labels =  T, isolate_group = isolate_group)
 
   left <- switch(plot_left,
-                 "allele" = build_left_alleleplot(HapObject, hide_labels),
-                 "pos" = build_left_posplot(HapObject, hide_labels))
+                 "allele" = build_left_alleleplot(HapObject, epsilon = epsilon, hide_labels = hide_labels),
+                 "pos" = build_left_posplot(HapObject, epsilon = epsilon, hide_labels = hide_labels))
 
 
   right <- switch(plot_right,
-                  "pheno" = build_right_phenoplot(HapObject, hide_labels),
-                  "cluster" = build_right_clusterplot(HapObject, hide_labels))
+                  "pheno" = build_right_phenoplot(HapObject, epsilon = epsilon, hide_labels = hide_labels),
+                  "cluster" = build_right_clusterplot(HapObject, epsilon = epsilon, hide_labels = hide_labels))
 
-  tables <- build_summary_tables(HapObject)
+  tables <- build_summary_tables(HapObject, epsilon = epsilon)
   MGtable <- tables[[1]]
   haptable <- tables[[2]]
 

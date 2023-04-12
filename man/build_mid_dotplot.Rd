@@ -4,10 +4,12 @@
 \alias{build_mid_dotplot}
 \title{Middle MG/hap dot plot}
 \usage{
-build_mid_dotplot(HapObject, hide_labels)
+build_mid_dotplot(HapObject, epsilon, hide_labels = FALSE)
 }
 \arguments{
-\item{HapObject}{Haplotype object created by crosshap::run_haplotyping}
+\item{HapObject}{Haplotype object created by run_haplotyping}
+
+\item{epsilon}{Epsilon to visualize haplotyping results for.}
 
 \item{hide_labels}{If TRUE, legend is hidden.}
 }
@@ -23,6 +25,6 @@ be called separately to build a stand-alone plot (can be useful when patched
 to a peripheral plot).
 }
 \examples{
-build_mid_dotplot(Haplotypes_MGmin30_E0.6, hide_labels = FALSE)
+build_mid_dotplot(HapObject, epsilon = 0.6, hide_labels = FALSE)
 
 }
