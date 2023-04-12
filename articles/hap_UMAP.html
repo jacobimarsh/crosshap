@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">crosshap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,10 +95,11 @@ better understanding of what our results reflect.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#Read in example data (LD Matrix, VCF and Haplotype object)</span></span>
+<span><span class="co">#Read in example data (LD Matrix, VCF, Haplotype object and chosen epsilon)</span></span>
 <span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu">crosshap</span><span class="fu">::</span><span class="va"><a href="../reference/LD.html">LD</a></span></span>
 <span><span class="va">vcf</span> <span class="op">&lt;-</span> <span class="fu">crosshap</span><span class="fu">::</span><span class="va"><a href="../reference/vcf.html">vcf</a></span></span>
-<span><span class="va">Haplotypes_MGmin30_E0.6</span> <span class="op">&lt;-</span> <span class="fu">crosshap</span><span class="fu">::</span><span class="va"><a href="../reference/Haplotypes_MGmin30_E0.6.html">Haplotypes_MGmin30_E0.6</a></span></span></code></pre></div>
+<span><span class="va">HapObject</span> <span class="op">&lt;-</span> <span class="fu">crosshap</span><span class="fu">::</span><span class="va"><a href="../reference/HapObject.html">HapObject</a></span></span>
+<span><span class="va">epsilon</span> <span class="op">&lt;-</span> <span class="fl">0.6</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="umap">UMAP<a class="anchor" aria-label="anchor" href="#umap"></a>
@@ -128,7 +129,8 @@ before we use it to map our individuals.</p>
 <span><span class="va">MGumap_data</span> <span class="op">&lt;-</span> <span class="va">umap_in</span><span class="op">$</span><span class="va">layout</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">umap_in</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>UMAP1 <span class="op">=</span> <span class="va">V1</span>, UMAP2 <span class="op">=</span> <span class="va">V2</span>, ID <span class="op">=</span> <span class="st">'rownames(umap_in$data)'</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="co">#HapObject$Haplotypes_MGmin30_E0.6$Varfile contains variant information at epsilon = 0.6</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>                     <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">MGs</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MGs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">'0'</span>, <span class="cn">NA</span>, <span class="va">MGs</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -142,7 +144,7 @@ before we use it to map our individuals.</p>
 <p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/MGumap.png?raw=true" width="500"></p>
 <details><summary><strong>What haplotypes do these Marker Groups define?</strong>
 </summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">crosshap</span><span class="fu">::</span><span class="fu"><a href="../reference/build_mid_dotplot.html">build_mid_dotplot</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span>, hide_labels <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">crosshap</span><span class="fu">::</span><span class="fu"><a href="../reference/build_mid_dotplot.html">build_mid_dotplot</a></span><span class="op">(</span><span class="va">HapObject</span>, epsilon <span class="op">=</span> <span class="fl">0.6</span>, hide_labels <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/middotplot.png?raw=true" width="500"></p>
 </details><p>A full guide to optimizing UMAP parameters is beyond the scope of
 this tutorial, but the MGumap plot we’ve created should be able to help
@@ -157,8 +159,8 @@ forget to keep <code>spread</code> above <code>min_dist()</code>!</p>
 </h2>
 <p>The <code><a href="../reference/prepare_hap_umap.html">prepare_hap_umap()</a></code> function in crosshap takes UMAP
 results and a haplotype object built by <code><a href="../reference/run_haplotyping.html">run_haplotyping()</a></code>
-and builds a plot for individuals from each haplotype with their SNP
-alleles across the UMAP.</p>
+with an epsilon resolution and builds a plot for individuals from each
+haplotype with their SNP alleles across the UMAP.</p>
 <details><summary><strong>What’s the <code>nsamples</code> parameter?</strong>
 </summary><p>The <code>nsamples</code> parameter will match the number of unique
 frames in your final GIF. It can be changed depending on the number of
@@ -170,7 +172,8 @@ which is useful when nsamples &gt; nIndividuals within a given
 haplotype.</p>
 </details><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pre_anim_gg</span> <span class="op">&lt;-</span> <span class="fu">crosshap</span><span class="fu">::</span><span class="fu"><a href="../reference/prepare_hap_umap.html">prepare_hap_umap</a></span><span class="op">(</span><span class="va">umap_in</span>,</span>
-<span>                            HapObject <span class="op">=</span> <span class="va">Haplotypes_MGmin30_E0.6</span>,</span>
+<span>                            HapObject <span class="op">=</span> <span class="va">HapObject</span>,</span>
+<span>                            epsilon <span class="op">=</span> <span class="fl">0.6</span>,</span>
 <span>                            vcf <span class="op">=</span> <span class="va">vcf</span>,</span>
 <span>                            nsamples <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
 <p>At this stage, plots for all frames for all the individuals from all
@@ -178,20 +181,20 @@ haplotypes are stacked onto a single image, so we’ll need to isolate
 them. First, individuals are separated into different facets by
 haplotype. Then, gganimate will stagger the images by only showing one
 individual from each haplotype at a time. Finally, the animation will be
-rendered with the <code>gifski_renderer()</code>.</p>
+rendered with the <code><a href="https://gganimate.com/reference/renderers.html" class="external-link">gifski_renderer()</a></code>.</p>
 <p>Feel free to experiment with the <code>transition_length</code>,
-<code>state_length</code> and <code>animate()</code> display parameters
+<code>state_length</code> and <code><a href="https://gganimate.com/reference/animate.html" class="external-link">animate()</a></code> display parameters
 to find what you think best represents your data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hap_gganim</span> <span class="op">&lt;-</span> <span class="va">pre_anim_gg</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">hap</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">gganimate</span><span class="fu">::</span><span class="fu">transition_states</span><span class="op">(</span><span class="va">Frame</span>,</span>
+<span>  <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/transition_states.html" class="external-link">transition_states</a></span><span class="op">(</span><span class="va">Frame</span>,</span>
 <span>                    transition_length <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>                    state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu">animate</span><span class="op">(</span></span>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/animate.html" class="external-link">animate</a></span><span class="op">(</span></span>
 <span>  <span class="va">hap_gganim</span>,</span>
-<span>  renderer <span class="op">=</span> <span class="fu">gganimate</span><span class="fu">::</span><span class="fu">gifski_renderer</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  renderer <span class="op">=</span> <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/renderers.html" class="external-link">gifski_renderer</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  fps <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  res <span class="op">=</span> <span class="fl">1200</span>,</span>
 <span>  width  <span class="op">=</span> <span class="fl">6</span>,</span>
@@ -201,7 +204,7 @@ to find what you think best represents your data.</p>
 <span>  nframes <span class="op">=</span> <span class="fl">25</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu">anim_save</span><span class="op">(</span><span class="st">"hap_animation.gif"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span><span class="st">"hap_animation.gif"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/hap_animation.gif?raw=true" width="650"></p>
 <details><summary><strong>What do the dots and facets indicate here?</strong>
 </summary><p>In the GIF, the dots represent the same SNPs as in the MGumap,

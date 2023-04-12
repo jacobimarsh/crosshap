@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">crosshap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@ haplotype analysis of the seed protein QTL, cqProt-003, with crosshap
 example data figshare repository</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jacobimarsh.github.io/crosshap/">crosshap</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -225,15 +225,17 @@ so the range of epsilons we will test will be quite low (0.2 - 1).</p>
 the haplotyping!</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Run the haplotyping at all provided epsilon values</span></span>
-<span><span class="fu"><a href="../reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span>vcf <span class="op">=</span> <span class="va">vcf</span>,</span>
+<span><span class="va">HapObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span>vcf <span class="op">=</span> <span class="va">vcf</span>,</span>
 <span>                LD <span class="op">=</span> <span class="va">LD</span>,</span>
 <span>                pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
 <span>                metadata <span class="op">=</span> <span class="va">metadata</span>,</span>
 <span>                epsilon <span class="op">=</span> <span class="va">epsilon</span>,</span>
 <span>                MGmin <span class="op">=</span> <span class="va">MGmin</span><span class="op">)</span></span></code></pre></div>
-<p>If everything went to plan, 5 Haplotype S3 objects should have been
-saved to your global environment - one for each provided epsilon value.
-These files will be needed to build the crosshap visualizations.</p>
+<p>If everything went to plan, a haplotype object should have been saved
+in <code>HapObject</code><br>
+with haplotyping results for all five provided epsilon values. This
+haplotype object will be needed to build the crosshap visualizations
+(along with a chosen epsilon to visualize!).</p>
 <details><summary><strong>How should I tune MGmin and epsilon for my dataset?</strong>
 </summary><p>The MGmin value should be set based on the size, density and linkage
 decay of your dataset. To give some scale: A 300kb region with 3000 SNPs
@@ -259,14 +261,13 @@ one.</p>
 <p>The first clustering tree option provides a summary of changes in
 haplotype groups resolved at different epsilon values.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Phenotype data and parameters used to create haplotype objects</span></span>
-<span><span class="co">#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups</span></span>
-<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">MGmin</span>,</span>
-<span>                              pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
-<span>                              type <span class="op">=</span> <span class="st">'hap'</span>,</span>
-<span>                              epsilon <span class="op">=</span> <span class="va">epsilon</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
+<span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
+<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>,</span>
+<span>                              type <span class="op">=</span> <span class="st">'hap'</span><span class="op">)</span></span>
 <span><span class="va">hap_clustree</span></span></code></pre></div>
 <p><img src="Getting_started_files/figure-html/clustree-1.png" width="1152"></p>
+<p>#<code>{r clustree, fig.width = 12, fig.height = 6} #Phenotype data and parameters used to create haplotype objects #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups hap_clustree &lt;- clustree_viz(HapObject,                               type = 'hap') hap_clustree #</code></p>
 <details><summary><strong>What are the nodes and arrows on this plot?</strong>
 </summary><p>Each row of nodes represents the different haplotypes (A-Z) idenfied
 at a specific epsilon resolution (reported on right). The size of each
@@ -307,19 +308,18 @@ a Marker Group.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
 <span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
-<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>MGmin <span class="op">=</span> <span class="va">MGmin</span>,</span>
-<span>                              pheno <span class="op">=</span> <span class="va">pheno</span>,</span>
-<span>                              type <span class="op">=</span> <span class="st">'MG'</span>,</span>
-<span>                              epsilon <span class="op">=</span> <span class="va">epsilon</span><span class="op">)</span></span>
+<span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>,</span>
+<span>                              type <span class="op">=</span> <span class="st">'MG'</span><span class="op">)</span></span>
 <span><span class="va">MG_clustree</span></span></code></pre></div>
 <img src="Getting_started_files/figure-html/MG_clustree-1.png" width="1152"></details>
 </div>
 <div class="section level2">
 <h2 id="visualizing-local-haplotypes">Visualizing local haplotypes<a class="anchor" aria-label="anchor" href="#visualizing-local-haplotypes"></a>
 </h2>
-<p>Now that we have our ready as a haplotype object, and have picked the
-optimal epsilon resolution for our dataset, it’s time to visualize our
-results in full so we can start uncovering patterns of variation!</p>
+<p>Now that we have our results ready as a haplotype object, and have
+picked the optimal epsilon resolution for our dataset, it’s time to
+visualize our results in full so we can start uncovering patterns of
+variation!</p>
 <p>On the crosshap visualization, the central matrix displays the
 combinations of Marker Group alleles that define each haplotype, it
 provides a grid around which features of each Marker Group and haplotype
@@ -363,7 +363,7 @@ information and the table in the top right summarizes the Marker Group
 information. All guides are shown in the bottom left.</p></li>
 </ul></details><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Visualize haplotype object created by run_haplotyping() at the chosen epsilon (0.6)</span></span>
-<span><span class="va">Hap_viz</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">)</span></span>
+<span><span class="va">Hap_viz</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>, epsilon <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
 <span><span class="va">Hap_viz</span></span></code></pre></div>
 <p><img src="Getting_started_files/figure-html/crosshap_viz-1.png" width="1056"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -458,10 +458,10 @@ Group combinations</li>
 assignments</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Print first lines of haplotype object buckets</span></span>
-<span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Indfile</span></span>
-<span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Hapfile</span></span>
-<span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Print first lines of haplotype object buckets for epsilon = 0.6 results.</span></span>
+<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Indfile</span></span>
+<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Hapfile</span></span>
+<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span></span></code></pre></div>
 <p>If you’re interested in a specific plot from the crosshap
 visualization, though don’t need the full integrated figure, you can
 build the plots one-by one and stitch them together as you like using
@@ -473,10 +473,10 @@ that characterize our haplotype populations.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#First lets build the top plot, keeping the guides with "hide_labels = F"</span></span>
-<span><span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_top_metaplot.html">build_top_metaplot</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span>, hide_labels <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_top_metaplot.html">build_top_metaplot</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>, epsilon <span class="op">=</span> <span class="fl">0.6</span>, hide_labels <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Next lets build the bottom plot, hiding the guides with "hide_labels = T"</span></span>
-<span><span class="va">bot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_bot_halfeyeplot.html">build_bot_halfeyeplot</a></span><span class="op">(</span><span class="va">Haplotypes_MGmin30_E0.6</span>, hide_labels <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">bot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_bot_halfeyeplot.html">build_bot_halfeyeplot</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>, epsilon <span class="op">=</span> <span class="fl">0.6</span>, hide_labels <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Now we can stitch them together with patchwork!</span></span>
 <span><span class="va">hap_plots</span> <span class="op">&lt;-</span> <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">top</span>, <span class="va">bot</span><span class="op">)</span> <span class="op">+</span> <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
