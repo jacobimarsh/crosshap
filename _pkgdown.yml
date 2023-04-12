@@ -32,7 +32,7 @@ reference:
       - vcf
       - metadata
       - pheno
-      - Haplotypes_MGmin30_E0.6
+      - HapObject
   - title: "Internal functions"
     desc: "Functions called internally by crosshap to perform certain tasks"
   - contents:

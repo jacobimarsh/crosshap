@@ -154,7 +154,7 @@ Now you've got all your inputs and parameters ready, it's time to run the haplot
 
 ```{r run_haplotyping, message = F, results = 'hide', cache = T}
 #Run the haplotyping at all provided epsilon values
-test_HapObject <- run_haplotyping(vcf = vcf,
+HapObject <- run_haplotyping(vcf = vcf,
                 LD = LD,
                 pheno = pheno,
                 metadata = metadata,
@@ -162,8 +162,8 @@ test_HapObject <- run_haplotyping(vcf = vcf,
                 MGmin = MGmin)
 ```
 
-If everything went to plan, a haplotype object should have been saved in `HapObject` 
-environment with haplotyping results for all five provided epsilon values. This haplotype 
+If everything went to plan, a haplotype object should have been saved in `HapObject`  
+with haplotyping results for all five provided epsilon values. This haplotype 
 object will be needed to build the crosshap visualizations (along with a chosen epsilon 
 to visualize!). 
 
@@ -189,13 +189,22 @@ haplotype objects created at the different epsilon values to help you pick the b
 
 The first clustering tree option provides a summary of changes in haplotype groups 
 resolved at different epsilon values. 
+
 ```{r clustree, fig.width = 12, fig.height = 6}
-#Phenotype data and parameters used to create haplotype objects
-#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
-hap_clustree <- clustree_viz(HapObject = test_HapObject,
+#Provide phenotype data and parameters used to create haplotype objects
+#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
+hap_clustree <- clustree_viz(HapObject = HapObject,
                               type = 'hap')
 hap_clustree
 ```
+
+#```{r clustree, fig.width = 12, fig.height = 6}
+#Phenotype data and parameters used to create haplotype objects
+#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
+hap_clustree <- clustree_viz(HapObject,
+                              type = 'hap')
+hap_clustree
+#```
 
 <details>
   <summary>**What are the nodes and arrows on this plot?**</summary>
@@ -235,7 +244,7 @@ aren't assigned to a Marker Group.
 ```{r MG_clustree, fig.width = 12, fig.height = 6}
 #Provide phenotype data and parameters used to create haplotype objects
 #Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
-MG_clustree <- clustree_viz(HapObject = test_HapObject,
+MG_clustree <- clustree_viz(HapObject = HapObject,
                               type = 'MG')
 MG_clustree
 ```
@@ -293,7 +302,7 @@ left.
 
 ```{r crosshap_viz, fig.height = 11, fig.width = 11}
 #Visualize haplotype object created by run_haplotyping() at the chosen epsilon (0.6)
-Hap_viz <- crosshap_viz(HapObject = test_HapObject)
+Hap_viz <- crosshap_viz(HapObject = HapObject, epsilon = 0.6)
 Hap_viz
 #If it doesn't scale well in your plot viewer, try exporting it as an image with ggsave()
 ```
@@ -395,9 +404,9 @@ possess each haplotype, and the SNPs within each Marker Group for further analys
 
 ```{r export_hapobject, eval = F}
 #Print first lines of haplotype object buckets for epsilon = 0.6 results.
-test_HapObject$Haplotypes_MGmin30_E0.6$Indfile
-test_HapObject$Haplotypes_MGmin30_E0.6$Hapfile
-test_HapObject$Haplotypes_MGmin30_E0.6$Varfile
+HapObject$Haplotypes_MGmin30_E0.6$Indfile
+HapObject$Haplotypes_MGmin30_E0.6$Hapfile
+HapObject$Haplotypes_MGmin30_E0.6$Varfile
 ```
 
 If you're interested in a specific plot from the crosshap visualization, though don't 
@@ -412,10 +421,10 @@ our haplotype populations.
 library(patchwork)
 
 #First lets build the top plot, keeping the guides with "hide_labels = F"
-top <- build_top_metaplot(HapObject = test_HapObject, epsilon = 0.6, hide_labels = F)
+top <- build_top_metaplot(HapObject = HapObject, epsilon = 0.6, hide_labels = F)
 
 #Next lets build the bottom plot, hiding the guides with "hide_labels = T"
-bot <- build_bot_halfeyeplot(HapObject = test_HapObject, epsilon = 0.6, hide_labels = T)
+bot <- build_bot_halfeyeplot(HapObject = HapObject, epsilon = 0.6, hide_labels = T)
 
 #Now we can stitch them together with patchwork!
 hap_plots <- patchwork::wrap_plots(top, bot) + patchwork::plot_layout(ncol = 1)

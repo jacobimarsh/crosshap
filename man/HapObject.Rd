@@ -13,7 +13,6 @@ A haplotype (S3) object containing results needed for haplotype visualization ac
   \item{Indfile}{Haplotype assignments for individuals}
   \item{Varfile}{Marker Group assignments for SNPs, with additional calculated information}
   }
-  @concept data
 }
 \usage{
 HapObject
@@ -21,4 +20,5 @@ HapObject
 \description{
 A haplotyping object created by run_haplotyping() for example cqProt-003 soy data
 }
+\concept{data}
 \keyword{datasets}

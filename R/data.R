@@ -50,6 +50,6 @@
 #'   \item{Indfile}{Haplotype assignments for individuals}
 #'   \item{Varfile}{Marker Group assignments for SNPs, with additional calculated information}
 #'   }
-#'   @concept data
+#' @concept data
 #'
 "HapObject"
