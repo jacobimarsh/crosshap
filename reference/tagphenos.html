@@ -59,7 +59,7 @@ is not intended for external use.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tagphenos</span><span class="op">(</span><span class="va">MGfile</span>, <span class="va">bin_vcf</span>, <span class="va">pheno</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tagphenos</span><span class="op">(</span><span class="va">MGfile</span>, <span class="va">bin_vcf</span>, <span class="va">pheno</span>, het_phenos <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,6 +75,12 @@ run_haplotyping().</p></dd>
 
 <dt>pheno</dt>
 <dd><p>Input numeric phenotype data for each individual.</p></dd>
+
+
+<dt>het_phenos</dt>
+<dd><p>When FALSE, phenotype associations for SNPs are calculated
+from reference and alternate allele individuals only, when TRUE, heterozygous
+individuals are included assuming additive allele effects.</p></dd>
 
 </dl></div>
     <div class="section level2">
