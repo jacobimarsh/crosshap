@@ -14,6 +14,7 @@ run_haplotyping(
   minHap = 9,
   hetmiss_as = "allele",
   het_as = "alt",
+  het_phenos = FALSE,
   keep_outliers = FALSE
 )
 }
@@ -36,8 +37,12 @@ run_haplotyping(
 are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.}
 
 \item{het_as}{If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
-recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
-"het", they are kept as 'REF/ALT'.}
+recoded as 'ALT/ALT' to reduce number of unique haplotypes during haplotyping,
+if het_as = "het", they are kept as 'REF/ALT'. NOTE: Does not effect phenotypes.}
+
+\item{het_phenos}{When FALSE, phenotype associations for SNPs are calculated
+from reference and alternate allele individuals only, when TRUE, heterozygous
+individuals are included assuming additive allele effects.}
 
 \item{keep_outliers}{When FALSE, marker group smoothing is performed to
 remove outliers.}

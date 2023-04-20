@@ -9,6 +9,9 @@
 #' @param bin_vcf Binary VCF for region of interest reformatted by
 #' run_haplotyping().
 #' @param pheno Input numeric phenotype data for each individual.
+#' @param het_phenos When FALSE, phenotype associations for SNPs are calculated
+#' from reference and alternate allele individuals only, when TRUE, heterozygous
+#' individuals are included assuming additive allele effects.
 #'
 #' @importFrom rlang ".data"
 #'
@@ -17,7 +20,7 @@
 #' @return Returns intermediate of haplotype object.
 #'
 
-tagphenos <- function(MGfile, bin_vcf, pheno) {
+tagphenos <- function(MGfile, bin_vcf, pheno, het_phenos = FALSE) {
 
 #Split by allele type
 bin_vcf_long <- bin_vcf %>%
@@ -52,17 +55,31 @@ noNA_preVarfile$MGs[is.na(noNA_preVarfile$MGs)] <- "0"
 noNA_preVarfile[is.na(noNA_preVarfile)] <- 0
 
 #Long to wide format and clean for export
-Varfile <-  preVarfile %>% dplyr::select(-'nInd') %>%
-            tidyr::spread(.data$key, .data$avPheno) %>%
-            dplyr::rename(dplyr::any_of(types)) %>%
-            dplyr::mutate(phenodiff = .data$alt - .data$ref) %>%
-            dplyr::ungroup() %>%
-            dplyr::select('ID', 'phenodiff') %>%
-            dplyr::left_join(noNA_preVarfile %>%
-                              dplyr::mutate(AltAF = (2*.data$alt+.data$het)/(2*(.data$ref + .data$het + .data$alt))),
-                             by = c("ID")) %>%
-  dplyr::left_join(MGfile, by = c("ID", "MGs")) %>%
-  dplyr::relocate('ID', 'POS', 'cluster', 'MGs', 'ref', 'alt', 'het', 'miss')
+Varfile <-  if(het_phenos == FALSE){preVarfile %>% dplyr::select(-'nInd') %>%
+    tidyr::spread(.data$key, .data$avPheno) %>%
+    dplyr::rename(dplyr::any_of(types)) %>%
+    dplyr::mutate(phenodiff = .data$alt - .data$ref) %>%
+    dplyr::ungroup() %>%
+    dplyr::select('ID', 'phenodiff') %>%
+    dplyr::left_join(noNA_preVarfile %>%
+                       dplyr::mutate(AltAF = (2*.data$alt+.data$het)/(2*(.data$ref + .data$het + .data$alt))),
+                     by = c("ID")) %>%
+    dplyr::left_join(MGfile, by = c("ID", "MGs")) %>%
+    dplyr::relocate('ID', 'POS', 'cluster', 'MGs', 'ref', 'alt', 'het', 'miss')
+}else{preVarfile %>% dplyr::mutate(pheno_total = .data$nInd*.data$avPheno) %>%
+    dplyr::select(-c('nInd', 'avPheno'))  %>%
+    tidyr::spread(.data$key, .data$pheno_total) %>%
+    dplyr::mutate_at(c(3:5), ~replace(., is.na(.), 0)) %>%
+    dplyr::left_join(noNA_preVarfile, by = c('ID', 'MGs')) %>%
+    dplyr::mutate(phenodiff = (.data$`2` + .5*.data$`1`)/(.5*.data$het+.data$alt) -
+                    (.data$`0` + .5*.data$`1`)/(.5*.data$het+.data$ref)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select('ID', 'phenodiff') %>%
+    dplyr::left_join(noNA_preVarfile %>%
+                       dplyr::mutate(AltAF = (2*.data$alt+.data$het)/(2*(.data$ref + .data$het + .data$alt))),
+                     by = c("ID")) %>%
+    dplyr::left_join(MGfile, by = c("ID", "MGs")) %>%
+    dplyr::relocate('ID', 'POS', 'cluster', 'MGs', 'ref', 'alt', 'het', 'miss')}
 
 return(Varfile)
 }

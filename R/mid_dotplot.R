@@ -41,18 +41,19 @@ intersect <- HapObject_eps$Hapfile %>% tibble::as_tibble() %>%
   dplyr::mutate(Allele = factor(.data$present, levels = c("REF", "HET", "ALT")))
 
 #Report min and max MG that each hap has an ALT allele for (edges in plot)
-intersect_lines <- intersect %>%
+intersect_lines <- suppressWarnings(intersect %>%
   dplyr::filter(.data$Allele == "ALT") %>%
   dplyr::group_by(.data$hap) %>%
   dplyr::summarise(max = base::max(.data$MG), min = base::min(.data$MG)) %>%
-  dplyr::mutate(min = base::as.character(min), max = base::as.character(max))
+  dplyr::mutate(min = base::as.character(min), max = base::as.character(max)))
 
 mid_dotplot <- ggplot2::ggplot() +
   ggplot2::geom_segment(data = intersect_lines, col = "grey", linewidth = 1.5,
                ggplot2::aes(x = .data$hap, xend = .data$hap, y = min, yend = max)) +
   ggplot2::geom_point(data = intersect, col = 'black', pch = 21,
              ggplot2::aes(.data$hap, base::as.character(.data$MG), fill = .data$Allele, size= 2)) +
-  ggplot2::scale_fill_manual(values = c('white','black','grey')) +
+  ggplot2::scale_fill_manual(labels = c("REF","HET","ALT"),
+                               values = c('white','grey','black'), drop = FALSE) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.direction = 'horizontal',
                  legend.justification = "left",

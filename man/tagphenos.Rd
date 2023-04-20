@@ -4,7 +4,7 @@
 \alias{tagphenos}
 \title{Calculate SNP phenotypic associations}
 \usage{
-tagphenos(MGfile, bin_vcf, pheno)
+tagphenos(MGfile, bin_vcf, pheno, het_phenos = FALSE)
 }
 \arguments{
 \item{MGfile}{SNP marker groups clustered using DBscan.}
@@ -13,6 +13,10 @@ tagphenos(MGfile, bin_vcf, pheno)
 run_haplotyping().}
 
 \item{pheno}{Input numeric phenotype data for each individual.}
+
+\item{het_phenos}{When FALSE, phenotype associations for SNPs are calculated
+from reference and alternate allele individuals only, when TRUE, heterozygous
+individuals are included assuming additive allele effects.}
 }
 \value{
 Returns intermediate of haplotype object.
