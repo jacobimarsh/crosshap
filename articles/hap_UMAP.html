@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">crosshap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,20 +181,20 @@ haplotypes are stacked onto a single image, so we’ll need to isolate
 them. First, individuals are separated into different facets by
 haplotype. Then, gganimate will stagger the images by only showing one
 individual from each haplotype at a time. Finally, the animation will be
-rendered with the <code>gifski_renderer()</code>.</p>
+rendered with the <code><a href="https://gganimate.com/reference/renderers.html" class="external-link">gifski_renderer()</a></code>.</p>
 <p>Feel free to experiment with the <code>transition_length</code>,
-<code>state_length</code> and <code>animate()</code> display parameters
+<code>state_length</code> and <code><a href="https://gganimate.com/reference/animate.html" class="external-link">animate()</a></code> display parameters
 to find what you think best represents your data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hap_gganim</span> <span class="op">&lt;-</span> <span class="va">pre_anim_gg</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">hap</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">gganimate</span><span class="fu">::</span><span class="fu">transition_states</span><span class="op">(</span><span class="va">Frame</span>,</span>
+<span>  <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/transition_states.html" class="external-link">transition_states</a></span><span class="op">(</span><span class="va">Frame</span>,</span>
 <span>                    transition_length <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>                    state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu">animate</span><span class="op">(</span></span>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/animate.html" class="external-link">animate</a></span><span class="op">(</span></span>
 <span>  <span class="va">hap_gganim</span>,</span>
-<span>  renderer <span class="op">=</span> <span class="fu">gganimate</span><span class="fu">::</span><span class="fu">gifski_renderer</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  renderer <span class="op">=</span> <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/renderers.html" class="external-link">gifski_renderer</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  fps <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  res <span class="op">=</span> <span class="fl">1200</span>,</span>
 <span>  width  <span class="op">=</span> <span class="fl">6</span>,</span>
@@ -204,7 +204,7 @@ to find what you think best represents your data.</p>
 <span>  nframes <span class="op">=</span> <span class="fl">25</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu">anim_save</span><span class="op">(</span><span class="st">"hap_animation.gif"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span><span class="st">"hap_animation.gif"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/hap_animation.gif?raw=true" width="650"></p>
 <details><summary><strong>What do the dots and facets indicate here?</strong>
 </summary><p>In the GIF, the dots represent the same SNPs as in the MGumap,

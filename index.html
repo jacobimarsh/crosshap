@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">crosshap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,10 +89,13 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>crosshap</code> from <a href="https://github.com/jacobimarsh/crosshap" class="external-link">GitHub</a> with:</p>
+<p><code>crosshap</code> is available on CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"crosshap"</span><span class="op">)</span></span></code></pre></div>
+<p>For the latest features, you can install the development version of <code>crosshap</code> from <a href="https://github.com/jacobimarsh/crosshap" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"JacobIMarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"JacobIMarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -101,7 +104,7 @@
 <ol start="0" style="list-style-type: decimal">
 <li>Read in raw inputs</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/read_vcf.html">read_vcf</a></span><span class="op">(</span><span class="va">region.vcf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/read_LD.html">read_LD</a></span><span class="op">(</span><span class="va">plink.ld</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/read_metadata.html">read_metadata</a></span><span class="op">(</span><span class="va">metadata.txt</span><span class="op">)</span></span>
@@ -109,21 +112,21 @@
 <ol style="list-style-type: decimal">
 <li>Run local haplotyping at a range of epsilon values</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">HapObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span><span class="va">vcf</span>, <span class="va">LD</span>, <span class="va">metadata</span>, <span class="va">pheno</span>, <span class="va">epsilon</span>, <span class="va">MGmin</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Build clustering tree to optimize epsilon value</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span><span class="va">HapObject</span><span class="op">)</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Visualize local haplotypes and Marker Groups</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span><span class="va">HapObject</span>, <span class="va">epsilon</span><span class="op">)</span></span></code></pre></div>
 <p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_figure_nolabs-01.jpg?raw=true" width="90%" height="90%"></p>
 <p>From here you can examine haplotype and Marker Group features from the visualization, and export relevant information from the haplotype object.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Indfile</span></span>
 <span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Hapfile</span></span>
 <span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span></span></code></pre></div>
