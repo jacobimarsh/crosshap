@@ -75,13 +75,14 @@ for (ecks in 2:length(HapObject)){
 
 MGtree <- base::suppressMessages(
 clustree::clustree(pre_MGtree, prefix = 'MGs_eps', node_colour = 'phenodiff',node_colour_aggr = "mean_na.rm", edge_width = 1, node_alpha = 1) +
-  ggplot2::scale_colour_gradient(limits=c(base::max(pre_MGtree$phenodiff),
-                                          base::min(pre_MGtree$phenodiff)),
+  ggplot2::scale_colour_gradient(limits=c(base::min(pre_MGtree$phenodiff),
+                                          base::max(pre_MGtree$phenodiff)),
                                  high = "#8ADD81",low = "#6870F6",oob = scales::squish,name = 'phenodiff') +
   ggplot2::scale_colour_gradient(high = 'black', low = 'grey80', guide = "edge_colourbar", aesthetics = "edge_colour") +
   ggplot2::labs(size = 'nSNPs', edge_alpha = "Proportion") +
   ggplot2::guides(edge_color = "none", size = ggplot2::guide_legend(order = 1))
 )
+
 #Create epsilon label data
 #Extract x and ay coordinates from clustree object and build labels
 MGlbls <-

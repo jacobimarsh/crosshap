@@ -16,9 +16,6 @@
 #' @param minHap Minimum nIndividuals in a haplotype combination.
 #' @param hetmiss_as If hetmiss_as = "allele", heterozygous-missing SNPs './N'
 #' are recoded as 'N/N', if hetmiss_as = "miss", the site is recoded as missing.
-#' @param het_as If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
-#' recoded as 'ALT/ALT' to reduce number of unique haplotypes during haplotyping,
-#' if het_as = "het", they are kept as 'REF/ALT'. NOTE: Does not effect phenotypes.
 #' @param het_phenos When FALSE, phenotype associations for SNPs are calculated
 #' from reference and alternate allele individuals only, when TRUE, heterozygous
 #' individuals are included assuming additive allele effects.
@@ -34,8 +31,7 @@
 run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
                             epsilon = c(0.2,0.4,0.6,0.8,1),
                             MGmin = 30, minHap = 9, hetmiss_as = 'allele',
-                            het_as = 'alt', het_phenos = FALSE,
-                            keep_outliers = FALSE){
+                            het_phenos = FALSE, keep_outliers = FALSE){
     #Reformat VCF
 
   cli::cli_progress_bar(total = 4*length(epsilon) + 2
@@ -68,7 +64,7 @@ run_haplotyping <- function(vcf, LD, pheno, metadata = NULL,
     step <- paste0("eps(",arez,") Determining haplotypes from marker group clusters")
     cli::cli_progress_update()
 if(length(unique(preMGfile$cluster)) != 1){
-    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, het_as = het_as, keep_outliers = keep_outliers)
+    phaps_out <- pseudo_haps(preMGfile = preMGfile, bin_vcf = bin_vcf, minHap = minHap, LD = LD, keep_outliers = keep_outliers)
 
     ##Build summary object with all relevant haplotyping information
     step <- paste0("eps(",arez,") Collating haplotype information")

@@ -42,8 +42,14 @@ scans.
 
 ## Installation
 
-You can install the development version of `crosshap` from
-[GitHub](https://github.com/jacobimarsh/crosshap) with:
+`crosshap` is available on CRAN:
+
+``` r
+install.packages("crosshap")
+```
+
+For the latest features, you can install the development version of
+`crosshap` from [GitHub](https://github.com/jacobimarsh/crosshap) with:
 
 ``` r
 # install.packages("devtools")

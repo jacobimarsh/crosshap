@@ -15,9 +15,6 @@
 #' run_haplotyping().
 #' @param minHap Minimum size (nIndividuals) to keep haplotype combinations
 #' @param LD LD matrix input.
-#' @param het_as If het_as = "alt", heterozygous SNPs are recoded 'REF/ALT' are
-#' recoded as 'ALT/ALT' to reduce number of unique haplotypes, if het_as =
-#' "het", they are kept as 'REF/ALT'.
 #' @param keep_outliers When FALSE, marker group smoothing is performed to
 #' remove outliers.
 #'
@@ -29,7 +26,7 @@
 #' @return Returns intermediate of haplotype object
 #'
 
-pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, het_as = 'het', keep_outliers) {
+pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
@@ -59,13 +56,8 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
   }
 
 #Convert heterozygous marker groups to homozygous alternate (optional)
-  if(het_as == "alt"){
-  pseudoSNP <- pseudoSNP %>%
-    dplyr::mutate_if(is.numeric,function(x) {base::gsub(1, 2, x,fixed = T, )})
-  }else{
     pseudoSNP <- pseudoSNP %>%
       dplyr::mutate_all((as.character))
-  }
 
 ##Identify haplotype frequencies from different marker group combinations
 
