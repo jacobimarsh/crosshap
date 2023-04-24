@@ -29,7 +29,10 @@ no0Varfile <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0)
 
 #Format MG data in clean tibble to be build as tablegrob
 MGdata <- dplyr::left_join(
-no0Varfile %>% dplyr::count(.data$MGs) %>% dplyr::rename(nSNP = 'n'),
+  no0Varfile %>% dplyr::count(.data$MGs) %>%
+    dplyr::mutate(MGs = as.numeric(gsub("MG","",.data$MGs))) %>%
+    dplyr::arrange(.data$MGs) %>% dplyr::mutate(MGs = paste0("MG",.data$MGs)) %>%
+    dplyr::rename(nSNP = 'n'),
 stats::aggregate(no0Varfile$phenodiff,
                  base::list(no0Varfile$MGs),
                  mean) %>% dplyr::rename('MGs' = 'Group.1', 'phenodiff' = 'x') %>%
