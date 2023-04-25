@@ -1,7 +1,7 @@
 Package: crosshap
 Type: Package
 Title: Local Haplotype Clustering and Visualization
-Version: 1.2.1
+Version: 1.2.2
 Authors@R:
   c(person(given = "Jacob", 
            family = "Marsh", 
