@@ -30,10 +30,10 @@ pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
 
 ##Call allelic states for each SNP marker group across individuals
 #Extract SNPs in first MG cluster (MG1)
-  dbscan_c1 <- preMGfile %>%
+  dbscan_cvel <- preMGfile %>%
     dplyr::filter(.data$cluster == 1) %>% tibble::as_tibble()
   c1_vcf <- bin_vcf %>%
-    tibble::rownames_to_column() %>% dplyr::filter(.data$rowname %in% dbscan_c1$ID) %>% tibble::column_to_rownames()
+    tibble::rownames_to_column() %>% dplyr::filter(.data$rowname %in% dbscan_cvel$ID) %>% tibble::column_to_rownames()
 
 #Calculate most common (alternate or ref) allele for MG1 across all individuals
   i_modes_1 <- base::apply(c1_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble() %>%
@@ -43,6 +43,7 @@ pseudo_haps <- function(preMGfile, bin_vcf, minHap, LD, keep_outliers) {
   pseudoSNP <- tibble::tibble(Ind = base::colnames(c1_vcf), "1" = i_modes_1)
 
 #Repeat for all other MGs, iteratively adding to pseudoSNP bin_vcf
+  if(max(preMGfile$cluster) > 1){
 for (vel in c(2:base::max(preMGfile$cluster))) {
 
     dbscan_cvel <- preMGfile %>%
@@ -53,7 +54,8 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
       base::apply(cvel_vcf %>% base::sapply(as.double), 2, crosshap::arith_mode) %>% tibble::as_tibble()
     pseudoSNP <- dplyr::bind_cols(pseudoSNP, i_modes_vel)
     base::colnames(pseudoSNP)[vel + 1] <- base::paste0(vel)
-  }
+}
+}
 
 #Convert heterozygous marker groups to homozygous alternate (optional)
     pseudoSNP <- pseudoSNP %>%
