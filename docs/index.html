@@ -5,16 +5,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.">
-<title>Haplotype clustering and visualization • crosshap</title>
+<meta name="description" content="A local haplotyping visualization toolbox to capture major patterns 
+    of co-inheritance between clusters of linked variants, whilst connecting findings 
+    to phenotypic and demographic traits across individuals. crosshap enables users 
+    to explore and understand genomic variation across a trait-associated region. 
+    For an example of successful local haplotype analysis, see Marsh et al. (2022) 
+    &lt;doi:10.1007/s00122-022-04045-8&gt;.">
+<title>Local Haplotype Clustering and Visualization • crosshap</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Haplotype clustering and visualization">
-<meta property="og:description" content="More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Local Haplotype Clustering and Visualization">
+<meta property="og:description" content="A local haplotyping visualization toolbox to capture major patterns 
+    of co-inheritance between clusters of linked variants, whilst connecting findings 
+    to phenotypic and demographic traits across individuals. crosshap enables users 
+    to explore and understand genomic variation across a trait-associated region. 
+    For an example of successful local haplotype analysis, see Marsh et al. (2022) 
+    &lt;doi:10.1007/s00122-022-04045-8&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -28,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">crosshap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,8 +51,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/Getting_started.html">Getting_started.Rmd</a>
-    <a class="dropdown-item" href="articles/talkin_cars.html">talkin_cars</a>
+    <a class="dropdown-item" href="articles/Delimiting_region.html">Delimiting a region of interest</a>
+    <a class="dropdown-item" href="articles/Getting_started.html">Getting started</a>
+    <a class="dropdown-item" href="articles/hap_UMAP.html">Haplotype UMAP GIF</a>
   </div>
 </li>
       </ul>
@@ -59,43 +68,43 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9">
+<div class="section level1">
 <div class="page-header"><h1 id="crosshap">crosshap<a class="anchor" aria-label="anchor" href="#crosshap"></a>
 </h1></div>
-<!-- badges: start -->
-<!-- badges: end -->
-<p>LD-based local haplotype analysis and visualization tool</p>
+<p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_hex_sticker_eps_whitebackground-01.png?raw=true" width="15%" height="15%"></p>
 <div class="section level2">
 <h2 id="what-does-it-do">What does it do?<a class="anchor" aria-label="anchor" href="#what-does-it-do"></a>
 </h2>
-<p>Given a genomic variant data for a region of interest, crosshap performs LD-based local haplotyping. Tightly linked variants are clustered into Marker Groups (MGs), and individuals are grouped into local haplotypes by shared allelic combinations of MGs. Following this, crosshap provides a range of visualization options to examine relevant characteristics of the linked Marker Groups and local haplotypes.</p>
+<p><code>crosshap</code> is an LD-based local haplotype analysis and visualization tool.</p>
+<p>Given a genomic variant data for a region of interest, <code>crosshap</code> performs LD-based local haplotyping. Tightly linked variants are clustered into Marker Groups (MGs), and individuals are grouped into local haplotypes by shared allelic combinations of MGs. Following this, <code>crosshap</code> provides a range of visualization options to examine relevant characteristics of the linked Marker Groups and local haplotypes.</p>
 </div>
 <div class="section level2">
 <h2 id="why-would-i-use-it">Why would I use it?<a class="anchor" aria-label="anchor" href="#why-would-i-use-it"></a>
 </h2>
-<p>crosshap was originally designed to explore local haplotype patterns that may underlie phenotypic variability in quantitative trait locus (QTL) regions. It is ideally suited to complement and follow-up GWAS results (takes same inputs). crosshap equips users with the tools to explain why a region reported a GWAS hit, what variants are causal candidates, what populations are they present/absent in, and what the features are of those populations.</p>
-<p>Alternatively, crosshap can simply be a tool to identify patterns of linkage among local variants, and to classify individuals based on shared haplotypes.</p>
-<p>Note: crosshap is designed for in-depth, user-driven analysis of inheritance patterns in specific regions of interest, not genome-wide scans.</p>
-<div class="figure">
-<img src="https://github.com/JacobIMarsh/crosshap/blob/main/images/crosshap_jpg.jpg?raw=true" alt=""><p class="caption">alt text</p>
-</div>
+<p><code>crosshap</code> was originally designed to explore local haplotype patterns that may underlie phenotypic variability in quantitative trait locus (QTL) regions. It is ideally suited to complement and follow-up GWAS results (takes same inputs). <code>crosshap</code> equips users with the tools to explain why a region reported a GWAS hit, what variants are causal candidates, what populations are they present/absent in, and what the features are of those populations.</p>
+<p>Alternatively, <code>crosshap</code> can simply be a tool to identify patterns of linkage among local variants, and to classify individuals based on shared haplotypes.</p>
+<p>Note: <code>crosshap</code> is designed for in-depth, user-driven analysis of inheritance patterns in specific regions of interest, not genome-wide scans.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of crosshap from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p><code>crosshap</code> is available on CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"crosshap"</span><span class="op">)</span></span></code></pre></div>
+<p>For the latest features, you can install the development version of <code>crosshap</code> from <a href="https://github.com/jacobimarsh/crosshap" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"JacobIMarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>In short, a typical crosshap analysis workflow involves the following steps. For a detailed explanation and walk through, see <code>Getting_started.Rmd</code> (coming soon!).</p>
+<p>In short, a typical crosshap analysis workflow involves the following steps. For a detailed explanation and walk through, see our <a href="https://jacobimarsh.github.io/crosshap/articles/Getting_started.html">Getting started</a> vignette.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Read in raw inputs</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/read_vcf.html">read_vcf</a></span><span class="op">(</span><span class="va">region.vcf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/read_LD.html">read_LD</a></span><span class="op">(</span><span class="va">plink.ld</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/read_metadata.html">read_metadata</a></span><span class="op">(</span><span class="va">metadata.txt</span><span class="op">)</span></span>
@@ -103,23 +112,24 @@
 <ol style="list-style-type: decimal">
 <li>Run local haplotyping at a range of epsilon values</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span><span class="va">vcf</span>, <span class="va">LD</span>, <span class="va">metadata</span>, <span class="va">pheno</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">HapObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_haplotyping.html">run_haplotyping</a></span><span class="op">(</span><span class="va">vcf</span>, <span class="va">LD</span>, <span class="va">metadata</span>, <span class="va">pheno</span>, <span class="va">epsilon</span>, <span class="va">MGmin</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Build clustering tree to optimize epsilon value</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span><span class="va">pheno</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span><span class="va">HapObject</span><span class="op">)</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Visualize local haplotypes and Marker Groups</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span><span class="va">HapObject</span><span class="op">)</span></span></code></pre></div>
-<p>From here you can examine haplotype and Marker Group features from the visualization, and export relevant information from the haplotype object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">HapObject</span><span class="op">$</span><span class="va">Indfile</span></span>
-<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Varfile</span></span>
-<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Hapfile</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/crosshap_viz.html">crosshap_viz</a></span><span class="op">(</span><span class="va">HapObject</span>, <span class="va">epsilon</span><span class="op">)</span></span></code></pre></div>
+<p><img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_figure_nolabs-01.jpg?raw=true" width="90%" height="90%"></p>
+<p>From here you can examine haplotype and Marker Group features from the visualization, and export relevant information from the haplotype object.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Indfile</span></span>
+<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Hapfile</span></span>
+<span><span class="va">HapObject</span><span class="op">$</span><span class="va">Haplotypes_MGmin30_E0.6</span><span class="op">$</span><span class="va">Varfile</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
@@ -127,10 +137,19 @@
 <p>For technical queries feel free to contact me: <a href="mailto:jacob.marsh@research.uwa.edu.au" class="email">jacob.marsh@research.uwa.edu.au</a>. Please contact Prof. David Edwards for all other queries: <a href="mailto:dave.edwards@uwa.edu.au" class="email">dave.edwards@uwa.edu.au</a> .</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=crosshap" class="external-link">View on CRAN</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>What license is it under?</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -145,11 +164,19 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jacob Marsh <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Jacob Marsh <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3734-2023" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Brady Johnston <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6301-2269" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jakob Petereit <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-2159-0380" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/jacobimarsh/crosshap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jacobimarsh/crosshap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/JacobIMarsh/crosshap?branch=main" class="external-link"><img src="https://codecov.io/gh/JacobIMarsh/crosshap/branch/main/graph/badge.svg" alt="Codecov"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
@@ -157,12 +184,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Jacob Marsh.</p>
+<p>Developed by Jacob Marsh, Brady Johnston, Jakob Petereit.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
