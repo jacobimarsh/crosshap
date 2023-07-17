@@ -37,10 +37,10 @@ topplot_data <- suppressMessages(HapObject_eps$Indfile %>%
 
 
 top_metaplot <- ggplot2::ggplot(topplot_data,
-       ggplot2::aes(y = .data$counts, x = .data$hap, fill = base::factor(.data$Metadata, levels = c(NA, sort(unique(HapObject_eps$Indfile$Metadata))), exclude = NULL))) +
-  ggplot2::geom_bar(position="stack", stat = "identity") +
+       ggplot2::aes(y = .data$counts, x = .data$hap,fill = base::factor(.data$Metadata, levels = c(NA, sort(unique(HapObject_eps$Indfile$Metadata))), exclude = NULL))) +
+  ggplot2::geom_bar(position="stack", stat = "identity", colour = "black") +
   ggplot2::theme_minimal() +
-    ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "grey20") +
+    ggplot2::scale_fill_brewer("Metadata", palette = "Dark2", na.value = "white") +
     ggplot2::theme(legend.direction = "horizontal",
                    legend.title = ggplot2::element_text(size = 10),
                    legend.text = ggplot2::element_text(size = 7),
