@@ -1,21 +1,17 @@
-## R CMD check results
+## ── R CMD check results ────────────────────────────── crosshap 1.3.0 ────
+Duration: 1m 0.1s
 
-0 errors | 0 warnings | 0 notes
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+R CMD check succeeded
 
 --
 
-Submitting updated version (1.0.0 > 1.2.2) 
-with several essential bug fixes and 
-a minor
+Submitting updated version (1.2.2 > 1.3.0) with minor bug fixes and improvements. 
+Implementing revisions identified as necessary during peer review. While this is 
+a minor patch, this version is expected to be stable until the next major advancement.
 
-* Improved algorithm to handle extra variable (`tagphenos.R`)
-  * Changed labels in `mid_dotplot.R`
-  * Fixed associated documentation (`tagphenos.R`, `run_haplotyping.R`, `mid_dotplot.R`) and vignettes (`Getting_started.R`)
-
-* Removed unnecessary argument producing misleading results (`pseudohaps.R`, `run_haplotpying_wrapper.R`)
-* Fixed bug with node colours on figure (`clustree_viz.R`)
-  * Fixed associated documentation 
-
-* Updated test snapshots to fit with new version
-
-* Updated Readme to include CRAN install instructions
+* Changed bar plot borders and NA colour (`top_barplot.R`)
+  * Updated associated documentation, unit tests and vignette (`*.html`, `test-*.R`, `Getting_started.R`)
+  
+* Removed duplicated text and minor grammatical inconsistencies in vignette (`Getting_started.R`)

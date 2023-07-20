@@ -191,20 +191,12 @@ The first clustering tree option provides a summary of changes in haplotype grou
 resolved at different epsilon values. 
 
 ```{r clustree, fig.width = 12, fig.height = 6}
-#Provide phenotype data and parameters used to create haplotype objects
-#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
-hap_clustree <- clustree_viz(HapObject = HapObject,
-                              type = 'hap')
-hap_clustree
-```
-
-#```{r clustree, fig.width = 12, fig.height = 6}
-#Phenotype data and parameters used to create haplotype objects
+#HapObject created by `run_haplotyping`
 #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups
 hap_clustree <- clustree_viz(HapObject,
                               type = 'hap')
 hap_clustree
-#```
+```
 
 <details>
   <summary>**What are the nodes and arrows on this plot?**</summary>
@@ -242,7 +234,7 @@ association of a given Marker Groups. The '0' group represents background SNPs t
 aren't assigned to a Marker Group.
 
 ```{r MG_clustree, fig.width = 12, fig.height = 6}
-#Provide phenotype data and parameters used to create haplotype objects
+#HapObject created by `run_haplotyping`
 #Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes
 MG_clustree <- clustree_viz(HapObject = HapObject,
                               type = 'MG')
