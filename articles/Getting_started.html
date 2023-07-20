@@ -91,7 +91,7 @@ haplotype analysis of the seed protein QTL, cqProt-003, with crosshap
 example data figshare repository</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jacobimarsh/crosshap"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jacobimarsh.github.io/crosshap/">crosshap</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -261,13 +261,12 @@ one.</p>
 <p>The first clustering tree option provides a summary of changes in
 haplotype groups resolved at different epsilon values.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
-<span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
-<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>,</span>
+<code class="sourceCode R"><span><span class="co">#HapObject created by `run_haplotyping`</span></span>
+<span><span class="co">#Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups</span></span>
+<span><span class="va">hap_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span><span class="va">HapObject</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'hap'</span><span class="op">)</span></span>
 <span><span class="va">hap_clustree</span></span></code></pre></div>
 <p><img src="Getting_started_files/figure-html/clustree-1.png" width="1152"></p>
-<p>#<code>{r clustree, fig.width = 12, fig.height = 6} #Phenotype data and parameters used to create haplotype objects #Add type = 'hap' to ensure it summarizes haplotypes rather than Marker Groups hap_clustree &lt;- clustree_viz(HapObject,                               type = 'hap') hap_clustree #</code></p>
 <details><summary><strong>What are the nodes and arrows on this plot?</strong>
 </summary><p>Each row of nodes represents the different haplotypes (A-Z) idenfied
 at a specific epsilon resolution (reported on right). The size of each
@@ -306,7 +305,7 @@ SNPs, and colour reflecting the phenotypic association of a given Marker
 Groups. The ‘0’ group represents background SNPs that aren’t assigned to
 a Marker Group.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Provide phenotype data and parameters used to create haplotype objects</span></span>
+<code class="sourceCode R"><span><span class="co">#HapObject created by `run_haplotyping`</span></span>
 <span><span class="co">#Add type = 'MG' to ensure it summarizes Marker Groups rather than haplotypes</span></span>
 <span><span class="va">MG_clustree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustree_viz.html">clustree_viz</a></span><span class="op">(</span>HapObject <span class="op">=</span> <span class="va">HapObject</span>,</span>
 <span>                              type <span class="op">=</span> <span class="st">'MG'</span><span class="op">)</span></span>
