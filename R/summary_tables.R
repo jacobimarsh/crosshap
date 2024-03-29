@@ -24,8 +24,9 @@ build_summary_tables <- function(HapObject, epsilon){
     }
   }
 
-#Filter out unassigned individuals
-no0Varfile <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0)
+#Filter out unassigned individuals and mask SNPs without phenotype scores
+no0Varfile <- HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0,
+                                                      is.na(.data$phenodiff) == F)
 
 #Format MG data in clean tibble to be build as tablegrob
 MGdata <- dplyr::left_join(
