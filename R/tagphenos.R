@@ -81,21 +81,6 @@ Varfile <-  if(het_phenos == FALSE){preVarfile %>% dplyr::select(-'nInd') %>%
     dplyr::left_join(MGfile, by = c("ID", "MGs")) %>%
     dplyr::relocate('ID', 'POS', 'cluster', 'MGs', 'ref', 'alt', 'het', 'miss')}
 
-#Warn users if het_phenos = F and there are heterozygous sites, or phenotype assoc scores not calculated
-if(sum(is.na(Varfile$phenodiff)) > 0){
-base::message(paste0("WARNING: Phenotype association scores (phenodiff) not calculated for ",
-                     sum(is.na(Varfile$phenodiff)), " of ",length(Varfile$phenodiff),
-                     " sites"))
-}
-
-if(het_phenos == FALSE && (sum(Varfile$alt < Varfile$het) + sum(Varfile$ref < Varfile$het) > 0)){
-base::message(paste0("NOTE: ",
-                     sum(Varfile$alt < Varfile$het),
-              " sites have more heterozygous individuals (1/0) than homozygous (1/1 or 0/0).
-
-Haplotyping was performed with hetphenos = F, meaning phenotype association scores for heterozygous sites was ignored."))
-  }
-
 return(Varfile)
 }
 

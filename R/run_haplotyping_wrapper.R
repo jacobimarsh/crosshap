@@ -89,6 +89,23 @@ if(length(unique(preMGfile$cluster)) != 1){
     cli::cli_progress_update()
   }
 
+  #Warn users if het_phenos = F and there are heterozygous sites, or phenotype assoc scores not calculated
+  if(sum(is.na(HapObject[[1]]$Varfile$phenodiff)) > 0){
+    base::message(paste0("WARNING: Phenotype association scores (phenodiff) not calculated for ",
+                         sum(is.na(HapObject[[1]]$Varfile$phenodiff)), " of ",length(HapObject[[1]]$Varfile$phenodiff),
+                         " sites"))
+  }
+
+  if(het_phenos == FALSE && (sum(HapObject[[1]]$Varfile$alt < HapObject[[1]]$Varfile$het) + sum(Varfile$ref < HapObject[[1]]$Varfile$het) > 0)){
+    base::message(paste0("NOTE: ",
+                         sum(HapObject[[1]]$Varfile$alt < HapObject[[1]]$Varfile$het),
+                         " sites have more heterozygous individuals (1/0) than homozygous (1/1 or 0/0).
+
+Haplotyping was performed with hetphenos = F, meaning phenotype association scores for heterozygous sites was ignored."))
+  }
+
+
+
 list(paste("Haplotypes_MGmin",MGmin, "_E", epsilon,sep = ""))
 
   cli::cli_alert_success(paste0("Haplotyping complete!"))
