@@ -57,5 +57,6 @@ Suggests:
 Depends: 
     R (>= 4.00)
 URL: https://jacobimarsh.github.io/crosshap/
+BugReports: https://github.com/jacobimarsh/crosshap/issues
 License: MIT + file LICENSE
 Config/testthat/edition: 3
