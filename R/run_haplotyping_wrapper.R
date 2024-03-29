@@ -99,7 +99,7 @@ if(length(unique(preMGfile$cluster)) != 1){
   if(het_phenos == FALSE && (sum(HapObject[[1]]$Varfile$alt < HapObject[[1]]$Varfile$het) + sum(Varfile$ref < HapObject[[1]]$Varfile$het) > 0)){
     base::message(paste0("NOTE: ",
                          sum(HapObject[[1]]$Varfile$alt < HapObject[[1]]$Varfile$het),
-                         " sites have more heterozygous individuals (1/0) than homozygous (1/1 or 0/0).
+                         " sites have more heterozygous individuals (1/0) than one of the homozygous states (1/1 or 0/0).
 
 Haplotyping was performed with hetphenos = F, meaning phenotype association scores for heterozygous sites was ignored."))
   }

@@ -33,7 +33,11 @@ build_right_phenoplot <- function(HapObject, epsilon, hide_labels = TRUE) {
 
 right_phenoplot <- ggplot2::ggplot() +
   ggplot2::geom_jitter(data = HapObject_eps$Varfile %>% dplyr::filter(.data$MGs != 0),
-                       ggplot2::aes(x = base::abs(.data$phenodiff), y = base::as.factor(.data$MGs), fill = .data$AltAF),
+                       ggplot2::aes(x = base::abs(.data$phenodiff),
+                                    y = base::factor(.data$MGs,
+                                                     levels = base::paste0("MG",
+                                                                           1:(base::length(base::unique(c(HapObject_eps$Varfile$MGs)))-1))),
+                                    fill = .data$AltAF),
               alpha = 0.25, pch = 21, height = 0.25) +
   ggplot2::scale_fill_gradient('Alt allele frequency', low = 'white', high = '#440154FF') +
   ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()) +
