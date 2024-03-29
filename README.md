@@ -106,6 +106,6 @@ HapObject$Haplotypes_MGmin30_E0.6$Varfile
 
 ## Contact
 
-For technical queries feel free to contact me: <jacob.marsh@ad.unc.edu>
-. Please contact Prof. David Edwards for all other queries:
+For technical queries feel free to contact me: <jacob.marsh@unc.edu> .
+Please contact Prof. David Edwards for all other queries:
 <dave.edwards@uwa.edu.au> .
