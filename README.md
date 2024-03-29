@@ -10,8 +10,6 @@
 
 <img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_hex_sticker_eps_whitebackground-01.png?raw=true" width="15%" height="15%" />
 
-[Documentation](https://jacobimarsh.github.io/crosshap/)
-
 ## What does it do?
 
 `crosshap` is an LD-based local haplotype analysis and visualization
@@ -59,6 +57,8 @@ devtools::install_github("JacobIMarsh/crosshap")
 ```
 
 ## Usage
+
+[Documentation](https://jacobimarsh.github.io/crosshap/)
 
 In short, a typical crosshap analysis workflow involves the following
 steps. For a detailed explanation and walk through, see our [Getting
