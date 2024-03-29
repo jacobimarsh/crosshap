@@ -10,6 +10,8 @@
 
 <img src="https://github.com/JacobIMarsh/crosshapimages/blob/main/images/crosshap_hex_sticker_eps_whitebackground-01.png?raw=true" width="15%" height="15%" />
 
+[Documentation](https://jacobimarsh.github.io/crosshap/)
+
 ## What does it do?
 
 `crosshap` is an LD-based local haplotype analysis and visualization
@@ -104,6 +106,6 @@ HapObject$Haplotypes_MGmin30_E0.6$Varfile
 
 ## Contact
 
-For technical queries feel free to contact me:
-<jacob.marsh@research.uwa.edu.au>. Please contact Prof. David Edwards
-for all other queries: <dave.edwards@uwa.edu.au> .
+For technical queries feel free to contact me: <jacob.marsh@ad.unc.edu>
+. Please contact Prof. David Edwards for all other queries:
+<dave.edwards@uwa.edu.au> .
