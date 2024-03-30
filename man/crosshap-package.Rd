@@ -12,6 +12,7 @@ A local haplotyping visualization toolbox to capture major patterns of co-inheri
 Useful links:
 \itemize{
   \item \url{https://jacobimarsh.github.io/crosshap/}
+  \item Report bugs at \url{https://github.com/jacobimarsh/crosshap/issues}
 }
 
 }

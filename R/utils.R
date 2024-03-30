@@ -73,6 +73,16 @@ read_vcf <- function(VCFin){
     dplyr::mutate(POS = as.numeric(.data$POS))
 
   colnames(vcf) <- gsub('-','.',colnames(vcf))
+
+  if(length(unique(vcf$ID)) < length(vcf)){
+    base::message(paste0('Not all SNP IDs are unique, which is required for haplotyping with crosshap.
+
+To rename the ID column to unique values based on position you can use the following code now before haplotyping:
+library(dplyr)
+dplyr::mutate(vcf, ID = paste0("SNP_",POS))
+'))
+  }
+
   return(vcf)
 }
 

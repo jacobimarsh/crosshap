@@ -105,7 +105,6 @@ Haplotyping was performed with hetphenos = F, meaning phenotype association scor
   }
 
 
-
 list(paste("Haplotypes_MGmin",MGmin, "_E", epsilon,sep = ""))
 
   cli::cli_alert_success(paste0("Haplotyping complete!"))
