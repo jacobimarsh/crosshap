@@ -81,6 +81,10 @@ for (vel in c(2:base::max(preMGfile$cluster))) {
   overmin_hap_counts <- dplyr::filter(hapCounts, .data$n > minHap) %>%
     dplyr::mutate(hap=LETTERS[1:base::nrow(dplyr::filter(hapCounts, .data$n > minHap))])
 
+  if(nrow(overmin_hap_counts) < 2){
+    base::message(paste0('ERROR: Less than two unique haplotypes identified, try decreasing minHap or changing epsilon and MGmin parameters'))
+  }
+
 #Report what each individual's haplotype letter is based on their pseudoSNP combination
   base::suppressMessages(
     nophenIndfile <- dplyr::left_join(pseudoSNP, overmin_hap_counts, by = c(as.character(1:max(dbscan_cvel$cluster)))) %>%
