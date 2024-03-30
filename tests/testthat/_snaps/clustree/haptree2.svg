@@ -96,9 +96,9 @@
 <text x='470.49' y='549.51' text-anchor='middle' style='font-size: 8.54px; font-family: sans;' textLength='6.17px' lengthAdjust='spacingAndGlyphs'>D</text>
 <text x='373.34' y='549.51' text-anchor='middle' style='font-size: 8.54px; font-family: sans;' textLength='5.70px' lengthAdjust='spacingAndGlyphs'>E</text>
 <text x='567.63' y='549.51' text-anchor='middle' style='font-size: 8.54px; font-family: sans;' textLength='5.21px' lengthAdjust='spacingAndGlyphs'>F</text>
-<text x='605.28' y='56.57' style='font-size: 11.04px; font-family: sans;' textLength='32.85px' lengthAdjust='spacingAndGlyphs'>ε = 0.4</text>
-<text x='605.28' y='303.47' style='font-size: 11.04px; font-family: sans;' textLength='32.85px' lengthAdjust='spacingAndGlyphs'>ε = 0.8</text>
-<text x='605.28' y='550.38' style='font-size: 11.04px; font-family: sans;' textLength='23.65px' lengthAdjust='spacingAndGlyphs'>ε = 1</text>
+<text x='605.28' y='56.57' style='font-size: 11.04px; font-family: sans;' textLength='38.99px' lengthAdjust='spacingAndGlyphs'>ε = 0.39</text>
+<text x='605.28' y='303.47' style='font-size: 11.04px; font-family: sans;' textLength='38.99px' lengthAdjust='spacingAndGlyphs'>ε = 0.79</text>
+<text x='605.28' y='550.38' style='font-size: 11.04px; font-family: sans;' textLength='38.99px' lengthAdjust='spacingAndGlyphs'>ε = 0.99</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='650.31' y='107.72' style='font-size: 11.00px; font-family: sans;' textLength='58.10px' lengthAdjust='spacingAndGlyphs'>nIndividuals</text>
@@ -140,6 +140,6 @@
 <line x1='664.14' y1='477.59' x2='667.59' y2='477.59' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <line x1='664.14' y1='456.06' x2='667.59' y2='456.06' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <line x1='664.14' y1='434.53' x2='667.59' y2='434.53' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<text x='4.73' y='14.38' style='font-size: 18.00px; font-weight: bold; font-family: sans;' textLength='61.05px' lengthAdjust='spacingAndGlyphs'>haptree</text>
+<text x='4.73' y='14.38' style='font-size: 18.00px; font-weight: bold; font-family: sans;' textLength='71.06px' lengthAdjust='spacingAndGlyphs'>haptree2</text>
 </g>
 </svg>

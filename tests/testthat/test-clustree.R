@@ -1,6 +1,6 @@
-test_epsilon <- c(0.4, 0.8, 1)
+test_epsilon <- c(0.39, 0.79, 0.99)
 
-set.seed(153)
+set.seed(154)
 
 HapObject <- run_haplotyping(vcf = crosshap::vcf,
                           LD = crosshap::LD,
@@ -15,6 +15,6 @@ vdiffr::expect_doppelganger("MGtreedata", MGtree2$data)
 })
 
 test_that("test hap clustree", {
-haptree <- clustree_viz(HapObject = HapObject, type = 'hap')
-vdiffr::expect_doppelganger("haptree", haptree)
+haptree2 <- clustree_viz(HapObject = HapObject, type = 'hap')
+vdiffr::expect_doppelganger("haptree2", haptree2)
 })
