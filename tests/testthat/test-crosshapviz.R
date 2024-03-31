@@ -1,6 +1,6 @@
 test_epsilon <- 0.62
 
-set.seed(154)
+set.seed(155)
 
 testHapObject <- run_haplotyping(vcf = crosshap::vcf,
                                  LD = crosshap::LD,
