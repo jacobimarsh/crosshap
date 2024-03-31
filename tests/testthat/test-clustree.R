@@ -16,5 +16,5 @@ vdiffr::expect_doppelganger("MGtreedata", MGtree2$data)
 
 test_that("test hap clustree", {
 haptree2 <- clustree_viz(HapObject = HapObject, type = 'hap')
-vdiffr::expect_doppelganger("haptree2", haptree2)
+vdiffr::expect_doppelganger("haptreedata", haptree2$data)
 })
