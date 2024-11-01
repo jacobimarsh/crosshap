@@ -1,117 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/404.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/articles/Delimiting_region.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/articles/Getting_started.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/articles/hap_UMAP.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/HapObject.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/LD.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/arith_mode.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_bot_halfeyeplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_left_alleleplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_left_posplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_mid_dotplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_right_clusterplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_right_phenoplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_summary_tables.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/build_top_metaplot.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/clustree_viz.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/crosshap-package.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/crosshap_viz.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/mean_na.rm.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/pheno.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/prepare_hap_umap.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/pseudo_haps.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/read_LD.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/read_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/read_pheno.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/read_vcf.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/run_haplotyping.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/run_hdbscan_haplotyping.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/tagphenos.html</loc>
-  </url>
-  <url>
-    <loc>https://jacobimarsh.github.io/crosshap/reference/vcf.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jacobimarsh.github.io/crosshap/404.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/LICENSE-text.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/LICENSE.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/articles/Delimiting_region.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/articles/Getting_started.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/articles/hap_UMAP.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/articles/index.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/authors.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/index.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/HapObject.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/LD.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/arith_mode.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_bot_halfeyeplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_left_alleleplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_left_posplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_mid_dotplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_right_clusterplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_right_phenoplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_summary_tables.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/build_top_metaplot.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/clustree_viz.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/crosshap-package.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/crosshap_viz.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/index.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/mean_na.rm.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/metadata.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/pheno.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/pipe.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/prepare_hap_umap.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/pseudo_haps.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/read_LD.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/read_metadata.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/read_pheno.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/read_vcf.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/run_haplotyping.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/run_hdbscan_haplotyping.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/tagphenos.html</loc></url>
+<url><loc>https://jacobimarsh.github.io/crosshap/reference/vcf.html</loc></url>
 </urlset>
+
