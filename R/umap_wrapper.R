@@ -60,7 +60,7 @@ x_y_vcf[x_y_vcf == "0"] <- NA
 x_y_vcf_long <-
   x_y_vcf %>% dplyr::select('UMAP1', 'UMAP2', 'MGs', 'cluster', HapObject_eps$Indfile$Ind) %>%
   tidyr::gather(HapObject_eps$Indfile$Ind, key = "Ind", value = "allele") %>%
-  dplyr::left_join(HapObject_eps$Indfile, .data$hap, by = "Ind")
+  dplyr::left_join(HapObject_eps$Indfile, by = "Ind")
 
 #
 framenum_ID <- NULL
